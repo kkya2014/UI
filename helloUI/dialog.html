@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Hello UI Dialog</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="stylesheet" href="css/mui.css">
+
+        <!--demo展示所用css，不用关心 begin-->
+        <link rel="stylesheet" type="text/css" href="css/assets/reset.css" />
+        <!--demo展示所用css end-->
+
+        <!--组件依赖css begin-->
+        <link rel="stylesheet" type="text/css" href="css/assets/widget/dialog/dialog.css" />
+        <!-- <link rel="stylesheet" type="text/css" href="../../../assets/widget/dialog/dialog.default.css" /> --> <!--皮肤文件，若不使用该皮肤，可以不加载-->
+        <link rel="stylesheet" type="text/css" href="css/assets/widget/dialog/dialog.iOS7.css" /> <!--皮肤文件，若不使用该皮肤，可以不加载-->
+        <!--组件依赖css end-->
+
+        <!--demo展示所用css，不用关心 begin-->
+        <link rel="stylesheet" type="text/css" href="css/assets/widget/button/button.css" />
+        <link rel="stylesheet" type="text/css" href="css/assets/widget/button/button.default.css" />
+        <link rel="stylesheet" type="text/css" href="css/assets/dialog_demo.css"/>
+        <!--demo展示所用css end-->
+
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+            header.mui-bar{
+                display: none;
+            }
+            .mui-bar-nav~.mui-content{
+                padding: 0;
+            }
+            .mui-btn{
+                display: block;
+                width: 120px;
+                margin: 10px auto;
+              }
+              #info{
+                padding: 20px 10px ;
+              }
+        </style>
+        
+    </head>
+
+    <body>
+        <header class="mui-bar mui-bar-nav">
+            <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+            <h1 class="mui-title">消息框（dialog）</h1>
+        </header>
+        <div class="mui-content">
+            <div class="mui-content-padded" style="margin: 5px;text-align: center;">
+                <button id='alertBtn' type="button" class="mui-btn mui-btn-blue mui-btn-outlined">分享框</button>
+                <button id='confirmBtn' type="button" class="mui-btn mui-btn-blue mui-btn-outlined">评分框</button>
+                <button id='promptBtn' type="button" class="mui-btn mui-btn-blue mui-btn-outlined">提示框</button>
+                <button id='toastBtn' type="button" class="mui-btn mui-btn-blue mui-btn-outlined">个性化提示框</button>
+                <div id="info">
+        
+                </div>
+            </div>
+        </div>
+         <script src="js/sea.js"></script>
+        <script src="js/config.js"></script>
+    </body>
+     <script>
+            seajs.use(['dialog','button'], function(){
+                $('#alertBtn').botton({
+                    callback:function(btn,el){
+                         Dialog.dialog({
+                            title:'消息框',
+                            width: 288,
+                            buttons: {
+                                '取消': function(){
+                                    this.close();
+                                }
+                            },
+                            content: '<ul class="share-list"><li class="renren">人人网</li><li class="sina">新浪微博</li><li class="sms">短信息</li><li class="email">用电子邮件发送信息</li></ul>'
+                        }).opts['_wrap'].addClass('share-dialog');
+
+                        Dialog.alert('111');
+                    }
+                });
+
+                $('#confirmBtn').botton({
+                    callback:function(btn,el){
+                        Dialog.dialog({
+                            title:'文档评分',
+                            autoOpen: false,
+                            closeBtn: true,
+                            scrollMove: false,
+                            buttons: {
+                                '取消': function(){
+                                    this.close();
+                                },
+                                '确定': function(){
+                                    this.close();
+                                }
+                            },
+                            content:  '<div  class="vote-dialog" style="display:block"><p class="vote"></p><p>星级从1到5，获得越多星星，表示等级越高</p></div>'
+                        });
+                        Dialog.prompt('222');
+                    }
+                });
+                $('#promptBtn').botton({
+                    callback:function(btn,el){
+                       Dialog.dialog({
+                            title:'登陆提示',
+                            autoOpen: false,
+                            closeBtn: false,
+                            buttons: {
+                                '取消': function(){
+                                    this.close();
+                                },
+                                '确定': function(){
+                                    this.close();
+                                }
+                            },
+                            content:  '<div style="display:block"><p>登录后, 获得更多个性化特色功能</p></div>'
+                        })//.opts['_wrap'].addClass('login-dialog').addClass('login-dialog login-dialog-dark');;
+
+                        Dialog.prompt('333');
+                    }
+                });
+                $('#toastBtn').botton({
+                    callback:function(btn,el){
+                        Dialog.dialog({
+                            autoOpen: false,
+                            closeBtn: false,
+                            buttons: {
+                                '取消': function(){
+                                    this.close();
+                                },
+                                '确定': function(){
+                                    this.close();
+                                }
+                            },
+                            title: '登录提示',
+                            content: '<p>登录后, 获得更多个性化特色功能</p><p>特色功能1：个性化首页</p>' +
+                                    '<p>特色功能2：各产品线自动关联，无需再次登录，一站式服务</p><p>特色功能3：记录您当前的活动状态</p>' +
+                                    '<p>特色功能4：个性化提醒</p>'
+                        }).opts['_wrap'].addClass('login-dialog login-dialog-dark')
+
+                        Dialog.prompt('444');
+                    }
+                });
+            });
+        </script>
+</html>

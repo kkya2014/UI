@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <meta name="apple-itunes-app" content="app-id=698076980" />
+    <meta name="Keywords" content="多玩游戏">
+    <meta name="description" content="">
+    <title>Hello UI Input</title>
+
+    <!-- Style -->
+    <link rel="stylesheet" href="css/mui.css">
+      <style>
+            html,
+            body {
+                height: 100%;
+                overflow: hidden;
+                margin: 0px;
+                padding: 0px;
+                background-color: #efeff4;
+            }
+            .ui-logo {
+                width: 100px;
+                height: 100px;
+                margin: 60px auto 25px auto;
+                background-image: url(images/user-photo.png);
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                border-radius: 60px;
+            }
+            .mui-content-padded {
+                margin-top: 20px;
+            }
+            .ui-login-form {
+                border: solid 1px #ddd;
+                border-radius: 5px;
+                margin: 10px;
+                overflow: hidden;
+                background-color: #ddd;
+            }
+            .ui-login-form input {
+                border: none;
+                margin: 0px;
+                font-size: 18px;
+                padding: 15px !important;
+                border-radius: 0px;
+                height: auto;
+            }
+            .ui-login-form input:first-child {
+                margin-bottom: 1px;
+            }
+            .mui-btn-block {
+                padding: 12px 0px;
+            }
+            #reg {
+                display: block;
+                margin-top: 45px;
+                text-align: center;
+            }
+            .mui-checkbox label {
+                display: inline-block;
+                width: auto;
+                vertical-align: text-bottom;
+                padding: 2px 0px;
+                color: #777;
+            }
+            .mui-checkbox input {
+                position: relative !important;
+                top: auto!important;
+                left: auto!important;
+                right: auto!important;
+                bottom: auto!important;
+                margin: 0px;
+                padding: 0px;
+                vertical-align: text-bottom;
+            }
+            .mui-checkbox {
+                margin: 3px 10px;
+            }
+        </style>
+   <!--  Style -->
+   
+</head>
+<body>
+	   <div class="mui-content">
+            <div class="mui-content-padded" style="margin: 5px;">
+                <h5>默认搜索框：</h5>
+                <div class="mui-input-row mui-search">
+                    <input type="search" class="mui-input-clear" placeholder="">
+                </div>
+                <h5>语音输入搜索框：</h5>
+                <div class="mui-input-row mui-search">
+                    <input id="search" type="search" class="mui-input-speech mui-input-clear" placeholder="带语音输入的搜索框">
+                </div>
+                <form class="mui-input-group">
+                    <div class="mui-input-row">
+                        <label>Input</label>
+                        <input type="text" placeholder="普通输入框">
+                    </div>
+                    <div class="mui-input-row">
+                        <input type="text" class="mui-input-clear" placeholder="带清除按钮的输入框">
+                    </div>
+
+                    <div class="mui-input-row">
+                        <label>Input</label>
+                        <input type="text" class="mui-input-speech mui-input-clear" placeholder="语音输入">
+                    </div>
+                    <div class="mui-button-row">
+                        <button type="button" class="mui-btn mui-btn-primary" onclick="return false;">确认</button>&nbsp;&nbsp;
+                        <button type="button" class="mui-btn mui-btn-danger" onclick="return false;">取消</button>
+                    </div>
+                </form>
+                <form class="ui-login-form">
+                    <input id='account' type="text" class="mui-input-clear mui-input" placeholder="账号">
+                    <input id='password' type="password" class="mui-input-clear mui-input" placeholder="密码">
+                </form>
+                <div class="mui-input-row" style="margin: 10px 5px;">
+                    <textarea id="textarea" rows="5" placeholder="多行文本框"></textarea>
+                </div>
+            </div>
+        </div>
+     <script src="js/sea.js"></script>
+     <script src="js/config.js"></script>
+</body>
+     <script>
+        seajs.use(['input'], function(){
+        });
+    </script>
+</html>
