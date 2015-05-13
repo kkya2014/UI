@@ -3,15 +3,8 @@
  */
 (function() {
     // todo 检测3d是否支持。
-    var translateZ = ' translateZ(0)',
-        tpl = {
-            item: '<div class="ui-slider-item"><a href="<%= href %>">' +
-                    '<img src="<%= pic %>" alt="" /></a>' +
-                    '<% if( title ) { %><p><%= title %></p><% } %>' +
-                    '</div>',
-            dots: '<p class="ui-slider-dots"><%= new Array( len + 1 )' +
-                    '.join("<b></b>") %></p>'        
-        };
+    var translateZ = ' translateZ(0)';
+       
     /**
      * 更新dots
      */
@@ -27,7 +20,7 @@
         var dots = _sl.ref.find( opts.selector.dots );
 
         if ( !dots.length ) {
-            dots = _sl.UI.parseTpl(tpl.dots, {
+            dots = _sl.UI.parseTpl(opts.tpl.dots, {
                 len: _sl.length
             });
             dots = $( dots ).appendTo( _sl.ref[0] );
@@ -92,7 +85,16 @@
                 selector: {
                     dots: '.ui-slider-dots',
                     group: '.ui-slider-group'
+                },
+                 tpl : {
+                    item: '<div class="ui-slider-item"><a href="<%= href %>">' +
+                            '<img src="<%= pic %>" alt="" /></a>' +
+                            '<% if( title ) { %><p><%= title %></p><% } %>' +
+                            '</div>',
+                    dots: '<p class="ui-slider-dots"><%= new Array( len + 1 )' +
+                            '.join("<b></b>") %></p>'        
                 }
+
         }); 
 
         //初始化
@@ -100,7 +102,6 @@
             var _sl = this, opts = _sl.opts;
 
             _sl.index = opts.index;
-            _sl.ref = $(opts.ref);
             _sl.UI = UI;
 
 
@@ -218,7 +219,7 @@
                     .addClass( 'ui-slider-item' )
                     .toArray();
             _sl.ref.addClass( 'ui-slider' )
-            UI.trigger(_sl.ref[0], 'donedom');
+            UI.trigger(opts.ref, 'donedom');
             opts.dots&&updateDots.call( _sl, _sl.index );
         };
 
@@ -363,36 +364,6 @@
             speed = speed || opts.speed;
 
             return _sl.slide( index, diff, dir, width, speed, opts );
-        };
-
-        /**
-         * 切换到上一个slide
-         * @method prev
-         * @chainable
-         * @return {self} 返回本身
-         */
-        $slider.prototype.prev = function() {
-            
-            if ( this._options.loop || this.index > 0 ) {
-                this.slideTo( this.index - 1 );
-            }
-
-            return this;
-        };
-
-        /**
-         * 切换到下一个slide
-         * @method next
-         * @chainable
-         * @return {self} 返回本身
-         */
-        $slider.prototype.next = function() {
-            
-            if ( this._options.loop || this.index + 1 < this.length ) {
-                this.slideTo( this.index + 1 );
-            }
-
-            return this;
         };
 
         /**

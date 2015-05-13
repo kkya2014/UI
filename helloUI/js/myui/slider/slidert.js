@@ -53,8 +53,7 @@
                     return map[ e.type ] && _sl[ map[ e.type ] ].call( _sl, e );
                 };
 
-                _sl.ref.on( 'ready', function() {
-
+                _sl.ref.on( 'readydom', function() {
                     // 绑定手势
                     _sl.ref.on( 'touchstart', _sl._handler );
                     
