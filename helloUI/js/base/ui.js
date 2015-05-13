@@ -46,6 +46,38 @@ define(function(require, exports, module) {
       return this;
   };
 
+  Base.parseTpl = function(str, data){
+    var tmpl = 'var __p=[];' + 'with(obj||{}){__p.push(\'' +
+                str.replace( /\\/g, '\\\\' )
+                .replace( /'/g, '\\\'' )
+                .replace( /<%=([\s\S]+?)%>/g, function( match, code ) {
+                    return '\',' + code.replace( /\\'/, '\'' ) + ',\'';
+                } )
+                .replace( /<%([\s\S]+?)%>/g, function( match, code ) {
+                    return '\');' + code.replace( /\\'/, '\'' )
+                            .replace( /[\r\n\t]/g, ' ' ) + '__p.push(\'';
+                } )
+                .replace( /\r/g, '\\r' )
+                .replace( /\n/g, '\\n' )
+                .replace( /\t/g, '\\t' ) +
+                '\');}return __p.join("");',
+
+            func = new Function( 'obj', tmpl );
+    
+        return data ? func( data ) : func;
+  };
+
+  /*
+        判断是否Touch屏幕
+    */
+  Base.isTouchScreen = function(){
+        return (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
+    }
+
+  Base.touchEve = function(str, data){
+    return this.isTouchScreen()? "touchstart" : "mousedown"
+  }
+
   UI.define = function( name, options) {
         if(UI[ name ])return UI[ name ];
          var defOpts =  {
@@ -57,9 +89,10 @@ define(function(require, exports, module) {
          }
         var klass = function(opts) {
             this.opts = $.extend(this.options, opts); 
-            this.init();
+            this.ref = $(opts.ref);
             this.initPlugins();
-            this.trigger(this.opts.ref, 'ready', {goal:this});
+            this.init();
+            this.trigger(this.opts.ref, 'readydom', {goal:this});
         }
         UI[ name ] = Base.extend.call(klass,Base);
         UI[ name ].prototype.options = $.extend(defOpts, options); 
