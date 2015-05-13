@@ -10,7 +10,8 @@ seajs.config({
         'dialog' : 'myui/dialog',
         'header' : 'myui/header',
         'input' : 'myui/input',
-        'switch':'myui/switch'
+        'switch':'myui/switch',
+        'slider':'myui/slider/slider'
     },
 
     vars : [

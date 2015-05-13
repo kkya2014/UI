@@ -75,13 +75,13 @@ define(function(require, exports, module) {
      * @param {type} eventData
      * @returns {_L8.$}
      */
-    UI.trigger = function(element, eventType, eventData) {
+    UI.trigger = function(element, eventType, eventData,goal) {
         element.dispatchEvent(new CustomEvent(eventType, {
             detail: eventData,
             bubbles: true,
             cancelable: true
         }));
-        return this;
+        return goal||this;
     };
 
     UI.stopPropagation = function(e) {
