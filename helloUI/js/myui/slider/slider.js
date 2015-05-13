@@ -8,25 +8,43 @@
             item: '<div class="ui-slider-item"><a href="<%= href %>">' +
                     '<img src="<%= pic %>" alt="" /></a>' +
                     '<% if( title ) { %><p><%= title %></p><% } %>' +
-                    '</div>'
+                    '</div>',
+            dots: '<p class="ui-slider-dots"><%= new Array( len + 1 )' +
+                    '.join("<b></b>") %></p>'        
         };
+    /**
+     * 更新dots
+     */
+    var updateDots = function( to, from ) {
+        var _sl = this, dots = _sl._dots;
+
+        typeof from === 'undefined' || _sl.UI.call(dots[from % this.length ]).removeClass('ui-state-active');
+        _sl.UI.call(dots[to % this.length ]).addClass('ui-state-active');  
+    };
+
+    var initDots = function(){
+        var _sl = this, opts = _sl.opts;
+        var dots = _sl.ref.find( opts.selector.dots );
+
+        if ( !dots.length ) {
+            dots = _sl.UI.parseTpl(tpl.dots, {
+                len: _sl.length
+            });
+            dots = $( dots ).appendTo( _sl.ref[0] );
+        }
+
+        this._dots = dots.children().toArray();    
+    };
     
     /**
      * 图片轮播组件
      */
     define(function(require, exports, module) {
-        var $ = require("zepto"),
             UI = require("UI"),
             cssPrefix = $.fx.cssPrefix,
             transitionEnd = $.fx.transitionEnd;
-        var $slider = function(opts){    
-
-            var defOpts =  {
-                /**
-                 * 参照对象
-                 * @property {String} [ref=null]
-                 */
-                ref     : null,     //参照目标
+        var $slider = UI.define('Slider',{
+                
 
                 /**
                  * @property {Boolean} [loop=false] 是否连续滑动
@@ -59,15 +77,23 @@
                  * @uses Slider.autoplay
                  */
                 interval: 4000,
+
                 /**
-                 * @property {Object} [selector={container:'.ui-slider-group'}] 内部结构选择器定义
+                 * @property {Boolean} [dots=true] 是否显示点
                  * @namespace options
+                 * @for Slider
+                 * @uses Slider.dots
                  */
-                selector: '.ui-slider-group'    // 容器的选择器
-            };
-            this.opts = $.extend(defOpts, opts); 
-            this.init();
-        }; 
+                dots: true,
+
+                /**
+                 * @property {Object}  容器的选择器
+                 */
+                selector: {
+                    dots: '.ui-slider-dots',
+                    group: '.ui-slider-group'
+                }
+        }); 
 
         //初始化
         $slider.prototype.init = function() {
@@ -75,6 +101,23 @@
 
             _sl.index = opts.index;
             _sl.ref = $(opts.ref);
+            _sl.UI = UI;
+
+
+            _sl.ref.on( 'slideend', $.proxy($slider.prototype.resume, _sl)).on( 'destory', $.proxy($slider.prototype.stop, _sl));
+
+            // 避免滑动时，自动切换
+            _sl.ref.on( 'touchstart', $.proxy($slider.prototype.stop, _sl))
+                    .on( 'touchend', $.proxy($slider.prototype.resume, _sl));
+             //dots添加
+             if(opts.dots){
+                _sl.ref.on( 'slide', function(e) {
+                    var to = e.detail.to, from = e.detail.from;
+                    updateDots.apply(_sl,[to,from]);
+                }).on( 'donedom', function(e) {
+                    initDots.call(_sl);
+                })
+            }
 
             // 初始dom结构
             _sl.initDom();
@@ -83,11 +126,7 @@
             _sl.initWidth();
             _sl._container.on( transitionEnd,
                     $.proxy( _sl.tansitionEnd, _sl ) );
-            _sl.ref.on( 'slideend', $.proxy($slider.prototype.resume, _sl)).on( 'destory', $.proxy($slider.prototype.stop, _sl));
-
-            // 避免滑动时，自动切换
-            _sl.ref.on( 'touchstart', $.proxy($slider.prototype.stop, _sl))
-                    .on( 'touchend', $.proxy($slider.prototype.resume, _sl));
+            //自动轮播
             opts.autoPlay&&_sl.resume();
             // // 转屏事件检测
             // $( window ).on( 'ortchange' + me.eventNs, function() {
@@ -137,7 +176,7 @@
                 container;
 
             // 检测容器节点是否指定
-            container = _sl.ref.find( selector );
+            container = _sl.ref.find( selector.group );
 
             // 没有指定容器则创建容器
             if ( !container.length ) {
@@ -178,8 +217,9 @@
                     .children()
                     .addClass( 'ui-slider-item' )
                     .toArray();
-
-            //this.trigger( 'done.dom', $el.addClass( 'ui-slider' ), opts );
+            _sl.ref.addClass( 'ui-slider' )
+            UI.trigger(_sl.ref[0], 'donedom');
+            opts.dots&&updateDots.call( _sl, _sl.index );
         };
 
         // 根据items里面的数据挨个render插入到container中
@@ -298,8 +338,9 @@
             _sl.move( to, 0, speed );
 
             _sl.index = to;
-            return UI.trigger(_sl.ref[0], 'slideend', {
-                index: _sl.index
+            return UI.trigger(_sl.ref[0], 'slide', {
+                to: to,
+                from: from
             },_sl);
         };
 

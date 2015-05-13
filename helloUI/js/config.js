@@ -11,7 +11,8 @@ seajs.config({
         'header' : 'myui/header',
         'input' : 'myui/input',
         'switch':'myui/switch',
-        'slider':'myui/slider/slider'
+        'slider':'myui/slider/slider',
+        'slidertouch':'myui/slider/slidert'
     },
 
     vars : [

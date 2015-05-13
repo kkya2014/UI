@@ -1,11 +1,71 @@
 define(function(require, exports, module) {
 	require("zepto");
-	var UI = {};
+	var UI = {},Base = {};
 
-	UI.config = {
-		baseUrl : '',
-		debug : true
-	};
+	UI.config = {};
+
+  Base.eachObj = function( obj, iterator ) {
+        obj && Object.keys( obj ).forEach(function( key ) {
+            iterator( key, obj[ key ] );
+        });
+  }
+  /**
+     * trigger event
+     * @param {type} element
+     * @param {type} eventType
+     * @param {type} eventData
+     * @returns {_L8.$}
+     */
+  Base.trigger = function(element, eventType, eventData,goal) {
+        element.dispatchEvent(new CustomEvent(eventType, {
+            detail: eventData,
+            bubbles: true,
+            cancelable: true
+        }));
+        return goal||this;
+    };
+  Base.init = function(){};
+  Base.plugins = [];
+  Base.initPlugins = function(){
+      var self = this;
+      self.plugins.forEach(function(fn){
+          if ($.isFunction(fn)) {
+                    fn.call(self);
+                }
+      });
+  };
+  /**
+  * @name extend
+  * @desc 扩充现有组件
+  */
+  Base.extend = function( obj ) {
+      var proto = this.prototype;
+      Base.eachObj( obj, function( key, val ) {
+          proto[ key ] = val;
+      } );
+      return this;
+  };
+
+  UI.define = function( name, options) {
+        if(UI[ name ])return UI[ name ];
+         var defOpts =  {
+                /**
+                 * 参照对象
+                 * @property {String} [ref=null]
+                 */
+                ref     : {}    //参照目标 
+         }
+        var klass = function(opts) {
+            this.opts = $.extend(this.options, opts); 
+            this.init();
+            this.initPlugins();
+            this.trigger(this.opts.ref, 'ready', {goal:this});
+        }
+        UI[ name ] = Base.extend.call(klass,Base);
+        UI[ name ].prototype.options = $.extend(defOpts, options); 
+        return UI[ name ];
+    };
+
 
     /*
         判断是否Touch屏幕
@@ -24,14 +84,6 @@ define(function(require, exports, module) {
 	/**
      * 解析模版tpl。当data未传入时返回编译结果函数；当某个template需要多次解析时，
      * 建议保存编译结果函数，然后调用此函数来得到结果。
-     * 
-     * @method MO.parseTpl
-     * @grammar MO.parseTpl(str, data)  ⇒ string
-     * @grammar MO.parseTpl(str)  ⇒ Function
-     * @param {String} str 模板
-     * @param {Object} data 数据
-     * @example var str = "<p><%=name%></p>",
-     * obj = {name: 'ajean'};
      */
 	UI.parseTpl = function(str, data){
 		var tmpl = 'var __p=[];' + 'with(obj||{}){__p.push(\'' +
@@ -84,6 +136,19 @@ define(function(require, exports, module) {
         return goal||this;
     };
 
+    /**
+     * 调用此方法，可以减小重复实例化Zepto的开销。所有通过此方法调用的，都将公用一个Zepto实例
+     */
+    UI.call = (function() {
+            instance = $();
+            instance.length = 1;
+
+        return function( item) {
+            instance[ 0 ] = item;
+            return instance;
+        };
+    })()
+
     UI.stopPropagation = function(e) {
         e.stopPropagation();
     };
@@ -123,16 +188,16 @@ define(function(require, exports, module) {
         };
     };
 
+
     //exports
     module.exports = UI;
-
         /**
      *  @file 实现了通用highlight方法。
      *  @name Highlight
      *  @desc 点击高亮效果
      *  @import zepto.js
      */
-    (function( $ ) {
+    ;(function( $ ) {
         var $doc = $( document ),
             $el,    // 当前按下的元素
             timer;    // 考虑到滚动操作时不能高亮，所以用到了100ms延时
