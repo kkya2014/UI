@@ -225,11 +225,11 @@
 
         // 根据items里面的数据挨个render插入到container中
         $slider.prototype.createItems = function( container, items ) {
-            // var i = 0,
+            // var _sl = this, opts = _sl.opts,i = 0,
             //     len = items.length;
 
             // for ( ; i < len; i++ ) {
-            //     container.append( this.tpl2html( 'item', items[ i ] ) );
+            //     container.append( _sl.parseTpl(tpl.wrap, vars) );
             // }
         };
 
