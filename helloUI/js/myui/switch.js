@@ -163,14 +163,14 @@
             var switchObjs = [];
             var switchs = this;
             switchs.hasClass('.mui-switch')||(switchs = switchs.find('.mui-switch'));
-            switchs.each(function(index,item) {
+            switchs.each(function() {
                 var switchObj = null;
-                var id = item.getAttribute('data-switch');
+                var id = this.getAttribute('data-switch');
                 if (!id) {
-                    opts = $.extend(opts, { ref : item});
+                    opts = $.extend(opts, { ref : this});
                     id = ++UI.uuid;
                     UI.data[id] = new $switch(opts);
-                    item.setAttribute('data-switch', id);
+                    this.setAttribute('data-switch', id);
                 } else {
                     switchObj = UI.data[id];
                 }

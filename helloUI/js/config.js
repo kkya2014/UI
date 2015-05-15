@@ -14,7 +14,9 @@ seajs.config({
         'slider':'myui/slider/slider',
         'slidertouch':'myui/slider/slidert',
         'sliderbtn':'myui/slider/sliderb',
-        'gridview' : 'myui/gridview'
+        'gridview' : 'myui/gridview',
+        'tab' : 'myui/tabs',
+        'tabbak' : 'myui/tabs_bak',
     },
 
     vars : [

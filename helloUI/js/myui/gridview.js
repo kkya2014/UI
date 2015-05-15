@@ -44,7 +44,7 @@
     define(function(require, exports, module) {
         var UI = require("UI");
 
-        //pop
+        //gridview
         var $gridview = UI.define('Slider',{
                 /**
                  * 模板對象

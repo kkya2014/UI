@@ -1,0 +1,50 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <meta charset="utf-8">
+    <title>Hello UI Tabs</title>
+    <!--demo展示所用css，不用关心 begin-->
+    <link rel="stylesheet" type="text/css" href="css/assets/reset.css" />
+    <style>
+        .section {
+            padding:1em 3px;
+        }
+        .section h2 {
+            font-size: 16px;
+            font-weight: bold;
+            padding: 5px 5px;
+            color: #5b5b5b;
+        }
+    </style>
+    <!--demo展示所用css end-->
+    <!--组件依赖css begin-->
+    <link rel="stylesheet" type="text/css" href="css/assets/transitions.css" />
+    <link rel="stylesheet" type="text/css" href="css/assets/widget/tabs/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="css/assets/widget/tabs/tabs.default.css" />
+    <!--组件依赖css end-->
+</head>
+<body>
+        <div id="tabs1">
+            <ul>
+                <li><a href="#conten1">Tab1</a></li>
+                <li><a href="#conten2">Tab2</a></li>
+                <li><a href="#conten3">Tab3</a></li>
+            </ul>
+            <div id="conten1">content1</div>
+            <div id="conten2"><input type="checkbox" id="input1" /><label for="input1">选中我后tabs不可切换</label></div>
+            <div id="conten3">content3</div>
+        </div>
+        <script src="js/sea.js"></script>
+        <script src="js/config.js"></script>
+</body>
+<script>
+   seajs.use(['tab'], function(){
+            $('#tabs1').tab();
+            $('#tabs1').on('beforeActivate',function(e){
+                //alert(11);
+                //e.preventDefault();
+            })
+    });
+</script>   
+</html>

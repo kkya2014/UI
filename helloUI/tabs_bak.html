@@ -1,0 +1,99 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <meta charset="utf-8">
+    <title>Hello UI Tabs</title>
+    <!--demo展示所用css，不用关心 begin-->
+    <link rel="stylesheet" href="css/mui.css">
+   <style>
+            html,body {
+                background-color: #efeff4;
+            }
+            header.mui-bar{
+                display: none;
+            }
+            .mui-bar-nav~.mui-content{
+                padding-top: 0;
+            }
+            .title{
+                margin: 20px 15px 10px;
+                color: #6d6d72;
+                font-size: 15px;
+            }
+            
+            .oa-contact-cell.mui-table .mui-table-cell {
+                padding: 11px 0;
+                vertical-align: middle;
+            }
+            
+            .oa-contact-cell {
+                position: relative;
+                margin: -11px 0;
+            }
+    
+            .oa-contact-avatar {
+                width: 75px;
+            }
+            .oa-contact-avatar img {
+                border-radius: 50%;
+            }
+            .oa-contact-content {
+                width: 100%;
+            }
+            .oa-contact-name {
+                margin-right: 20px;
+            }
+            .oa-contact-name, oa-contact-position {
+                float: left;
+            }
+        </style>
+</head>
+<body>  
+    
+    <div class="mui-content" id = "tabs1">
+        <nav class="mui-bar mui-bar-tab" >
+            <a class="mui-tab-item mui-active" href="#tabbar">
+                <span class="mui-icon mui-icon-home"></span>
+                <span class="mui-tab-label">首页</span>
+            </a>
+            <a class="mui-tab-item" href="#tabbar-with-chat">
+                <span class="mui-icon mui-icon-email"><span class="mui-badge">9</span></span>
+                <span class="mui-tab-label">消息</span>
+            </a>
+            <a class="mui-tab-item" href="#tabbar-with-contact">
+                <span class="mui-icon mui-icon-contact"></span>
+                <span class="mui-tab-label">通讯录</span>
+            </a>
+            <a class="mui-tab-item" href="#tabbar-with-map">
+                <span class="mui-icon mui-icon-gear"></span>
+                <span class="mui-tab-label">设置</span>
+            </a>
+        </nav>
+            <div id="tabbar" class="mui-control-content mui-active">
+                <div class="title">这是div模式选项卡中的第1个子页面.</div>
+            </div>
+            <div id="tabbar-with-chat" class="mui-control-content">
+                <div class="title">这是div模式选项卡中的第2个子页面，该页面展示一个消息列表</div>
+            </div>
+            <div id="tabbar-with-contact" class="mui-control-content">
+                <div class="title">这是div模式选项卡中的第3个子页面，该页面展示一个通讯录示例.</div>
+            </div>
+            <div id="tabbar-with-map" class="mui-control-content">
+                <div class="title">这是div模式选项卡中的第4个子页面，该页面展示一个常见的设置示例.</div>
+         
+            </div>
+        </div>
+        <script src="js/sea.js"></script>
+        <script src="js/config.js"></script>
+</body>
+<script>
+   seajs.use(['tabbak'], function(){
+            $('#tabs1').tab();
+            $('#tabs1').on('beforeActivate',function(e){
+                 $('#input1').prop('checked') && e.preventDefault();
+                //e.preventDefault();
+            })
+    });
+</script>   
+</html>
