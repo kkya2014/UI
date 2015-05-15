@@ -11,8 +11,8 @@
     var updateDots = function( to, from ) {
         var _sl = this, dots = _sl._dots;
 
-        typeof from === 'undefined' || _sl.UI.call(dots[from % this.length ]).removeClass('ui-state-active');
-        _sl.UI.call(dots[to % this.length ]).addClass('ui-state-active');  
+        typeof from === 'undefined' || _sl.UI.callZepto(dots[from % this.length ]).removeClass('ui-state-active');
+        _sl.UI.callZepto(dots[to % this.length ]).addClass('ui-state-active');  
     };
 
     var initDots = function(){
@@ -33,7 +33,7 @@
      * 图片轮播组件
      */
     define(function(require, exports, module) {
-            UI = require("UI"),
+        var UI = require("UI"),
             cssPrefix = $.fx.cssPrefix,
             transitionEnd = $.fx.transitionEnd;
         var $slider = UI.define('Slider',{
@@ -96,7 +96,8 @@
                 }
 
         }); 
-
+        //加載觸摸按鈕
+        require("slidertouch");
         //初始化
         $slider.prototype.init = function() {
             var _sl = this, opts = _sl.opts;
@@ -395,7 +396,7 @@
                 if (!id) {
                     opts = $.extend(opts, { ref : this});
                     id = ++UI.uuid;
-                    UI.data[id] = new $slider(opts);
+                    sliderObj = UI.data[id] = new $slider(opts);
                     this.setAttribute('data-slider', id);
                 } else {
                     sliderObj = UI.data[id];

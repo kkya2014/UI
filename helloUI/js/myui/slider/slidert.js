@@ -26,7 +26,7 @@
     define(function(require, exports, module) {
         UI = require("UI");
         // 提供默认options
-        $.extend( UI.Slider.prototype.options, {
+        $.extend(true, UI.Slider.prototype.options, {
 
             /**
              * @property {Boolean} [stopPropagation=false] 是否阻止事件冒泡

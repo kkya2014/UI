@@ -161,14 +161,16 @@
         //注册$插件
         $.fn.switch = function(opts) {
             var switchObjs = [];
-            this.each(function() {
+            var switchs = this;
+            switchs.hasClass('.mui-switch')||(switchs = switchs.find('.mui-switch'));
+            switchs.each(function(index,item) {
                 var switchObj = null;
-                var id = this.getAttribute('data-switch');
+                var id = item.getAttribute('data-switch');
                 if (!id) {
-                    opts = $.extend(opts, { ref : this});
+                    opts = $.extend(opts, { ref : item});
                     id = ++UI.uuid;
                     UI.data[id] = new $switch(opts);
-                    this.setAttribute('data-switch', id);
+                    item.setAttribute('data-switch', id);
                 } else {
                     switchObj = UI.data[id];
                 }

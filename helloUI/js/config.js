@@ -13,7 +13,8 @@ seajs.config({
         'switch':'myui/switch',
         'slider':'myui/slider/slider',
         'slidertouch':'myui/slider/slidert',
-        'sliderbtn':'myui/slider/sliderb'
+        'sliderbtn':'myui/slider/sliderb',
+        'gridview' : 'myui/gridview'
     },
 
     vars : [

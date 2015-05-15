@@ -8,7 +8,7 @@ define(function(require, exports, module) {
         obj && Object.keys( obj ).forEach(function( key ) {
             iterator( key, obj[ key ] );
         });
-  }
+  };
   /**
      * trigger event
      * @param {type} element
@@ -72,11 +72,32 @@ define(function(require, exports, module) {
     */
   Base.isTouchScreen = function(){
         return (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
-    }
+  };
 
   Base.touchEve = function(str, data){
     return this.isTouchScreen()? "touchstart" : "mousedown"
-  }
+  };
+
+  Base.touchEnd = function(str, data){
+    return this.isTouchScreen()? "touchend touchcancel" : "mouseup"
+  };
+
+  Base.log = function(str){
+    console.log(str);
+  };
+  Base.callZepto = (function() {
+            instance = $();
+            instance.length = 1;
+
+        return function( item) {
+            instance[ 0 ] = item;
+            return instance;
+        };
+    })()
+
+  Base.stopPropagation = function(e) {
+        e.stopPropagation();
+    };
 
   UI.define = function( name, options) {
         if(UI[ name ])return UI[ name ];
@@ -88,7 +109,8 @@ define(function(require, exports, module) {
                 ref     : {}    //参照目标 
          }
         var klass = function(opts) {
-            this.opts = $.extend(this.options, opts); 
+            var baseOpts = $.extend(true,{},this.options);
+            this.opts = $.extend(true,baseOpts, opts); 
             this.ref = $(opts.ref);
             this.initPlugins();
             this.init();
@@ -172,7 +194,7 @@ define(function(require, exports, module) {
     /**
      * 调用此方法，可以减小重复实例化Zepto的开销。所有通过此方法调用的，都将公用一个Zepto实例
      */
-    UI.call = (function() {
+    UI.callZepto = (function() {
             instance = $();
             instance.length = 1;
 
@@ -180,7 +202,7 @@ define(function(require, exports, module) {
             instance[ 0 ] = item;
             return instance;
         };
-    })()
+    })();
 
     UI.stopPropagation = function(e) {
         e.stopPropagation();
