@@ -79,7 +79,7 @@ define(function(require, exports, module) {
   };
 
   Base.touchEnd = function(str, data){
-    return this.isTouchScreen()? "touchend touchcancel" : "mouseup"
+    return this.isTouchScreen()? "touchend touchcancel touchmove" : "mouseup"
   };
 
   Base.log = function(str){
