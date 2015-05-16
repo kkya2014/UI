@@ -44,8 +44,7 @@
              */
             disableScroll: false
         });
-        var sliderT = {
-            sliderTinit: function() {
+        var sliderTinit =  function() {
                 var _sl = this, opts = _sl.opts;
 
                 _sl._handler = function( e ) {
@@ -60,13 +59,13 @@
                     // 阻止误点击, 犹豫touchmove被preventDefault了，导致长按也会触发click
                     _sl._container.on( 'click', _sl._handler );
                 } );
-            },
+            };
 
-            sliderTonClick: function() {
+            sliderTinit.sliderTonClick = function() {
                 return !moved;
-            },
+            };
 
-            sliderTonStart: function( e ) {
+            sliderTinit.sliderTonStart = function( e ) {
                     
                 // 不处理多指
                 if ( e.touches.length > 1 ) {
@@ -96,9 +95,9 @@
 
                 _sl.ref.on( 'touchmove' + ' touchend' +
                         ' touchcancel', _sl._handler );
-            },
+            };
 
-            sliderTonMove: function( e ) {
+            sliderTinit.sliderTonMove = function( e ) {
 
                 // 多指或缩放不处理
                 if ( e.touches.length > 1 || e.scale &&
@@ -153,9 +152,9 @@
 
                     moved = true;
                 }
-            },
+            };
 
-            sliderTonEnd: function() {
+            sliderTinit.sliderTonEnd = function() {
                 var _sl = this,
                     opts = _sl.opts;
                 // 解除事件
@@ -217,9 +216,8 @@
                                 opts.speed );
                     }
                 }
-            }
-        }
-        UI.Slider.prototype.extend.call(UI.Slider,sliderT);
-        UI.Slider.prototype.plugins.push(sliderT.sliderTinit);
+        };
+        UI.Slider.prototype.extend.call(UI.Slider,sliderTinit);
+        UI.Slider.prototype.plugins.push(sliderTinit);
     } );
 })();

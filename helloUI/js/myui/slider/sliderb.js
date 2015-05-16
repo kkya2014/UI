@@ -34,7 +34,7 @@
                 next: '.ui-slider-next'    // 下一张按钮选择器
             }
         });
-        var arrinit = function(){
+        var sliderBinit = function(){
             var _sl = this, opts = _sl.opts,
                 arr = [ 'prev', 'next' ];
 
@@ -67,7 +67,7 @@
          * @chainable
          * @return {self} 返回本身
          */
-        arrinit.next = function() {
+        sliderBinit.next = function() {
             var _sl = this, opts = _sl.opts;
             if ( opts.loop || _sl.index + 1 < _sl.length ) {
                 _sl.slideTo( _sl.index + 1 );
@@ -81,7 +81,7 @@
          * @chainable
          * @return {self} 返回本身
          */
-        arrinit.prev = function() {
+        sliderBinit.prev = function() {
             var _sl = this, opts = _sl.opts;
             if ( opts.loop || _sl.index > 0 ) {
                 _sl.slideTo( _sl.index - 1 );
@@ -89,7 +89,7 @@
 
             return _sl;
         };
-        UI.Slider.prototype.extend.call(UI.Slider,arrinit);
-        UI.Slider.prototype.plugins.push(arrinit);
+        UI.Slider.prototype.extend.call(UI.Slider,sliderBinit);
+        UI.Slider.prototype.plugins.push(sliderBinit);
     });
 })();
