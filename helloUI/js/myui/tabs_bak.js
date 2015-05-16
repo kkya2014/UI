@@ -10,19 +10,17 @@
         idRE = /^#(.+)$/;
 
     var render = function(){
-            var _tb = this, opts = _tb.opts, 
-                content, items;
+            var _tb = this, opts = _tb.opts,items;
 
             _tb._nav =  _tb.ref.find('nav').first();
             if(_tb._nav) {
-                content = _tb.ref.find('div.ui-tabs-content').first();
-                _tb._content = ( content[0]?content : $('<div></div>').appendTo(_tb.ref)).addClass('ui-viewport ui-tabs-content');
+                _tb._content = $('<div></div>').appendTo(_tb.ref).addClass('mui-content');
                 items = [];
-                _tb._nav.addClass('ui-tabs-nav').children().each(function(){
-                    var $a = _tb.callZepto(this).find('a'), href = $a?$a.attr('href'):_tb.callZepto(this).attr('data-url'), id, $content;
+                _tb._nav.addClass('mui-bar mui-bar-tab').children().each(function(){
+                    var $a = _tb.callZepto(this).addClass('mui-tab-item'), href = $a?$a.attr('href'):_tb.callZepto(this).attr('data-url'), id, $content;
                     id = idRE.test(href)? RegExp.$1: 'tabs_'+uid();
                     ($content = _tb.ref.find('#'+id) || $('<div id="'+id+'"></div>'))
-                        .addClass('ui-tabs-panel'+(opts.transition?' '+opts.transition:''))
+                        .addClass('mui-control-content'+(opts.transition?' '+opts.transition:''))
                         .appendTo(_tb._content);
                     items.push({
                         id: id,
@@ -32,8 +30,8 @@
                     });
                 });
                 opts.items = items;
-                opts.active = Math.max(0, Math.min(items.length-1, opts.active || _tb.callZepto('.ui-state-active', _tb._nav).index()||0));
-                getPanel.call(_tb).add(_tb._nav.children().eq(opts.active)).addClass('ui-state-active');
+                opts.active = Math.max(0, Math.min(items.length-1, opts.active || _tb.callZepto('.mui-active', _tb.ref).index()||0));
+                getPanel.call(_tb).add(_tb._nav.children().eq(opts.active)).addClass('mui-active');
             } 
             fitToContent.call(_tb,getPanel.call(_tb));
         };
@@ -41,7 +39,7 @@
     var bind = function(){
             var _tb = this, opts = _tb.opts, handler = $.proxy(eventHandler, _tb);
             
-            _tb._nav.on(_tb.touchEve(), handler).children().highlight('ui-state-hover');
+            _tb._nav.on(_tb.touchEve(), handler);
         };
 
     var getPanel = function(index){
@@ -52,12 +50,12 @@
     var fitToContent = function(div) {
             var _tb = this, opts = _tb.opts, $content = _tb._content;
             _tb._plus === undefined && (_tb._plus = parseFloat($content.css('border-top-width'))+parseFloat($content.css('border-bottom-width')))
-            $content.height( div.height() + _tb._plus);
+            //$content.height( div.height() + _tb._plus);
         };
 
     var eventHandler = function (e) {
             var _tb = this, opts = _tb.opts;
-            if((match = $(e.target).closest('li', _tb._nav.get(0))) && match.length) {
+            if((match = $(e.target).closest('a', _tb._nav)) && match.length) {
                 e.preventDefault();
                 _tb.switchTo(match.index());
             }
@@ -72,7 +70,7 @@
         var $tabs = UI.define('Tabs',{
 
             /**
-             * @property {Number} [active=0] 初始时哪个为选中状态，如果时setup模式，如果第2个li上加了ui-state-active样式时，active值为1
+             * @property {Number} [active=0] 初始时哪个为选中状态
              * @namespace options
              */
             active: 0,
@@ -89,21 +87,15 @@
              */
             transition: 'slide',
             tpl: {
-                nav:'<ul class="ui-tabs-nav">'+
-                    '<% var item; for(var i=0, length=items.length; i<length; i++) { item=items[i]; %>'+
-                        '<li<% if(i==active){ %> class="ui-state-active"<% } %>><a href="javascript:;"><%=item.title%></a></li>'+
-                    '<% } %></ul>',
-                content:'<div class="ui-viewport ui-tabs-content">' +
-                    '<% var item; for(var i=0, length=items.length; i<length; i++) { item=items[i]; %>'+
-                        '<div<% if(item.id){ %> id="<%=item.id%>"<% } %> class="ui-tabs-panel <%=transition%><% if(i==active){ %> ui-state-active<% } %>"><%=item.content%></div>'+
-                    '<% } %></div>'
+                nav:'',
+                content:''
             }
          });
         
         //初始化
         $tabs.prototype.init = function () {
             var _tb = this, opts = _tb.opts;
-            _tb.ref.addClass('ui-tabs');
+            _tb.ref.addClass('mui-content');
             render.call(_tb);
             bind.call(_tb);
         };
@@ -131,14 +123,13 @@
                 })
                 if(!eventStatus) return _tb;
 
-                _tb._content.children().removeClass('ui-state-active');
-                to.div.addClass('ui-state-active');
-                _tb._nav.children().removeClass('ui-state-active').eq(to.index).addClass('ui-state-active');
+                _tb._content.children().removeClass('mui-active');
+                to.div.addClass('mui-active');
+                _tb._nav.children().removeClass('mui-active').eq(to.index).addClass('mui-active');
                 if(opts.transition) { 
                     _tb._buzy = true;
                     endEvent = $.fx.animationEnd + '.tabs';
                     reverse = index>opts.active?'':' reverse';
-                    _tb._content.addClass('ui-viewport-transitioning');
                     from.div.addClass('out'+reverse);
                     to.div.addClass('in'+reverse).on(endEvent, function(e){
                         if (e.target != e.currentTarget) return //如果是冒泡上来的，则不操作
@@ -146,7 +137,6 @@
                         _tb._buzy = false;
                         from.div.removeClass('out reverse');
                         to.div.removeClass('in reverse');
-                        _tb._content.removeClass('ui-viewport-transitioning');
                         _tb.trigger(opts.ref,'animateComplete',{
                             to: to,
                             from: from

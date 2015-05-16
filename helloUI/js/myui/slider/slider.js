@@ -130,10 +130,7 @@
                     $.proxy( _sl.tansitionEnd, _sl ) );
             //自动轮播
             opts.autoPlay&&_sl.resume();
-            // // 转屏事件检测
-            // $( window ).on( 'ortchange' + me.eventNs, function() {
-            //     me._initWidth( $el, me.index );
-            // } );
+            
         };
 
         /**

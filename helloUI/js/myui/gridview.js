@@ -45,7 +45,7 @@
         var UI = require("UI");
 
         //gridview
-        var $gridview = UI.define('Slider',{
+        var $gridview = UI.define('Gridview',{
                 /**
                  * 模板對象
                  * @type {function}

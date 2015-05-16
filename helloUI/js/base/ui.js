@@ -25,7 +25,6 @@ define(function(require, exports, module) {
         //return goal||this;
     };
   Base.init = function(){};
-  Base.plugins = [];
   Base.initPlugins = function(){
       var self = this;
       self.plugins.forEach(function(fn){
@@ -114,10 +113,11 @@ define(function(require, exports, module) {
             this.ref = $(opts.ref);
             this.initPlugins();
             this.init();
-            this.trigger(this.opts.ref, 'readydom', {goal:this});
+            this.trigger(this.opts.ref, 'readydom');
         }
         UI[ name ] = Base.extend.call(klass,Base);
         UI[ name ].prototype.options = $.extend(defOpts, options); 
+        UI[ name ].prototype.plugins = [];
         return UI[ name ];
     };
 
