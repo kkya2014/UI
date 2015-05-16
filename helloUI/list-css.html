@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello UI GridView</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!-- <link rel="stylesheet" href="css/mui.css"> -->
+        <link rel="stylesheet" href="css/content.css">
+        <link rel="stylesheet" href="css/common.css">
+        <link rel="stylesheet" href="css/list.css">
+        <link rel="stylesheet" href="css/switch.css">
+        <link rel="stylesheet" href="css/btn.css">
+        <link rel="stylesheet" href="css/check.css">
+	</head>
+
+	<body>
+		<div class="mui-content" id="base">
+			<div class="title">
+				基礎列表
+			</div>
+		</div>	
+		<div class="mui-content" id="left">
+			<div class="title">
+				缩略图居左
+			</div>
+		</div>	
+		<div class="mui-content" id="right">
+			
+			<div class="title">
+				缩略图居右
+			</div>
+		</div>	
+		<div class="mui-content" id="rightC">
+			<div class="title">
+				右侧带导航箭头
+			</div>
+		</div>	
+		<div class="mui-content">
+			<div class="title">
+				card（圆角列表）
+			</div>
+			<div class="mui-card" id="card">
+			</div>
+		</div>	
+		<div class="mui-content" id="muiR">
+			<div class="title">
+				多行消息
+			</div>
+		</div>	
+		<div class="mui-content" id="custom">
+			<div class="title">
+				自定義內容
+			</div>
+		</div>	
+
+	<script src="js/sea.js"></script>
+        <script src="js/config.js"></script>
+</body>
+<script>
+   seajs.use(['gridview','switch'], function(){
+
+   				$('#base').gridview({
+                	data:[{
+                			cont:'远眺'
+                		},{
+                			cont:'木屋'
+                		},{
+                			cont:'烤炉'
+                		}]
+                }).appendHtml('<li class="mui-table-view-cell">'+
+									'<a class="mui-navigate-right">'+
+										'Item 1'+
+									'</a>'+
+								'</li>'+
+								'<li class="mui-table-view-cell">'+
+									'<a class="mui-navigate-right">'+
+										'Item 2'+
+									'</a>'+
+								'</li>'+
+								'<li class="mui-table-view-cell">'+
+									'<a class="mui-navigate-right">'+
+										'Item 3'+
+									'</a>'+
+								'</li>');
+
+			   var	tplLeft = '<li class="mui-table-view-cell mui-media">'+
+								'<a href="javascript:;">'+
+									'<img class="mui-media-object mui-pull-left" src="<%=src%>">'+
+									'<div class="mui-media-body">'+
+										'<%=cont%>'+
+										'<p class="mui-ellipsis"><%=text%></p>'+
+									'</div>'+
+								'</a>'+
+							'</li>';
+				
+
+				var data = [{
+                			src:'css/assets/slider/image1.png',
+                			cont:'远眺',
+                			text:'能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？'
+                		},{
+                			src:'css/assets/slider/image2.png',
+                			cont:'木屋',
+                			text:'想要这样一间小木屋，夏天挫冰吃瓜，冬天围炉取暖.'
+                		},{
+                			src:'css/assets/slider/image3.png',
+                			cont:'烤炉',
+                			text:'烤炉模式的城，到黄昏，如同打翻的调色盘一般.'
+                		}]			
+                $('#left').gridview({
+                	tpl:{
+                		li: tplLeft 
+                	},
+                	data:data
+                });//gv.renderData(data);
+                $('#card').gridview({
+                	tpl:{
+                		li: tplLeft 
+                	},
+                	data:data
+                });
+                var	tplright = '<li class="mui-table-view-cell mui-media">'+
+								'<a href="javascript:;">'+
+									'<img class="mui-media-object mui-pull-right" src="<%=src%>">'+
+									'<div class="mui-media-body">'+
+										'<%=cont%>'+
+										'<p class="mui-ellipsis"><%=text%></p>'+
+									'</div>'+
+								'</a>'+
+							'</li>';	
+                $('#right').gridview({
+                	tpl:{
+                		li: tplright 
+                	},
+                	data:data
+                });
+                var	tplrightC = '<li class="mui-table-view-cell mui-media">'+
+								'<a class="mui-navigate-right">'+
+									'<img class="mui-media-object mui-pull-left" src="<%=src%>">'+
+									'<div class="mui-media-body">'+
+										'<%=cont%>'+
+										'<p class="mui-ellipsis"><%=text%></p>'+
+									'</div>'+
+								'</a>'+
+							'</li>';
+                
+                var ul = '<ul class="mui-table-view mui-table-view-chevron">';
+                $('#rightC').gridview({
+                	tpl:{
+                		ul:ul,
+                		li: tplrightC 
+                	},
+                	data:data
+                });	
+                var	tplmuiR = '<li class="mui-table-view-cell">'+
+						            '<div class="mui-table">'+
+						                '<div class="mui-table-cell mui-col-xs-10">'+
+						                    '<h4 class="mui-ellipsis"><%=ellips%></h4>'+
+						                    '<h5><%=title%></h5>'+
+						                    '<p class="mui-h6 mui-ellipsis">'+
+						                    '<%=cont%>'+
+						                '</div>'+
+						                '<div class="mui-table-cell mui-col-xs-2 mui-text-right">'+
+						                    '<span class="mui-h5"><%=date%></span>'+
+						                '</div>'+
+						            '</div>'+
+						        '</li>';
+                
+                ul = '<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">';
+                var dataR = [{
+                			ellips:'信息化推进办公室张彦合同付款信息化',
+                			title:'申请人：李四',
+                			cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                			date:'12:25'
+                		},{
+                			ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                			title:'申请人：張三',
+                			cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                			date:'12:25'
+                		}];	
+                $('#muiR').gridview({
+                	tpl:{
+                		ul:ul,
+                		li: tplmuiR 
+                	},
+                	data:dataR
+                });	
+
+                var customSTR = '<li class="mui-table-view-cell">'+
+									'card（圆角列表）'+
+									'<div id="M_Toggle" class="mui-switch mui-active">'+
+										'<div class="mui-switch-handle"></div>'+
+									'</div>'+
+								'</li>'+
+								'<li class="mui-table-view-cell">'+
+									'Item 1'+
+									'<button type="button" class="mui-btn">'+
+										'Button'+
+									'</button>'+
+								'</li>'+
+								'<li class="mui-table-view-cell">'+
+									'Item 2'+
+									'<button type="button" class="mui-btn mui-btn-primary">'+
+										'Button'+
+									'</button>'+
+								'</li>'+
+								'<li class="mui-table-view-cell">'+
+									'Item 3'+
+									'<div class="mui-switch mui-active">'+
+										'<div class="mui-switch-handle"></div>'+
+									'</div>'+
+								'</li>'+
+								'<li class="mui-table-view-cell">'+
+									'Item 4'+
+									'<div class="mui-switch mui-switch-blue mui-switch-mini mui-active">'+
+										'<div class="mui-switch-handle"></div>'+
+									'</div>'+
+								'</li>';
+                var customGV = $('#custom').gridview({
+                		tpl:{
+	                		li: '<li class="mui-table-view-cell mui-radio mui-left">'+
+									'<input name="radio" type="radio"><%=itme%>'+
+								'</li>'
+	                	}
+                });	
+                customGV.appendHtml(customSTR);
+                var dataCust = [{
+                			itme:'Item 5'
+                		},{
+                			itme:'Item 6'
+                		},{
+                			itme:'Item 7'
+                		},{
+                			itme:'Item 8'
+                		}];	
+                customGV.appendData(dataCust);		
+                $('#custom').switch({
+                    callback:function(el,event){
+                        
+                    }
+                });
+
+                var  badgeSTR = '<li class="mui-table-view-divider">右侧无导航箭头</li>'+
+					            '<li class="mui-table-view-cell">Item 1 <span class="mui-badge mui-badge-primary">14</span></li>'+
+					            '<li class="mui-table-view-cell">Item 2 <span class="mui-badge mui-badge-success">1</span></li>'+
+					            '<li class="mui-table-view-cell">Item 3 <span class="mui-badge">5</span></li>'+
+					            '<li class="mui-table-view-divider">右侧有导航箭头</li>'+
+					            '<li class="mui-table-view-cell">'+
+					                '<a class="mui-navigate-right">'+
+					                    '<span class="mui-badge mui-badge-danger">15</span>'+
+					                    'Item 1'+
+					                '</a>'+
+					            '</li>'+
+					            '<li class="mui-table-view-cell">'+
+					                '<a class="mui-navigate-right">'+
+					                    '<span class="mui-badge mui-badge-purple">5</span>'+
+					                    'Item 2'+
+					                '</a>'+
+					            '</li>'+
+					            '<li class="mui-table-view-cell">'+
+					                '<a class="mui-navigate-right">'+
+					                    '<span class="mui-badge mui-badge-warning">5</span>'+
+					                    'Item 3'+
+					                '</a>'+
+					            '</li>';
+				customGV.appendHtml(badgeSTR);	            
+
+            });
+</script>
+</html>

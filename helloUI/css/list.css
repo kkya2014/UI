@@ -1,0 +1,175 @@
+.title {
+    padding: 20px 15px 10px;
+    color: #6d6d72;
+    font-size: 15px;
+}
+.mui-table-view {
+    position: relative;
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style: none;
+    background-color: #fff;
+}
+.mui-table-view-cell:after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 15px;
+    height: 1px;
+    content: '';
+    background-color: #c8c7cc;
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+}
+.mui-table-view-cell {
+    position: relative;
+    padding: 11px 15px;
+    overflow: hidden;
+    background-color: inherit;
+    -webkit-touch-callout: none;
+}
+.mui-table-view-cell > a:not(.mui-btn) {
+    position: relative;
+    display: block;
+    padding: inherit;
+    margin: -11px -15px;
+    overflow: hidden;
+    color: inherit;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.mui-navigate-left:after, .mui-navigate-right:after, .mui-push-left:after, .mui-push-right:after {
+    position: absolute;
+    top: 50%;
+    display: inline-block;
+    font-family: Muiicons;
+    font-size: inherit;
+    line-height: 1;
+    color: #bbb;
+    text-decoration: none;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    -webkit-font-smoothing: antialiased;
+}
+.mui-navigate-right:after, .mui-push-right:after {
+    right: 15px;
+    content: '\e583';
+}
+.mui-table-view .mui-media, .mui-table-view .mui-media-body {
+    overflow: hidden;
+}
+.mui-table-view .mui-media-object {
+    max-width: 42px;
+    height: 42px;
+    line-height: 42px;
+}
+.mui-table-view .mui-media-object.mui-pull-left {
+    margin-right: 10px;
+}
+.mui-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.mui-table-view-cell p {
+    margin-bottom: 0;
+}
+.mui-table-view-chevron .mui-table-view-cell {
+  padding-right: 65px;
+}
+.mui-table-view-chevron .mui-table-view-cell > a:not(.mui-btn) {
+  margin-right: -65px;
+}
+.mui-table {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+.mui-table-cell {
+    position: relative;
+    display: table-cell;
+}
+.mui-col-xs-10 {
+    width: 83.33333333%;
+}
+.mui-text-right {
+    text-align: right !important;
+}
+.mui-col-xs-2 {
+    width: 16.66666667%;
+}
+.mui-card {
+    margin: 0 15px;
+    overflow: hidden;
+    background-color: white;
+    background-clip: padding-box;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+.mui-card .mui-table-view {
+    margin-bottom: 0;
+    border-top: 0;
+    border-bottom: 0;
+    border-radius: 6px;
+}
+.mui-table-view-divider {
+    position: relative;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 15px;
+    margin-top: -1px;
+    margin-left: 0;
+    font-weight: 500;
+    color: #999;
+    background-color: #fafafa;
+}
+.mui-table-view-divider:before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 1px;
+    content: '';
+    background-color: #c8c7cc;
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+}
+.mui-table-view-divider:after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    content: '';
+    background-color: #c8c7cc;
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+}
+.mui-table-view:before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 1px;
+    content: '';
+    background-color: #c8c7cc;
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+}
+.mui-table-view:after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    content: '';
+    background-color: #c8c7cc;
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+}
+.mui-table-view-cell .mui-navigate-left > .mui-btn, .mui-table-view-cell .mui-navigate-left > .mui-badge, .mui-table-view-cell .mui-navigate-left > .mui-switch, .mui-table-view-cell .mui-navigate-right > .mui-btn, .mui-table-view-cell .mui-navigate-right > .mui-badge, .mui-table-view-cell .mui-navigate-right > .mui-switch, .mui-table-view-cell .mui-push-left > .mui-btn, .mui-table-view-cell .mui-push-left > .mui-badge, .mui-table-view-cell .mui-push-left > .mui-switch, .mui-table-view-cell .mui-push-right > .mui-btn, .mui-table-view-cell .mui-push-right > .mui-badge, .mui-table-view-cell .mui-push-right > .mui-switch, .mui-table-view-cell > a .mui-navigate-left > .mui-btn, .mui-table-view-cell > a .mui-navigate-left > .mui-badge, .mui-table-view-cell > a .mui-navigate-left > .mui-switch, .mui-table-view-cell > a .mui-navigate-right > .mui-btn, .mui-table-view-cell > a .mui-navigate-right > .mui-badge, .mui-table-view-cell > a .mui-navigate-right > .mui-switch, .mui-table-view-cell > a .mui-push-left > .mui-btn, .mui-table-view-cell > a .mui-push-left > .mui-badge, .mui-table-view-cell > a .mui-push-left > .mui-switch, .mui-table-view-cell > a .mui-push-right > .mui-btn, .mui-table-view-cell > a .mui-push-right > .mui-badge, .mui-table-view-cell > a .mui-push-right > .mui-switch {
+  right: 35px;
+}
+
+

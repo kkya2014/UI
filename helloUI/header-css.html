@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <meta name="apple-itunes-app" content="app-id=698076980" />
+    <meta name="Keywords" content="多玩游戏">
+    <meta name="description" content="">
+    <title>Hello UI Header</title>
+
+    <!-- Style -->
+    <!-- <link rel="stylesheet" href="css/mui.css"> -->
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/header.css">
+       <style>
+           
+        </style>
+   <!--  Style -->
+   
+</head>
+<body>
+    <header id="header" class="mui-bar mui-bar-nav">
+        <h1 class="mui-title">导航栏</h1>
+    </header>
+    <nav class="mui-bar mui-bar-tab">
+        <a id="defaultTab" class="mui-tab-item mui-active" href="#">
+            <span class="mui-icon mui-icon-home"></span>
+            <span class="mui-tab-label">首页</span>
+        </a>
+        <a class="mui-tab-item" href="#">
+            <span class="mui-icon mui-icon-email"><span class="mui-badge">9</span></span>
+            <span class="mui-tab-label">消息</span>
+        </a>
+        <a class="mui-tab-item" href="#">
+            <span class="mui-icon mui-icon-contact"></span>
+            <span class="mui-tab-label">通讯录</span>
+        </a>
+        <a class="mui-tab-item" href="#">
+            <span class="mui-icon mui-icon-gear"></span>
+            <span class="mui-tab-label">设置</span>
+        </a>
+    </nav>
+    <script src="js/sea.js"></script>
+    <script src="js/config.js"></script>
+</body>
+     <script>
+        seajs.use(['header'], function(){
+            $('#header').header({
+                left:{
+                    text:'首页',
+                    callback:function(chk,el){
+                        alert('首页');
+                    }
+                },
+                 right:{
+                }
+            });
+        });
+    </script>
+</html>
