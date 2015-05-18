@@ -16,7 +16,8 @@ seajs.config({
         'sliderbtn':'myui/slider/sliderb',
         'gridview' : 'myui/gridview',
         'tab' : 'myui/tabs/tabs',
-        'tabbak' : 'myui/tabs/tabs.base'
+        'tabbak' : 'myui/tabs/tabs.base',
+        'tabswipe' : 'myui/tabs/tabs$swipe'
     },
 
     vars : [

@@ -2,7 +2,7 @@
  * @file 左右滑动手势插件
  */
 
-(function ($, undefined) {
+(function () {
     var durationThreshold = 1000, // 时间大于1s就不算。
         horizontalDistanceThreshold = 30, // x方向必须大于30
         verticalDistanceThreshold = 70, // y方向上只要大于70就不算
@@ -72,8 +72,8 @@
                 eventBinded =  eventBinded || (tabsSwipeEvents.call(_tb), true);
                 _tb._content.on('tabsSwipeLeft tabsSwipeRight', $.proxy(_tb.eventHandler, _tb));
             } );
-        },
-        tabsSinit.eventHandler:function (e) {
+        };
+        tabsSinit.eventHandler = function (e) {
             var _tb = this, opts = _tb.opts, items, index;
             switch (e.type) {
                 case 'tabsSwipeLeft':
@@ -89,9 +89,12 @@
                 default://tap
                     return _tb;
             }
-        },
-        destroy: function(){
+        };
+        tabsSinit.destroy = function(){
            
-        }
+        };
+
+        UI.Tabs.prototype.extend.call(UI.Tabs,tabsSinit);
+        UI.Tabs.prototype.plugins.push(tabsSinit);
     } );
-})(Zepto);
+})();

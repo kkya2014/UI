@@ -50,7 +50,7 @@
     var fitToContent = function(div) {
             var _tb = this, opts = _tb.opts, $content = _tb._content;
             _tb._plus === undefined && (_tb._plus = parseFloat($content.css('border-top-width'))+parseFloat($content.css('border-bottom-width')))
-            //$content.height( div.height() + _tb._plus);
+            $content.height('100%');
         };
 
     var eventHandler = function (e) {
@@ -76,8 +76,7 @@
             active: 0,
 
             /**
-             * @property {Array} [items=null] 在render模式下需要必须设置 格式为\[{title:\'\', content:\'\', href:\'\'}\], href可以不设，可以用来设置ajax内容
-             * @namespace options
+             * @property {Array} [items=null] 
              */
             items:null,
 
