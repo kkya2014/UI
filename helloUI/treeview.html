@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello UI Treeview</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		 <link rel="stylesheet" href="css/mui.css">
+	</head>
+	<body>
+		<div class="mui-content" id='treeview'>
+				
+		</div>
+		<script src="js/sea.js"></script>
+        <script src="js/config.js"></script>
+</body>
+<script>
+   seajs.use(['treeview'], function(){
+   		$('#treeview').treeview({
+   					callback:function(el,evt){
+   						alert(el.innerHTML)
+   					},
+                	data:[{
+						    cont : "消息框(dialog)",
+						    name : "control",
+						    tar : "UIcontrol/dialog.html"
+						}, {
+						    cont : "图片轮播(slider)",
+						    contents : [{
+						        cont : '单行列表',
+						        name : "listview",
+						        tar : "UIcontrol/listview.html"
+						    }, {
+						        cont : '单行右侧带箭头',
+						        name : "listview",
+						        tar : "UIcontrol/listview.html"
+						    }, {
+						        cont : '单行带描述右侧带箭头',
+						        name : "listview",
+						        tar : "UIcontrol/listview.html"
+						    }, {
+						        cont : '单行复选',
+						        name : "listview",
+						        tar : "UIcontrol/listview.html"
+						    }, {
+						        cont : '单行单选',
+						        name : "listview",
+						        tar : "UIcontrol/listview.html"
+						    }, {
+						        cont : '单行全包含',
+						        name : "listview",
+						        tar : "UIcontrol/listview.html"
+						    }, {
+						        cont : '单行带控件',
+						        name : "listview",
+						        tar : "UIcontrol/listview.html"
+						    }, {
+						        cont : '多行列表',
+						        name : "listview",
+						        tar : "UIcontrol/listview.html"
+						    }, {
+						        cont : '文字换行缩略',
+						        name : "listview",
+						        tar : "UIcontrol/listview.html"
+						    }]
+						}, {
+						    cont : "列表(list)",
+						    contents : [{
+						        cont : '单行列表',
+						        name : "listview",
+						        tar : "UIcontrol/listview.html"
+						    }, {
+						        cont : '单行右侧带箭头',
+						        name : "listview",
+						        tar : "UIcontrol/listview.html"
+						    }, {
+						        cont : '单行带描述右侧带箭头',
+						        name : "listview",
+						        tar : "UIcontrol/listview.html"
+						    }, {
+						        cont : '单行复选',
+						        name : "listview",
+						        tar : "UIcontrol/listview.html"
+						    }, {
+						        cont : '单行单选',
+						        name : "listview",
+						        tar : "UIcontrol/listview.html"
+						    }, {
+						        cont : '单行全包含',
+						        name : "listview",
+						        tar : "UIcontrol/listview.html"
+						    }, {
+						        cont : '单行带控件',
+						        name : "listview",
+						        tar : "UIcontrol/listview.html"
+						    }, {
+						        cont : '多行列表',
+						        name : "listview",
+						        tar : "UIcontrol/listview.html"
+						    }, {
+						        cont : '文字换行缩略',
+						        name : "listview",
+						        tar : "UIcontrol/listview.html"
+						    }]
+						}]
+                });
+   })
+   </script>
+</html>

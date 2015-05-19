@@ -84,7 +84,7 @@ define(function(require, exports, module) {
   Base.log = function(str){
     console.log(str);
   };
-  Base.callZepto = (function() {
+  Base.callZ = (function() {
             instance = $();
             instance.length = 1;
 

@@ -30,9 +30,9 @@ define(function(require, exports, module) {
         _btn.callback = opts.callback;
         _btn.isTouchScreen = UI.isTouchScreen();
         $(_btn.ref).on( _btn.isTouchScreen? "touchstart" : "mousedown" , function(evt) {
-            var ele = $(evt.currentTarget);
+            var ele = evt.currentTarget;
             if ($.isFunction(_btn.callback)) {
-                    _btn.callback.apply(_btn, [ele[0],evt]);
+                    _btn.callback.apply(_btn, [ele,evt]);
                 }
             //_btn.render();   
         });

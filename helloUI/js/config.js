@@ -17,7 +17,8 @@ seajs.config({
         'gridview' : 'myui/gridview',
         'tab' : 'myui/tabs/tabs',
         'tabbak' : 'myui/tabs/tabs.base',
-        'tabswipe' : 'myui/tabs/tabs$swipe'
+        'tabswipe' : 'myui/tabs/tabs$swipe',
+        'treeview' : 'myui/treeview'
     },
 
     vars : [

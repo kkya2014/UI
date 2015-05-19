@@ -81,11 +81,11 @@
             if($.isArray(lis)){
                 var _gv = this,opts = _gv.opts;
                 _gv._ul.empty();
-                _gv.parseFn||(_gv.parseFn = _gv.parseTpl(opts.tpl.li));
+                _gv._parseFn||(_gv._parseFn = _gv.parseTpl(opts.tpl.li));
                 var _lis = [];
                 if(lis.length>0){
                     $.each(lis, function(index, item){
-                        _lis[index] = _gv.parseFn(item);
+                        _lis[index] = _gv._parseFn(item);
                     })
                     _gv._lis = $(_lis.join('')).appendTo( _gv._ul );
                     _gv._lis.attr('data-ui-gli',true);
@@ -124,11 +124,11 @@
         $gridview.prototype.appendData = function(lis){
             if($.isArray(lis)){
                 var _gv = this,opts = _gv.opts;
-                _gv.parseFn||(_gv.parseFn = _gv.parseTpl(opts.tpl.li));
+                _gv._parseFn||(_gv._parseFn = _gv.parseTpl(opts.tpl.li));
                 var _lis = [];
                 if(lis.length>0){
                     $.each(lis, function(index, item){
-                        _lis[index] = _gv.parseFn(item);
+                        _lis[index] = _gv._parseFn(item);
                     })
                     _lis = $(_lis.join('')).appendTo( _gv._ul );
                     _lis.attr('data-ui-gli',true);

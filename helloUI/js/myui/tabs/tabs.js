@@ -48,9 +48,9 @@
         };
 
     var fitToContent = function(div) {
-            var _tb = this, opts = _tb.opts, $content = _tb._content;
-            _tb._plus === undefined && (_tb._plus = parseFloat($content.css('border-top-width'))+parseFloat($content.css('border-bottom-width')))
-            $content.height('100%');
+            // var _tb = this, opts = _tb.opts, $content = _tb._content;
+            // _tb._plus === undefined && (_tb._plus = parseFloat($content.css('border-top-width'))+parseFloat($content.css('border-bottom-width')))
+            // $content.height('100%');
         };
 
     var eventHandler = function (e) {
