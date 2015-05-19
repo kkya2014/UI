@@ -71,7 +71,7 @@
             seajs.use(['checkbox'], function(){
                 $('#basecheck').checkbox({
                     callback:function(el,evt){
-                        alert(el.val());
+                        alert($(el).val());
                     }
                 });
             });

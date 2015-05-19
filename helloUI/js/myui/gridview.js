@@ -6,6 +6,7 @@
             CLASS_TABLE_VIEW_CELL = 'mui-table-view-cell',
             CLASS_BTN = 'mui-btn',
             CLASS_TOGGLE = 'mui-switch',
+            CLASS_TABLE_VIEW = 'mui-table-view',
 
             tarEl;
 
@@ -19,15 +20,17 @@
          //绑定事件
         var bind = function(lis){
             var _gv = this,opts = _gv.opts;
-            if(!lis)lis = $(_gv.ref).find('li[data-ui-gli = true]');
+            if(!lis)lis = _gv.ref.find('li[data-ui-gli = true]');
             lis.on( _gv.touchEve() , function(evt) {
                 var ele = evt.currentTarget;
+                var tar = evt.target;
                 var classList = ele.classList;
-                if ((ele.tagName === 'INPUT' && ele.type !== 'radio' && ele.type !== 'checkbox') || ele.tagName === 'BUTTON') {
+                if ((tar.tagName === 'INPUT' && tar.type !== 'radio' && tar.type !== 'checkbox') || tar.tagName === 'BUTTON') {
                     _gv.stopPropagation(evt);
                     return;
                 }else if ((ele.querySelector('input') || ele.querySelector('.' +CLASS_BTN) || ele.querySelector('.' + CLASS_TOGGLE))) {
-                            return;
+                     _gv.stopPropagation(evt);
+                     return;
                 }
                 if (classList.contains(CLASS_TABLE_VIEW_CELL)) {
                     tarEl = ele;
@@ -51,26 +54,19 @@
                  * @type {function}
                  */
                  tpl : {
-                    ul: '<ul class="mui-table-view" ></ul>',
-                    li: '<li class="mui-table-view-cell"><%=cont%></li>' 
+                    ul: '<ul class="'+CLASS_TABLE_VIEW+'" ></ul>',
+                    li: '<li class="'+CLASS_TABLE_VIEW_CELL+'"><%=cont%></li>' 
                 },
                 /**
                  * 渲染數據
                  */
-                 data: [],
-                /**
-                 * 点击回调函数
-                 * @type {function}
-                 */
-                 callback: function(){}
+                 data: []
             });
 
         //初始化
         $gridview.prototype.init = function(){
-            var _gv = this,opts = _gv.opts;
-            _gv.callback = opts.callback;
-            render.call(_gv);
-            bind.call(_gv);
+            render.call(this);
+            bind.call(this);
         };
         /**
          * 根據傳入數據渲染

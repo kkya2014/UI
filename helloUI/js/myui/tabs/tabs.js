@@ -3,7 +3,16 @@
  */
 
 (function() {
-    var _uid = 1,
+    var CLASS_CONTENT = 'mui-content',
+        CLASS_ACTIVE = 'mui-active',
+        CLASS_BAR = 'mui-bar',
+        CLASS_BAR_TAB = 'mui-bar-tab',
+        CLASS_TAB_ITEM = 'mui-tab-item',
+        CLASS_CONTROL_CONTENT = 'mui-control-content';
+
+        SELECTOR_ACTIVE = '.'+CLASS_ACTIVE,
+
+        _uid = 1,
         uid = function(){
             return _uid++;
         },
@@ -14,24 +23,24 @@
 
             _tb._nav =  _tb.ref.find('nav').first();
             if(_tb._nav) {
-                _tb._content = $('<div></div>').appendTo(_tb.ref).addClass('mui-content');
+                _tb._content = $('<div></div>').appendTo(_tb.ref).addClass(CLASS_CONTENT);
                 items = [];
-                _tb._nav.addClass('mui-bar mui-bar-tab').children().each(function(){
-                    var $a = _tb.callZepto(this).addClass('mui-tab-item'), href = $a?$a.attr('href'):_tb.callZepto(this).attr('data-url'), id, $content;
+                _tb._nav.addClass(CLASS_BAR+'  '+CLASS_BAR_TAB).children().each(function(){
+                    var $a = _tb.callZ(this).addClass(CLASS_TAB_ITEM), href = $a?$a.attr('href'):_tb.callZ(this).attr('data-url'), id, $content;
                     id = idRE.test(href)? RegExp.$1: 'tabs_'+uid();
                     ($content = _tb.ref.find('#'+id) || $('<div id="'+id+'"></div>'))
-                        .addClass('mui-control-content'+(opts.transition?' '+opts.transition:''))
+                        .addClass(CLASS_CONTROL_CONTENT+(opts.transition?' '+opts.transition:''))
                         .appendTo(_tb._content);
                     items.push({
                         id: id,
                         href: href,
-                        title: $a?$a.attr('href', 'javascript:;').text():_tb.callZepto(this).text(),//如果href不删除的话，地址栏会出现，然后一会又消失。
+                        title: $a?$a.attr('href', 'javascript:;').text():_tb.callZ(this).text(),//如果href不删除的话，地址栏会出现，然后一会又消失。
                         content: $content
                     });
                 });
                 opts.items = items;
-                opts.active = Math.max(0, Math.min(items.length-1, opts.active || _tb.callZepto('.mui-active', _tb.ref).index()||0));
-                getPanel.call(_tb).add(_tb._nav.children().eq(opts.active)).addClass('mui-active');
+                opts.active = Math.max(0, Math.min(items.length-1, opts.active || _tb.callZ(SELECTOR_ACTIVE, _tb.ref).index()||0));
+                getPanel.call(_tb).add(_tb._nav.children().eq(opts.active)).addClass(CLASS_ACTIVE);
             } 
             fitToContent.call(_tb,getPanel.call(_tb));
         };
@@ -84,17 +93,13 @@
              * @property {String} [transition='slide'] 设置切换动画，目前只支持slide动画，或无动画
              * @namespace options
              */
-            transition: 'slide',
-            tpl: {
-                nav:'',
-                content:''
-            }
+            transition: 'slide'
          });
         
         //初始化
         $tabs.prototype.init = function () {
             var _tb = this, opts = _tb.opts;
-            _tb.ref.addClass('mui-content');
+            _tb.ref.addClass(CLASS_CONTENT);
             render.call(_tb);
             bind.call(_tb);
         };
@@ -122,9 +127,9 @@
                 })
                 if(!eventStatus) return _tb;
 
-                _tb._content.children().removeClass('mui-active');
-                to.div.addClass('mui-active');
-                _tb._nav.children().removeClass('mui-active').eq(to.index).addClass('mui-active');
+                _tb._content.children().removeClass(CLASS_ACTIVE);
+                to.div.addClass(CLASS_ACTIVE);
+                _tb._nav.children().removeClass(CLASS_ACTIVE).eq(to.index).addClass(CLASS_ACTIVE);
                 if(opts.transition) { 
                     _tb._buzy = true;
                     endEvent = $.fx.animationEnd + '.tabs';

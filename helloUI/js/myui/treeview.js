@@ -6,6 +6,9 @@
             CLASS_TABLE_VIEW_CELL = 'mui-table-view-cell',
             CLASS_COLLAPSE = 'mui-collapse',
             CLASS_CONTENT = 'mui-content',
+            CLASS_TABLE_VIEW = 'mui-table-view',
+            CLASS_TABLE_VIEW_CHEVRON = 'mui-table-view-chevron',
+            CLASS_NAVIGATE_RIGHT = 'mui-navigate-right',
 
             tarEl;
 
@@ -57,11 +60,11 @@
                  * @type {function}
                  */
                  tpl : {
-                    ul: '<ul class="mui-table-view mui-table-view-chevron" ></ul>',
-                    li: '<li class="mui-table-view-cell" data-ui-li = <%=i%> tar = <%=tar%>>'+
-                        '<a class="mui-navigate-right"><%=cont%></a></li>' ,
-                    muli: '<li class="mui-table-view-cell" data-ui-li = <%=i%>>'+
-                        '<a class="mui-navigate-right"><%=cont%></a></li>' 
+                    ul: '<ul class="'+CLASS_TABLE_VIEW+'  '+CLASS_TABLE_VIEW_CHEVRON+'" ></ul>',
+                    li: '<li class="'+CLASS_TABLE_VIEW_CELL+'" data-ui-li = <%=i%> tar = <%=tar%>>'+
+                        '<a class="'+CLASS_NAVIGATE_RIGHT+'"><%=cont%></a></li>' ,
+                    muli: '<li class="'+CLASS_TABLE_VIEW_CELL+'" data-ui-li = <%=i%>>'+
+                        '<a class="'+CLASS_NAVIGATE_RIGHT+'"><%=cont%></a></li>' 
                 },
                 /**
                  * 渲染數據
@@ -76,10 +79,8 @@
 
         //初始化
         $treeview.prototype.init = function(){
-            var _tv = this,opts = _tv.opts;
-            _tv.callback = opts.callback;
-            render.call(_tv);
-            bind.call(_tv);
+            render.call(this);
+            bind.call(this);
         };
         /**
          * 根據傳入數據渲染

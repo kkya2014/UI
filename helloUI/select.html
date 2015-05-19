@@ -41,7 +41,7 @@
          seajs.use(['select'], function(){
             $('#basesel').select({
                 callback:function(el,eve){
-                    alert(el.val());
+                    alert(this.callZ(el).val());
                 }
             });
         });

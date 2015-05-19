@@ -97,6 +97,21 @@ define(function(require, exports, module) {
   Base.stopPropagation = function(e) {
         e.stopPropagation();
     };
+  /*
+        判断是否存在原生插件对象
+    */
+  Base.isPlus = function(){
+        return false;
+    };  
+  Base.focus = function(element) {
+        if ($.os.ios) {
+            setTimeout(function() {
+                element.focus();
+            }, 10);
+        } else {
+            element.focus();
+        }
+    };  
 
   UI.define = function( name, options) {
         if(UI[ name ])return UI[ name ];
@@ -105,107 +120,27 @@ define(function(require, exports, module) {
                  * 参照对象
                  * @property {String} [ref=null]
                  */
-                ref     : {}    //参照目标 
+                ref     : null,    //参照目标 
+
+                /**
+                 * 点击回调函数
+                 * @type {function}
+                 */
+                 callback: function(){}
          }
         var klass = function(opts) {
             var baseOpts = $.extend(true,{},this.options);
             this.opts = $.extend(true,baseOpts, opts); 
-            this.ref = $(opts.ref);
+            this.ref = $(this.opts.ref);
+            this.callback = this.opts.callback;
             this.initPlugins();
             this.init();
-            this.trigger(this.opts.ref, 'readydom');
+            this.opts.ref&&this.trigger(this.opts.ref, 'readydom');
         }
         UI[ name ] = Base.extend.call(klass,Base);
         UI[ name ].prototype.options = $.extend(defOpts, options); 
         UI[ name ].prototype.plugins = [];
         return UI[ name ];
-    };
-
-
-    /*
-        判断是否Touch屏幕
-    */
-	UI.isTouchScreen = function(){
-        return (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
-    }
-    /*
-        判断是否存在原生插件对象
-    */
-    UI.isPlus = function(){
-        return false;
-    }
-
-
-	/**
-     * 解析模版tpl。当data未传入时返回编译结果函数；当某个template需要多次解析时，
-     * 建议保存编译结果函数，然后调用此函数来得到结果。
-     */
-	UI.parseTpl = function(str, data){
-		var tmpl = 'var __p=[];' + 'with(obj||{}){__p.push(\'' +
-                str.replace( /\\/g, '\\\\' )
-                .replace( /'/g, '\\\'' )
-                .replace( /<%=([\s\S]+?)%>/g, function( match, code ) {
-                    return '\',' + code.replace( /\\'/, '\'' ) + ',\'';
-                } )
-                .replace( /<%([\s\S]+?)%>/g, function( match, code ) {
-                    return '\');' + code.replace( /\\'/, '\'' )
-                            .replace( /[\r\n\t]/g, ' ' ) + '__p.push(\'';
-                } )
-                .replace( /\r/g, '\\r' )
-                .replace( /\n/g, '\\n' )
-                .replace( /\t/g, '\\t' ) +
-                '\');}return __p.join("");',
-
-            func = new Function( 'obj', tmpl );
-		
-        return data ? func( data ) : func;
-	};
-
-	UI.init = function(){
-	
-	}();
-
-    UI.focus = function(element) {
-        if ($.os.ios) {
-            setTimeout(function() {
-                element.focus();
-            }, 10);
-        } else {
-            element.focus();
-        }
-    };
-
-    /**
-     * trigger event
-     * @param {type} element
-     * @param {type} eventType
-     * @param {type} eventData
-     * @returns {_L8.$}
-     */
-    UI.trigger = function(element, eventType, eventData,goal) {
-        element.dispatchEvent(new CustomEvent(eventType, {
-            detail: eventData,
-            bubbles: true,
-            cancelable: true
-        }));
-        return goal||this;
-    };
-
-    /**
-     * 调用此方法，可以减小重复实例化Zepto的开销。所有通过此方法调用的，都将公用一个Zepto实例
-     */
-    UI.callZepto = (function() {
-            instance = $();
-            instance.length = 1;
-
-        return function( item) {
-            instance[ 0 ] = item;
-            return instance;
-        };
-    })();
-
-    UI.stopPropagation = function(e) {
-        e.stopPropagation();
     };
 
     UI.uuid = 0;

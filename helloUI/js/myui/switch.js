@@ -2,167 +2,168 @@
  * switch组件
  */
 (function() {
-    var CLASS_SWITCH = 'mui-switch';
-    var CLASS_ACTION = '.' + CLASS_SWITCH;
-    var CLASS_SWITCH_HANDLE = 'mui-switch-handle';
-    var CLASS_ACTIVE = 'mui-active';
-    var CLASS_DRAGGING = 'mui-dragging';
 
-    var CLASS_DISABLED = 'mui-disabled';
 
-    var SELECTOR_SWITCH_HANDLE = '.' + CLASS_SWITCH_HANDLE;
+        var CLASS_SWITCH = 'mui-switch',
+            CLASS_SWITCH_HANDLE = 'mui-switch-handle',
+            CLASS_ACTIVE = 'mui-active',
+            CLASS_DRAGGING = 'mui-dragging',
+            CLASS_DISABLED = 'mui-disabled',
 
-    var handle = function(event, target) {
-        if (target.classList && target.classList.contains(CLASS_SWITCH)) {
-            return target;
-        }
-        return false;
-    };
+            SELECTOR_SWITCH_HANDLE = '.' + CLASS_SWITCH_HANDLE;
 
-    define(function(require, exports, module) {
-        var $ = require("zepto"),
-        UI = require("UI");
-
-        var $switch = function(opts) {
-            //默认参数
-            var defOpts = {
-                /**
-                 * 参照对象
-                 * @property {String} [ref=null]
-                 */
-                ref     : null,     //参照目标
-                /**
-                 * 点击回调函数
-                 * @type {function}
-                 */
-                 callback: function(){}
-            };
-            this.opts = $.extend(defOpts, opts); 
-
-            this.element = this.opts.ref;
-            this.callback = this.opts.callback;
-            this.classList = this.element.classList;
-            this.handle = this.element.querySelector(SELECTOR_SWITCH_HANDLE);
-            this.init();
-            this.initEvent();
+        var handle = function(event, target) {
+            if (target.classList && target.classList.contains(CLASS_SWITCH)) {
+                return target;
+            }
+            return false;
         };
-        $switch.prototype.init = function() {
-            this.toggleWidth = this.element.offsetWidth;
-            this.handleWidth = this.handle.offsetWidth;
-            this.handleX = this.toggleWidth - this.handleWidth - 3;
+
+        //渲染
+        var render = function(){
+            var _tog = this, opts = this.opts,element = opts.ref;
+            _tog._handle||(_tog._handle = element.querySelector(SELECTOR_SWITCH_HANDLE));
+            opts.toggleWidth = element.offsetWidth;
+            opts.handleWidth = _tog._handle.offsetWidth;
+            opts.handleX = opts.toggleWidth - opts.handleWidth - 3;
         };
-        $switch.prototype.initEvent = function() {
-             var _tog = this, opts = this.opts;
-            this.element.addEventListener('touchstart', $.proxy(this.handleEvent, this));
-            this.element.addEventListener('drag', $.proxy(this.handleEvent, this));
-            this.element.addEventListener('swiperight', $.proxy(this.handleEvent, this));
-            this.element.addEventListener('touchend', $.proxy(this.handleEvent, this));
-            this.element.addEventListener('touchcancel', $.proxy(this.handleEvent, this));
-            this.element.addEventListener('toggle', function(event) {
+
+        //绑定事件
+        var bind = function(){
+            var _tog = this, opts = this.opts,element = opts.ref;
+            element.addEventListener('touchstart', $.proxy(handleEvent, _tog));
+            element.addEventListener('drag', $.proxy(handleEvent, _tog));
+            element.addEventListener('swiperight', $.proxy(handleEvent, _tog));
+            element.addEventListener('touchend', $.proxy(handleEvent, _tog));
+            element.addEventListener('touchcancel', $.proxy(handleEvent, _tog));
+            element.addEventListener('toggle', function(evt) {
                     //event.detail.isActive 可直接获取当前状态
-                    var ele = $(event.currentTarget);
+                    var ele = evt.currentTarget;
                 if ($.isFunction(_tog.callback)) {
-                    _tog.callback.apply(_tog, [ele[0],event]);
+                    _tog.callback.apply(_tog, [ele,evt]);
                 }
             });
+        };   
 
-        };
-        $switch.prototype.handleEvent = function(e) {
-            if (this.classList.contains(CLASS_DISABLED)) {
+
+        var handleEvent = function(evt) {
+            var _tog = this, opts = this.opts,element = opts.ref;
+            if (element.classList.contains(CLASS_DISABLED)) {
                 return;
             }
-            switch (e.type) {
+            switch (evt.type) {
                 case 'touchstart':
-                    this.start(e);
+                    start.call(_tog,evt);
                     break;
                 case 'drag':
-                    this.drag(e);
+                    drag.call(_tog,evt);
                     break;
                 case 'swiperight':
-                    this.swiperight();
+                    swiperight.call(_tog,evt);
                     break;
                 case 'touchend':
                 case 'touchcancel':
-                    this.end(e);
+                    end.call(_tog,evt);
                     break;
             }
-        };
-        $switch.prototype.start = function(e) {
-            this.classList.add(CLASS_DRAGGING);
-            if (this.toggleWidth === 0 || this.handleWidth === 0) { //当switch处于隐藏状态时，width为0，需要重新初始化
-                this.init();
+        }; 
+
+        var start = function(evt) {
+            var _tog = this, opts = _tog.opts,element = opts.ref;
+            element.classList.add(CLASS_DRAGGING);
+            if (opts.toggleWidth === 0 || opts.handleWidth === 0) { //当switch处于隐藏状态时，width为0，需要重新初始化
+                render.call(_tog);
             }
         };
-        $switch.prototype.drag = function(e) {
-            var detail = e.detail;
-            if (!this.isDragging) {
+        var drag = function(evt) {
+            var _tog = this, opts = _tog.opts,element = opts.ref,detail = evt.detail;
+            if (!opts.isDragging) {
                 if (detail.direction === 'left' || detail.direction === 'right') {
-                    this.isDragging = true;
-                    this.lastChanged = undefined;
-                    this.initialState = this.classList.contains(CLASS_ACTIVE);
+                    opts.isDragging = true;
+                    opts.lastChanged = undefined;
+                    opts.initialState = element.classList.contains(CLASS_ACTIVE);
                 }
             }
-            if (this.isDragging) {
-                this.setTranslateX(detail.deltaX);
-                e.stopPropagation();
+            if (opts.isDragging) {
+                _tog.setTranslateX(detail.deltaX);
+                evt.stopPropagation();
                 detail.gesture.preventDefault();
             }
         };
-        $switch.prototype.swiperight = function(e) {
-            if (this.isDragging) {
-                e.stopPropagation();
+        var swiperight = function(evt) {
+            var _tog = this, opts = _tog.opts;
+            if (opts.isDragging) {
+                evt.stopPropagation();
             }
         };
-        $switch.prototype.end = function(e) {
-            this.classList.remove(CLASS_DRAGGING);
-            if (this.isDragging) {
-                this.isDragging = false;
-                e.stopPropagation();
-                UI.trigger(this.element, 'toggle', {
-                    isActive: this.classList.contains(CLASS_ACTIVE)
+        var end = function(evt) {
+            var _tog = this, opts = _tog.opts,element = opts.ref;
+            element.classList.remove(CLASS_DRAGGING);
+            if (opts.isDragging) {
+                opts.isDragging = false;
+                evt.stopPropagation();
+                _tog.trigger(element, 'toggle', {
+                    isActive: element.classList.contains(CLASS_ACTIVE)
                 });
             } else {
-                this.toggle();
+                _tog.toggle();
             }
         };
+
+        
+
+    define(function(require, exports, module) {
+        var UI = require("UI");
+
+        var $switch = UI.define('Switch',{});
+        
+        $switch.prototype.init = function() {
+            render.call(this);
+            bind.call(this);
+        };
+        
         $switch.prototype.toggle = function() {
-            var classList = this.classList;
+            var _tog = this, opts = _tog.opts,element = opts.ref,classList = element.classList;
             if (classList.contains(CLASS_ACTIVE)) {
                 classList.remove(CLASS_ACTIVE);
-                this.handle.style.webkitTransform = 'translate3d(0,0,0)';
+                _tog._handle.style.webkitTransform = 'translate3d(0,0,0)';
             } else {
                 classList.add(CLASS_ACTIVE);
-                this.handle.style.webkitTransform = 'translate3d(' + this.handleX + 'px,0,0)';
+                _tog._handle.style.webkitTransform = 'translate3d(' + opts.handleX + 'px,0,0)';
             }
-            UI.trigger(this.element, 'toggle', {
-                isActive: this.classList.contains(CLASS_ACTIVE)
+            _tog.trigger(element, 'toggle', {
+                isActive: classList.contains(CLASS_ACTIVE)
             });
         };
+
         $switch.prototype.setTranslateX = UI.animationFrame(function(x) {
-            if (!this.isDragging) {
+            var _tog = this, opts = _tog.opts,element = opts.ref,classList = element.classList;
+            if (!opts.isDragging) {
                 return;
             }
             var isChanged = false;
-            if ((this.initialState && -x > (this.handleX / 2)) || (!this.initialState && x > (this.handleX / 2))) {
+            if ((opts.initialState && -x > (opts.handleX / 2)) || (!opts.initialState && x > (opts.handleX / 2))) {
                 isChanged = true;
             }
-            if (this.lastChanged !== isChanged) {
+            if (opts.lastChanged !== isChanged) {
                 if (isChanged) {
-                    this.handle.style.webkitTransform = 'translate3d(' + (this.initialState ? 0 : this.handleX) + 'px,0,0)';
-                    this.classList[this.initialState ? 'remove' : 'add'](CLASS_ACTIVE);
+                    _tog._handle.style.webkitTransform = 'translate3d(' + (opts.initialState ? 0 : opts.handleX) + 'px,0,0)';
+                    classList[opts.initialState ? 'remove' : 'add'](CLASS_ACTIVE);
                 } else {
-                    this.handle.style.webkitTransform = 'translate3d(' + (this.initialState ? this.handleX : 0) + 'px,0,0)';
-                    this.classList[this.initialState ? 'add' : 'remove'](CLASS_ACTIVE);
+                    _tog._handle.style.webkitTransform = 'translate3d(' + (opts.initialState ? opts.handleX : 0) + 'px,0,0)';
+                    classList[opts.initialState ? 'add' : 'remove'](CLASS_ACTIVE);
                 }
-                this.lastChanged = isChanged;
+                opts.lastChanged = isChanged;
             }
 
         });
+        
         //注册$插件
         $.fn.switch = function(opts) {
             var switchObjs = [];
             var switchs = this;
-            switchs.hasClass('.mui-switch')||(switchs = switchs.find('.mui-switch'));
+            switchs.hasClass(CLASS_SWITCH)||(switchs = switchs.find('.'+CLASS_SWITCH));
+            opts|| (opts = {});
             switchs.each(function() {
                 var switchObj = null;
                 var id = this.getAttribute('data-switch');
@@ -178,8 +179,5 @@
             });
             return switchObjs.length > 1 ? switchObjs : switchObjs[0];
         };
-       /* $(function() {
-            $(CLASS_ACTION).switch();
-        });*/
     });
 })();

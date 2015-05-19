@@ -2,20 +2,144 @@
  * @file 弹出框组件
  */
 (function() {
-    var tpl = {
-        mask: '<div class="ui-mask"></div>',
-        title: '<div class="ui-dialog-title"></div>',
-        wrap: '<div class="ui-dialog">'+
-            '<div class="ui-dialog-content"></div>'+
-            '<% if(btns){ %>'+
-            '<div class="ui-dialog-btns">'+
-            '<% for(var i=0, length=btns.length; i<length; i++){var item = btns[i]; %>'+
-            '<a class="ui-btn ui-btn-<%=item.index%>" data-key="<%=item.key%>"><%=item.text%></a>'+
-            '<% } %>'+
-            '</div>'+
-            '<% } %>' +
-            '</div> '
-    };
+     var CLASS_MASK = 'ui-mask',
+         CLASS_DIALOG_TITLE = 'ui-dialog-title',
+         CLASS_DIALOG = 'ui-dialog',
+         CLASS_DIALOG_CONTENT = 'ui-dialog-content',
+         CLASS_DIALOG_BTNS = 'ui-dialog-btns',
+         CLASS_BTN = 'ui-btn',
+         CLASS_DIALOG_CONTAINER = 'ui-dialog-container',
+         CLASS_STATE_HOVER = 'ui-state-hover',
+
+         SELECTOR_DIALOG_CONTENT = '.'+CLASS_DIALOG_CONTENT,
+         SELECTOR_DIALOG_BTNS = '.'+CLASS_DIALOG_BTNS+' .'+CLASS_BTN,
+
+
+        tpl = {
+            mask: '<div class="'+CLASS_MASK+'"></div>',
+            title: '<div class="'+CLASS_DIALOG_TITLE+'"></div>',
+            wrap: '<div class="'+CLASS_DIALOG+'">'+
+                '<div class="'+CLASS_DIALOG_CONTENT+'"></div>'+
+                '<% if(btns){ %>'+
+                '<div class="'+CLASS_DIALOG_BTNS+'">'+
+                '<% for(var i=0, length=btns.length; i<length; i++){var item = btns[i]; %>'+
+                '<a class="'+CLASS_BTN+'"  data-btn = <%=item.index%> data-key="<%=item.key%>"><%=item.text%></a>'+
+                '<% } %>'+
+                '</div>'+
+                '<% } %>' +
+                '</div> '
+        };
+
+
+    //渲染组件
+    var render = function(){
+            var _dog = this, opts = _dog.opts, btns,i= 0,vars = {};
+            _dog._container = $(opts.container || document.body);
+            (_dog._cIsBody = _dog._container.is('body')) || _dog._container.addClass(CLASS_DIALOG_CONTAINER);
+            vars.btns = btns= [];
+            opts.buttons && $.each(opts.buttons, function(key){
+                btns.push({
+                    index: ++i,
+                    text: key,
+                    key: key
+                });
+            });
+            _dog._mask = opts.mask ? $(tpl.mask).appendTo(_dog._container) : null;
+            _dog._wrap = $(_dog.parseTpl(tpl.wrap, vars)).appendTo(_dog._container);
+            _dog._content = $(SELECTOR_DIALOG_CONTENT, _dog._wrap);
+
+            _dog._title = $(tpl.title);
+            title.call(_dog,opts.title);
+            content.call(_dog,opts.content);
+
+            btns.length && $(SELECTOR_DIALOG_BTNS, _dog._wrap).highlight(CLASS_STATE_HOVER);
+            _dog._wrap.css({
+                width: opts.width,
+                height: opts.height
+            });
+        };
+    /**
+         * 设置弹出框标题
+         * @method title
+         * @param {String} [value] 弹出框标题
+         */
+    var title = function(value) {
+            var _dog = this, setter = value!==undefined;
+            value = '<h3>'+value+'</h3>';
+            setter && _dog._title.html(value).prependTo(_dog._wrap);
+        };
+
+        /**
+         * 设置弹出框内容。value接受带html标签字符串和zepto对象。
+         * @method content
+         * @param {String|Element} [val] 弹出框内容
+         */
+    var content = function(val) {
+            var _dog = this,opts = _dog.opts, setter = val!==undefined;
+            setter && _dog._content.empty().append(opts.content = val);
+        };    
+     //绑定事件
+    var bind = function(){
+            var _dog = this, match, wrap, opts = _dog.opts;
+                //bind events绑定事件
+            _dog._wrap.on(_dog.touchEve(), function(evt){
+                    var ele = evt.target;
+                    wrap = _dog._wrap.get(0);
+                    if( (match = $(ele).closest(SELECTOR_DIALOG_BTNS, wrap)) && match.length ) {
+                        fn = opts.buttons[match.attr('data-key')];
+                        fn && fn.apply(_dog, [ele,evt]);
+                    }
+            });
+            _dog._mask && _dog._mask.on(_dog.touchEve(), function(evt){
+                    var ele = evt.currentTarget;
+                    if ($.isFunction(opts.maskClick)) {
+                        opts.maskClick.apply(_dog, [ele,evt]);
+                    }
+            });
+        };
+
+
+     var tmove = function(e){
+                var _dog = this, opts = _dog.opts;
+                opts.scrollMove && e.preventDefault();
+        };  
+
+
+
+    var calculate = function(){
+            var _dog = this, opts = _dog.opts, size, $win, root = document.body,
+                ret = {}, isBody = _dog._cIsBody, round = Math.round;
+
+            opts.mask && (ret.mask = isBody ? {
+                width:  '100%',
+                height: Math.max(root.scrollHeight, root.clientHeight)-1//不减1的话uc浏览器再旋转的时候不触发resize.奇葩！
+            }:{
+                width: '100%',
+                height: '100%'
+            });
+
+            size = _dog._wrap.offset();
+            $win = $(window);
+            ret.wrap = {
+                left: '50%',
+                marginLeft: -round(size.width/2) +'px',
+                top: isBody?round($win.height() / 2) + window.pageYOffset:'50%',
+                marginTop: -round(size.height/2) +'px'
+            }
+            return ret;
+        };  
+
+
+        /**
+         * @desc 销毁组件。
+         * @name destroy
+         */
+    var destroy = function(){
+            var _dog = this, opts = _dog.opts;
+            $(document).off('touchmove',tmove);
+            _dog._wrap.off().remove();
+            _dog._mask && _dog._mask.off().remove();
+        };   
 
 
     /**
@@ -24,13 +148,10 @@
      */
 
     define(function(require, exports, module) {
-        var $ = require("zepto");
-            UI = require("UI");
+        var UI = require("UI");
 
         //pop
-        var $dialog_plus = function(opts){
-            //默认参数
-            var defOpts = {
+        var $dialog_plus = UI.define('Dialog_Plus',{
                 /**
                  * @property {Array} [buttons=null] 弹出框上的按钮
                  * @namespace options
@@ -76,64 +197,16 @@
                  * @namespace options
                  */
                 position: null //
-            };
-
-            this.opts = $.extend(defOpts, opts); 
-            this.init();
-        };
+            });
 
         //初始化
         $dialog_plus.prototype.init = function(){
             var _dog = this, opts = _dog.opts, btns,i= 0,vars = {};
 
-            opts._container = $(opts.container || document.body);
-            (opts._cIsBody = opts._container.is('body')) || opts._container.addClass('ui-dialog-container');
-            vars.btns = btns= [];
-            opts.buttons && $.each(opts.buttons, function(key){
-                btns.push({
-                    index: ++i,
-                    text: key,
-                    key: key
-                });
-            });
-            opts._mask = opts.mask ? $(tpl.mask).appendTo(opts._container) : null;
-            opts._wrap = $(UI.parseTpl(tpl.wrap, vars)).appendTo(opts._container);
-            opts._content = $('.ui-dialog-content', opts._wrap);
-
-            opts._title = $(tpl.title);
-
-            _dog.title(opts.title);
-            _dog.content(opts.content);
-
-            btns.length && $('.ui-dialog-btns .ui-btn', opts._wrap).highlight('ui-state-hover');
-            opts._wrap.css({
-                width: opts.width,
-                height: opts.height
-            });
-            _dog.bind();
+            render.call(_dog);
+            bind.call(_dog);
             _dog.open();
         };
-        /**
-         * 设置弹出框标题
-         * @method title
-         * @param {String} [value] 弹出框标题
-         */
-        $dialog_plus.prototype.title = function(value) {
-            var opts = this.opts;
-            value = '<h3>'+value+'</h3>';
-            opts._title.html(value).prependTo(opts._wrap);
-        };
-
-        /**
-         * 设置弹出框内容。value接受带html标签字符串和zepto对象。
-         * @method content
-         * @param {String|Element} [val] 弹出框内容
-         */
-        $dialog_plus.prototype.content = function(val) {
-            var opts = this.opts, setter = val!==undefined;
-            setter && opts._content.empty().append(opts.content = val);
-        };
-
         /**
          * 弹出弹出框
          * @method open
@@ -142,18 +215,16 @@
          * @return {self} 返回本身
          */
         $dialog_plus.prototype.open = function(x, y){
-            var opts = this.opts;
-            opts._isOpen = true;
+            var _dog = this,opts = _dog.opts;
+            _dog._isOpen = true;
 
-            opts._wrap.css('display', 'block');
-            opts._mask && opts._mask.css('display', 'block');
+            _dog._wrap.css('display', 'block');
+            _dog._mask && _dog._mask.css('display', 'block');
 
-            this.refresh();
+            _dog.refresh();
 
-            $(document).on('touchmove', $.proxy($dialog_plus.prototype.tmove, this));
+            $(document).on('touchmove', $.proxy(tmove, _dog));
         };
-
-        
 
         /**
          * 用来更新弹出框位置和mask大小。如父容器大小发生变化时，可能弹出框位置不对，可以外部调用refresh来修正。
@@ -162,12 +233,12 @@
          */
         $dialog_plus.prototype.refresh = function(){
             var _dog = this, opts = _dog.opts, ret, action;
-            if(opts._isOpen) {
+            if(_dog._isOpen) {
 
                 action = function(){
-                    ret = _dog.calculate();
-                    ret.mask && opts._mask.css(ret.mask);
-                    opts._wrap.css(ret.wrap);
+                    ret = calculate.call(_dog);
+                    ret.mask && _dog._mask.css(ret.mask);
+                    _dog._wrap.css(ret.wrap);
                 }
 
                 //如果有键盘在，需要多加延时
@@ -184,29 +255,6 @@
             }
         };
 
-        $dialog_plus.prototype.calculate = function(){
-            var _dog = this, opts = _dog.opts, size, $win, root = document.body,
-                ret = {}, isBody = opts._cIsBody, round = Math.round;
-
-            opts.mask && (ret.mask = isBody ? {
-                width:  '100%',
-                height: Math.max(root.scrollHeight, root.clientHeight)-1//不减1的话uc浏览器再旋转的时候不触发resize.奇葩！
-            }:{
-                width: '100%',
-                height: '100%'
-            });
-
-            size = opts._wrap.offset();
-            $win = $(window);
-            ret.wrap = {
-                left: '50%',
-                marginLeft: -round(size.width/2) +'px',
-                top: isBody?round($win.height() / 2) + window.pageYOffset:'50%',
-                marginTop: -round(size.height/2) +'px'
-            }
-            return ret;
-        };
-
         /**
          * 关闭弹出框
          * @method close
@@ -216,49 +264,10 @@
             var _dog = this, opts = _dog.opts;
 
 
-            opts._isOpen = false;
-            opts._wrap.css('display', 'none');
-            opts._mask && opts._mask.css('display', 'none');
-            _dog.destroy();
-        };
-
-        /**
-         * @desc 销毁组件。
-         * @name destroy
-         */
-        $dialog_plus.prototype.destroy = function(){
-            var _dog = this, opts = _dog.opts;
-            $(document).off('touchmove',$dialog_plus.prototype.tmove);
-            opts._wrap.off().remove();
-            opts._mask && opts._mask.off().remove();
-        };
-
-        $dialog_plus.prototype.tmove = function(e){
-                var _dog = this, opts = _dog.opts;
-                opts.scrollMove && e.preventDefault();
-        };
-        /**
-         * 绑定事件
-         * @method close
-         * @return {self} 返回本身
-         */
-        $dialog_plus.prototype.bind = function(){
-            var _dog = this, match, wrap, opts = _dog.opts;
-                //bind events绑定事件
-            opts._wrap.on(UI.isTouchScreen() ? "touchstart" : "mousedown", function(e){
-                    wrap = opts._wrap.get(0);
-                    if( (match = $(e.target).closest('.ui-dialog-close', wrap)) && match.length ){
-                        _dog.close();
-                    } else if( (match = $(e.target).closest('.ui-dialog-btns .ui-btn', wrap)) && match.length ) {
-                        fn = opts.buttons[match.attr('data-key')];
-                        fn && fn.apply(_dog, [_dog,e]);
-                    }
-            });
-            opts._mask && opts._mask.on(UI.isTouchScreen() ? "touchstart" : "mousedown", function(e){
-                    if ($.isFunction(opts.maskClick)) {
-                        opts.maskClick.apply(_dog, [_dog,e]);
-                    }
-            });
+            _dog._isOpen = false;
+            _dog._wrap.css('display', 'none');
+            _dog._mask && _dog._mask.css('display', 'none');
+            destroy.call(_dog);
         };
         
         /*$.fn.dialog = function (opts) {
@@ -267,6 +276,7 @@
         };*/
 
         module.exports = function(opts){
+            opts|| (opts = {});
             return new $dialog_plus(opts);
         };
 

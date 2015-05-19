@@ -2,8 +2,99 @@
  * @file 图片轮播组件
  */
 (function() {
+    var CLASS_STATE_ACTIVE = 'ui-state-active';
+        CLASS_SLIDER_DOTS = 'ui-slider-dots',
+        CLASS_SLIDER_GROUP = 'ui-slider-group' ,
+        CLASS_SLIDER_ITEM = 'ui-slider-item' ,
+        CLASS_SLIDER = 'ui-slider';
+
+
     // todo 检测3d是否支持。
-    var translateZ = ' translateZ(0)';
+    var transitionEnd,translateZ = ' translateZ(0)';
+
+    var render = function() {
+            var _sl = this, opts = _sl.opts,
+                selector = opts.selector,
+                viewNum = opts.viewNum || 1,
+                items,
+                container;
+
+            _sl.index = opts.index,
+            // 检测容器节点是否指定
+            container = _sl.ref.find( selector.group );
+
+            // 没有指定容器则创建容器
+            if (!container.length ) {
+                container = $( '<div></div>' );
+                if ( !opts.content ) {
+                    if ( _sl.ref.is( 'ul' ) ) {
+                        _sl.el = container.insertAfter( _sl.ref );
+                        container = _sl.ref;
+                        _sl.ref = _sl.el;
+                    } else {
+                        container.append( _sl.ref.children() );
+                    }
+                } else {
+                   // createItems.appli(_sl, [container, opts.content] );
+                }
+                container.appendTo( _sl.ref );
+            }
+
+            // 检测是否构成循环条件
+            if ( (items = container.children()).length < viewNum + 1 ) {
+                opts.loop = false;
+            }
+
+            // 如果节点少了，需要复制几份
+            while ( opts.loop && container.children().length < 3 * viewNum ) {
+                container.append( items.clone() );
+            }
+
+            _sl.length = container.children().length;
+
+            _sl._items = (_sl._container = container)
+                    .addClass( CLASS_SLIDER_GROUP )
+                    .children()
+                    .addClass( CLASS_SLIDER_ITEM )
+                    .toArray();
+            _sl.ref.addClass( CLASS_SLIDER )
+            _sl.trigger(opts.ref, 'donedom');
+            opts.dots&&initDots.call(_sl);
+            initWidth.call(_sl);
+        };
+
+    var bind = function(){
+            var _sl = this, opts = _sl.opts;
+            _sl.ref.on( 'slideend', $.proxy(handleEvent, _sl))
+                   .on( 'touchstart', $.proxy(handleEvent, _sl))
+                   .on( 'touchend', $.proxy(handleEvent, _sl));
+             //dots添加
+             if(opts.dots){
+                _sl.ref.on( 'slide', function(evt) {
+                    var to = evt.detail.to, from = evt.detail.from;
+                    updateDots.apply(_sl,[to,from]);
+                })
+            }
+            _sl._container.on( transitionEnd,
+                    $.proxy(tansitionEnd, _sl ) );
+    };    
+
+    var handleEvent = function(evt) {
+            var _sl = this, opts = _sl.opts;
+            // if (element.classList.contains(CLASS_DISABLED)) {
+            //     return;
+            // }
+            switch (evt.type) {
+                case 'touchstart':
+                    _sl.stop();
+                    break;
+                case 'touchend':
+                case 'touchcancel':
+                case 'slideend':
+                    _sl.resume();
+                    break;
+            }
+        }; 
        
     /**
      * 更新dots
@@ -11,8 +102,8 @@
     var updateDots = function( to, from ) {
         var _sl = this, dots = _sl._dots;
 
-        typeof from === 'undefined' || _sl.UI.callZepto(dots[from % this.length ]).removeClass('ui-state-active');
-        _sl.UI.callZepto(dots[to % this.length ]).addClass('ui-state-active');  
+        typeof from === 'undefined' || _sl.callZ(dots[from % this.length ]).removeClass(CLASS_STATE_ACTIVE);
+        _sl.callZ(dots[to % this.length ]).addClass(CLASS_STATE_ACTIVE);  
     };
 
     var initDots = function(){
@@ -20,25 +111,83 @@
         var dots = _sl.ref.find( opts.selector.dots );
 
         if ( !dots.length ) {
-            dots = _sl.UI.parseTpl(opts.tpl.dots, {
+            dots = _sl.parseTpl(opts.tpl.dots, {
                 len: _sl.length
             });
             dots = $( dots ).appendTo( _sl.ref[0] );
         }
 
-        this._dots = dots.children().toArray();    
+        this._dots = dots.children().toArray();
+        updateDots.call( _sl, _sl.index );  
     };
+
+
+
+    var initWidth = function() {
+            var _sl = this, opts = _sl.opts,width;
+
+            // width没有变化不需要重排
+            if ( (width = _sl.ref.width()) === _sl.width ) {
+                return;
+            }
+            _sl.width = width;
+            arrange.call(_sl);
+            _sl.height = _sl.ref.height();
+    };
+
+    // 重排items
+    var arrange = function() {
+            var _sl = this, opts = _sl.opts,
+                items = _sl._items,
+                i = 0,
+                item,
+                len;
+
+            _sl._slidePos = new Array( items.length );
+
+            for ( len = items.length; i < len; i++ ) {
+                item = items[ i ];
+                
+                item.style.cssText += 'width:' + _sl.width + 'px;' +
+                        'left:' + (i * -_sl.width) + 'px;';
+                item.setAttribute( 'data-index', i );
+
+                _sl.move( i, i < _sl.index ? -_sl.width : i > _sl.index ? _sl.width : 0, 0 );
+            }
+
+            _sl._container.css( 'width', _sl.width * len );
+        };
+
+
+    var tansitionEnd = function( evt ) {
+             var _sl = this, opts = _sl.opts;
+            // ~~用来类型转换，等价于parseInt( str, 10 );
+            if ( ~~evt.target.getAttribute( 'data-index' ) !== _sl.index ) {
+                return;
+            }
+            _sl.trigger(opts.ref, 'slideend', {
+                index: _sl.index
+            });
+        };    
+
+
+       var createItems = function( container, items ) {
+            // var _sl = this, opts = _sl.opts,i = 0,
+            //     len = items.length;
+
+            // for ( ; i < len; i++ ) {
+            //     container.append( _sl.parseTpl(tpl.wrap, vars) );
+            // }
+        };
     
     /**
      * 图片轮播组件
      */
     define(function(require, exports, module) {
         var UI = require("UI"),
-            cssPrefix = $.fx.cssPrefix,
+            cssPrefix = $.fx.cssPrefix;
             transitionEnd = $.fx.transitionEnd;
         var $slider = UI.define('Slider',{
-                
-
                 /**
                  * @property {Boolean} [loop=false] 是否连续滑动
                  * @namespace options
@@ -83,15 +232,15 @@
                  * @property {Object}  容器的选择器
                  */
                 selector: {
-                    dots: '.ui-slider-dots',
-                    group: '.ui-slider-group'
+                    dots: '.'+CLASS_SLIDER_DOTS,
+                    group: '.'+CLASS_SLIDER_GROUP
                 },
                  tpl : {
-                    item: '<div class="ui-slider-item"><a href="<%= href %>">' +
+                    item: '<div class="'+CLASS_SLIDER_ITEM+'"><a href="<%= href %>">' +
                             '<img src="<%= pic %>" alt="" /></a>' +
                             '<% if( title ) { %><p><%= title %></p><% } %>' +
                             '</div>',
-                    dots: '<p class="ui-slider-dots"><%= new Array( len + 1 )' +
+                    dots: '<p class="'+CLASS_SLIDER_DOTS+'"><%= new Array( len + 1 )' +
                             '.join("<b></b>") %></p>'        
                 }
 
@@ -100,45 +249,20 @@
         require("slidertouch");
         //初始化
         $slider.prototype.init = function() {
-            var _sl = this, opts = _sl.opts;
-
-            _sl.index = opts.index;
-            _sl.UI = UI;
-
-
-            _sl.ref.on( 'slideend', $.proxy($slider.prototype.resume, _sl)).on( 'destory', $.proxy($slider.prototype.stop, _sl));
-
-            // 避免滑动时，自动切换
-            _sl.ref.on( 'touchstart', $.proxy($slider.prototype.stop, _sl))
-                    .on( 'touchend', $.proxy($slider.prototype.resume, _sl));
-             //dots添加
-             if(opts.dots){
-                _sl.ref.on( 'slide', function(e) {
-                    var to = e.detail.to, from = e.detail.from;
-                    updateDots.apply(_sl,[to,from]);
-                }).on( 'donedom', function(e) {
-                    initDots.call(_sl);
-                })
-            }
-
+            var _sl = this,opts = _sl.opts;
             // 初始dom结构
-            _sl.initDom();
-
-            // 更新width
-            _sl.initWidth();
-            _sl._container.on( transitionEnd,
-                    $.proxy( _sl.tansitionEnd, _sl ) );
+            render.call(this);
+            //绑定事件
+            bind.call(this);
             //自动轮播
             opts.autoPlay&&_sl.resume();
-            
         };
 
         /**
          * 自动播放。
          */
         $slider.prototype.resume = function() {
-            var _sl = this,
-                opts = _sl.opts;
+            var _sl = this,opts = _sl.opts;
 
             if ( opts.autoPlay && !_sl._timer ) {
                 _sl._timer = setTimeout( function() {
@@ -167,107 +291,7 @@
             return _sl;
         };
 
-        $slider.prototype.initDom = function( $el, opts ) {
-            var _sl = this, opts = _sl.opts,
-                selector = opts.selector,
-                viewNum = opts.viewNum || 1,
-                items,
-                container;
-
-            // 检测容器节点是否指定
-            container = _sl.ref.find( selector.group );
-
-            // 没有指定容器则创建容器
-            if ( !container.length ) {
-                container = $( '<div></div>' );
-
-                // 如果没有传入content, 则将root的孩子作为可滚动item
-                if ( !opts.content ) {
-
-                    // 特殊处理直接用ul初始化slider的case
-                    if ( _sl.ref.is( 'ul' ) ) {
-                        _sl.el = container.insertAfter( _sl.ref );
-                        container = _sl.ref;
-                        _sl.ref = _sl.el;
-                    } else {
-                        container.append( _sl.ref.children() );
-                    }
-                } else {
-                    _sl.createItems( container, opts.content );
-                }
-
-                container.appendTo( _sl.ref );
-            }
-
-            // 检测是否构成循环条件
-            if ( (items = container.children()).length < viewNum + 1 ) {
-                opts.loop = false;
-            }
-
-            // 如果节点少了，需要复制几份
-            while ( opts.loop && container.children().length < 3 * viewNum ) {
-                container.append( items.clone() );
-            }
-
-            _sl.length = container.children().length;
-
-            _sl._items = (_sl._container = container)
-                    .addClass( 'ui-slider-group' )
-                    .children()
-                    .addClass( 'ui-slider-item' )
-                    .toArray();
-            _sl.ref.addClass( 'ui-slider' )
-            UI.trigger(opts.ref, 'donedom');
-            opts.dots&&updateDots.call( _sl, _sl.index );
-        };
-
-        // 根据items里面的数据挨个render插入到container中
-        $slider.prototype.createItems = function( container, items ) {
-            // var _sl = this, opts = _sl.opts,i = 0,
-            //     len = items.length;
-
-            // for ( ; i < len; i++ ) {
-            //     container.append( _sl.parseTpl(tpl.wrap, vars) );
-            // }
-        };
-
-        $slider.prototype.initWidth = function() {
-            var _sl = this, opts = _sl.opts,
-                width;
-
-            // width没有变化不需要重排
-            if ( (width = _sl.ref.width()) === _sl.width ) {
-                return;
-            }
-
-            _sl.width = width;
-            _sl.arrange();
-            _sl.height = _sl.ref.height();
-            //me.trigger( 'width.change' );
-        };
-
-        // 重排items
-        $slider.prototype.arrange = function() {
-            var _sl = this, opts = _sl.opts,
-                items = _sl._items,
-                i = 0,
-                item,
-                len;
-
-            _sl._slidePos = new Array( items.length );
-
-            for ( len = items.length; i < len; i++ ) {
-                item = items[ i ];
-                
-                item.style.cssText += 'width:' + _sl.width + 'px;' +
-                        'left:' + (i * -_sl.width) + 'px;';
-                item.setAttribute( 'data-index', i );
-
-                _sl.move( i, i < _sl.index ? -_sl.width : i > _sl.index ? _sl.width : 0, 0 );
-            }
-
-            _sl._container.css( 'width', _sl.width * len );
-        };
+        
 
         $slider.prototype.move = function( index, dist, speed, immediate ) {
             var _sl = this, opts = _sl.opts,
@@ -308,20 +332,8 @@
             return (index % len + len) % arr.length;
         };
 
-        $slider.prototype.tansitionEnd = function( e ) {
-             var _sl = this;
-            // ~~用来类型转换，等价于parseInt( str, 10 );
-            if ( ~~e.target.getAttribute( 'data-index' ) !== _sl.index ) {
-                return;
-            }
-            
-            UI.trigger(_sl.ref[0], 'slideend', {
-                index: _sl.index
-            });
-        };
-
         $slider.prototype.slide = function( from, diff, dir, width, speed, opts ) {
-             var _sl = this, to;
+             var _sl = this, to, opts = _sl.opts;
 
             to = _sl.circle( from - dir * diff );
 
@@ -337,7 +349,7 @@
             _sl.move( to, 0, speed );
 
             _sl.index = to;
-            return UI.trigger(_sl.ref[0], 'slide', {
+            return _sl.trigger(opts.ref, 'slide', {
                 to: to,
                 from: from
             },_sl);
@@ -379,14 +391,13 @@
          * @method destroy
          */
         $slider.prototype.destroy = function() {
-            this._container.off( this.eventNs );
-            $( window ).off( 'ortchange' + this.eventNs );
-            return this.$super( 'destroy' );
+            
         };
 
         //注册$插件
         $.fn.slider = function(opts) {
             var sliderObjs = [];
+            opts|| (opts = {});
             this.each(function() {
                 var sliderObj = null;
                 var id = this.getAttribute('data-slider');

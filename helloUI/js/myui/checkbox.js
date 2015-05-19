@@ -3,64 +3,39 @@
  */
 (function() {   
 
-
-    define(function(require, exports, module) {
-        var $ = require("zepto");
-            UI = require("UI");
-
-        //pop
-        var $checkbox = function(opts){
-            //默认参数
-            var defOpts = {
-                /**
-                 * 参照对象
-                 * @property {String} [ref=null]
-                 */
-                ref     : null,     //参照目标
-                /**
-                 * 参照对象
-                 * @property {String} [ref=null]
-                 */
-                type     : null,     //参照目标
-                /**
-                 * 点击回调函数
-                 * @type {function}
-                 */
-                 callback: function(){}
-            };
-            this.opts = $.extend(defOpts, opts); 
-            this.init();
-        };
-
-        //初始化
-        $checkbox.prototype.init = function(){
-            var _chk = this, 
-                opts = this.opts;
-            //基础属性
-            _chk.ref = opts.ref;
-            _chk.callback = opts.callback;
-            var els = opts.type == 'checkbox'?$(_chk.ref).find('input[type=checkbox]'):(opts.type == 'radio'?$(_chk.ref).find('input[type=radio]'):[]);
-            els.on('change', function(evt) {
-                var ele = $(evt.currentTarget);
-                if ($.isFunction(_chk.callback)) {
-                        _chk.callback.apply(_chk, [ele,evt]);
-                    }
-                    //_chk.render();   
-            });
-        };
-
-        //渲染
-        $checkbox.prototype.render = function(){
-            var _chk = this, opts = _chk.opts;
-            var hasTouch = isTouchScreen();
-            var $ele = $(_chk.ref);
-        };
-
-        //绑定事件
-        $checkbox.prototype.bind = function(){
+    //渲染
+        var render = function(){
             
         };
 
+        //绑定事件
+        var bind = function(){
+            var _chk = this, opts = _chk.opts;
+            var els = opts.type == 'checkbox'?_chk.ref.find('input[type=checkbox]'):(opts.type == 'radio'?_chk.ref.find('input[type=radio]'):[]);
+            els.on('change', function(evt) {
+                var ele = evt.currentTarget;
+                if ($.isFunction(_chk.callback)) {
+                        _chk.callback.apply(_chk, [ele,evt]);
+                    }
+            });
+        };
+
+    define(function(require, exports, module) {
+            var UI = require("UI");
+
+        //pop
+        var $checkbox = UI.define('Checkbox',{
+                /**
+                 * 区分是checkbox、radio
+                 */
+                type     : null     
+            });
+
+        //初始化
+        $checkbox.prototype.init = function(){
+            render.call(this);
+            bind.call(this);
+        };
         //注册$插件
         $.fn.checkbox = function (opts) {
             var checkObjs = [];
@@ -81,6 +56,7 @@
         };
         $.fn.radio = function (opts) {
             var radioObjs = [];
+            opts|| (opts = {});
             this.each(function() {
                 var radioObj = null;
                 var id = this.getAttribute('data-radio');
