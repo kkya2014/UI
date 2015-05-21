@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello UI Treeview</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		 <link rel="stylesheet" href="css/mui.css">
+	<style type="text/css">
+	
+
+
+#wrapper {
+	position: absolute;
+	z-index: 1;
+	top: 30px;
+	bottom: 0px;
+	left: 0;
+	width: 100%;
+	background: #ccc;
+	overflow: hidden;
+}
+
+#scroller {
+	position: absolute;
+	width: 100%;
+}
+
+</style>
+
+	</head>
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+        </header> 
+		<div id="wrapper">
+			<div id="scroller">
+				<div class="mui-content" id='treeview'>
+				
+				</div>
+			</div>
+		</div>
+		<script src="js/sea.js"></script>
+        <script src="js/config.js"></script>
+</body>
+<script>
+   seajs.use(['header','treeview','iscroll'], function(){
+   		$('#header').header({
+   				title:'<h1 class="mui-title">UI Widgets</h1>',
+                left:{
+                    content:'<a class="mui-icon mui-icon-bars mui-pull-left"></a>',
+                    callback:function(chk,el){
+                        //alert('首页');
+                    }
+                },
+                 right:{
+                    content:'<a id="info" class="mui-icon mui-icon-info-filled mui-pull-right" style="color: #999;"></a>',
+                    callback:function(chk,el){
+                        //alert('首页');
+                    }
+                }
+            });
+   		$('#treeview').treeview({
+   					callback:function(el,evt){
+   						window.location.href=$(el).attr('tar');
+   					},
+   					toggle:function(el,evt){
+   						$(window).trigger('resize');
+   					},
+                	data:[{
+						    cont : "按钮",
+						    name : "control",
+						    tar : "button.html"
+					    },{
+						    cont : '多选框',
+						    name : "listview",
+						    tar : "checkbox.html"
+					    },{
+						    cont : '弹出框',
+						    name : "listview",
+						    tar : "dialog.html"
+						},{
+						    cont : '列表',
+						    name : "listview",
+						    tar : "gridview.html"
+						},{
+						    cont : '导航',
+						    name : "listview",
+						    tar : "header.html"
+						},{
+						    cont : '文本框',
+						    name : "listview",
+						    tar : "input.html"
+						},{
+						    cont : '单选框',
+						    tar : "radio.html"
+						},{
+						    cont : '下拉列表',
+						    name : "listview",
+						    tar : "select.html"
+						},{
+						    cont : '轮播图',
+						    name : "listview",
+						    tar : "slider.html"
+						},{
+						    cont : '开关',
+						    name : "listview",
+						    tar : "switche.html"
+						},{
+						    cont : "图片轮播(slider)",
+						    contents : [{
+						        cont : '图片轮播(slider)',
+						        name : "listview",
+						        tar : "slider.html"
+						    }]
+						},{
+						    cont : 'Tab bar',
+						    name : "listview",
+						    tar : "tabs.html"
+						},{
+						    cont : '单行右侧带箭头',
+						    name : "listview",
+						    tar : "treeview.html"
+						}]
+                });
+		setTimeout(function(){
+			$('#wrapper').iScroll({
+				scrollbars: true
+			});
+			$(window).trigger('resize');
+		}, 200);
+   })
+   </script>
+</html>

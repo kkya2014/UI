@@ -2,6 +2,7 @@ seajs.config({
     alias: {
     	'zepto': 'base/zepto',
         'UI': 'base/UI',
+        'iscroll': 'components/iscroll_lite',
         'button' : 'myui/button',
         'checkbox' : 'myui/checkbox',
         'radio' : 'myui/checkbox',
@@ -16,7 +17,7 @@ seajs.config({
         'sliderbtn':'myui/slider/sliderb',
         'gridview' : 'myui/gridview',
         'tab' : 'myui/tabs/tabs',
-        'tabbak' : 'myui/tabs/tabs.base',
+        'tabbase' : 'myui/tabs/tabs.base',
         'tabswipe' : 'myui/tabs/tabs$swipe',
         'treeview' : 'myui/treeview'
     },

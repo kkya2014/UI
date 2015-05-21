@@ -40,7 +40,7 @@
                     //event.detail.isActive 可直接获取当前状态
                     var ele = evt.currentTarget;
                 if ($.isFunction(_tog.callback)) {
-                    _tog.callback.apply(_tog, [ele,evt]);
+                    _tog.callback.apply(_tog, [ele,evt,evt.detail.isActive]);
                 }
             });
         };   

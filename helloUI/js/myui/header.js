@@ -12,43 +12,28 @@
             CLASS_ICON_LEFT_NAV = 'mui-icon-left-nav',
             CLASS_PULL_LEFT = 'mui-pull-left',
             CLASS_PULL_RIGHT = 'mui-pull-right';
-            CLASS_ICON_BARS = 'mui-icon-bars',
+            CLASS_ICON_BARS = 'mui-icon-bars';
 
-            tpl = {
-                content:'<h1 class="'+CLASS_TITLE+'"><%=title%></h1>',
-                leftImg: '<a class="'+CLASS_ACTION_BACK+' '+CLASS_ICON+' '+CLASS_ICON_LEFT_NAV+' '+CLASS_PULL_LEFT+'"></a>',
-                leftText: '<button class="'+CLASS_ACTION_BACK+' '+CLASS_BTN+' '+CLASS_BTN_BLUE+' '+CLASS_BTN_LINK+' '+CLASS_BTN_NAV+' '+CLASS_PULL_LEFT+'">'+
-                          '<span class="'+CLASS_ICON+' '+CLASS_ICON_LEFT_NAV+'"></span><%=text%></button>',
-                rightImg: '<a class="'+CLASS_ICON+' '+CLASS_ICON_BARS+' '+CLASS_PULL_RIGHT+'"></a>',
-                rightText: '<button class="'+CLASS_BTN+' '+CLASS_BTN_BLUE+' '+CLASS_BTN_LINK+' '+CLASS_PULL_RIGHT+'"><%=text%></button>'
-            };
+            
 
 
 
         //渲染
         var render = function(){
-            var _h = this, opts = _h.opts;
-            $(_h.parseTpl(tpl.content, opts)).appendTo(_h.ref)
-            if(opts.left){
-                var vars = {};
-                opts.left.text&& (vars.text = opts.left.text);
-                _h._left = vars.text?$(_h.parseTpl(tpl.leftText, vars)).appendTo(_h.ref):$(tpl.leftImg).appendTo(_h.ref);
-            }
-            if(opts.right){
-                var vars = {};
-                opts.right.text&& (vars.text = opts.right.text);
-                _h._right = vars.text?$(_h.parseTpl(tpl.rightText, vars)).appendTo(_h.ref):$(tpl.rightImg).appendTo(_h.ref);
-            }
+            var _h = this, opts = _h.opts,left = opts.left;right = opts.right;
+            _h.ref.append(opts.title);
+            left&&left.content&&(_h._left = $(left.content).appendTo(_h.ref));
+            right&&right.content&&(_h._right = $(right.content).appendTo(_h.ref));
         };
 
         //绑定事件
         var bind = function(){
-            var _h = this, match, opts = _h.opts;
-            _h._left && $.isFunction(opts.left.callback) && _h._left.botton({
-                callback:opts.left.callback
+            var _h = this, match, opts = _h.opts,left = opts.left;right = opts.right;
+            _h._left && $.isFunction(left.callback) && _h._left.botton({
+                callback:left.callback
             });
-            _h._right && $.isFunction(opts.right.callback) && _h._right.botton({
-                callback:opts.right.callback
+            _h._right && $.isFunction(right.callback) && _h._right.botton({
+                callback:right.callback
             });
         };    
 
@@ -67,17 +52,24 @@
                  * 标题
                  * @type {function}
                  */
-                title:'导航栏',
+                title:'<h1 class="'+CLASS_TITLE+'">导航栏</h1>',
                 /**
                  * 定义左侧
                  * @type {function}
                  */
-                 left: null,
+                 left: {
+                    content: '<a class="'+CLASS_ACTION_BACK+' '+CLASS_ICON+' '+CLASS_ICON_LEFT_NAV+' '+CLASS_PULL_LEFT+'"></a>'
+                    /*,leftText: '<button class="'+CLASS_ACTION_BACK+' '+CLASS_BTN+' '+CLASS_BTN_BLUE+' '+CLASS_BTN_LINK+' '+CLASS_BTN_NAV+' '+CLASS_PULL_LEFT+'">'+
+                              '<span class="'+CLASS_ICON+' '+CLASS_ICON_LEFT_NAV+'"></span><%=text%></button>'*/
+                 },
                  /**
                  * 定义右侧
                  * @type {function}
                  */
-                 right: null
+                 right: {
+                    content: '<a class="'+CLASS_ICON+' '+CLASS_ICON_BARS+' '+CLASS_PULL_RIGHT+'"></a>'
+                    /*,rightText: '<button class="'+CLASS_BTN+' '+CLASS_BTN_BLUE+' '+CLASS_BTN_LINK+' '+CLASS_PULL_RIGHT+'"><%=text%></button>'*/
+                 }
             });
 
         //初始化

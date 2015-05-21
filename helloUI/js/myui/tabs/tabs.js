@@ -93,7 +93,7 @@
              * @property {String} [transition='slide'] 设置切换动画，目前只支持slide动画，或无动画
              * @namespace options
              */
-            transition: 'slide'
+            transition: ''
          });
         
         //初始化

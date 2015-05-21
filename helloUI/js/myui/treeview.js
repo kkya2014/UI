@@ -26,8 +26,11 @@
             lis.on( _tv.touchEve() , function(evt) {
                 _tv.stopPropagation(evt);
                 var ele = evt.currentTarget;
+                var tar = evt.target;
                 var classList = ele.classList;
-                if (classList.contains(CLASS_COLLAPSE)) {
+                if(false){
+
+                }else if (classList.contains(CLASS_COLLAPSE)) {
                     if (!classList.contains(CLASS_ACTIVE)) { //展开时,需要收缩其他同类
                         var collapse = ele.parentNode.querySelector('.'+CLASS_COLLAPSE+'.'+CLASS_ACTIVE);
                         if (collapse) {
@@ -35,19 +38,20 @@
                         }
                     }
                     classList.toggle(CLASS_ACTIVE);
+                    if ($.isFunction(_tv.toggle)) {
+                        _tv.toggle.apply(_tv, [ele,evt]);
+                    }
                 }else if (classList.contains(CLASS_TABLE_VIEW_CELL)) {
                     tarEl = ele;
                     classList.add(CLASS_ACTIVE);
                     if ($.isFunction(_tv.callback)) {
                         _tv.callback.apply(_tv, [ele,evt]);
                     }
+                    setTimeout(function(){
+                        tarEl.classList.remove(CLASS_ACTIVE);
+                    }, 200);
                 }
-            }).on( _tv.touchEnd() , function(evt) {
-                if (!tarEl) {
-                    return;
-                }
-                tarEl.classList.remove(CLASS_ACTIVE);
-            });
+            })
         };
 
     define(function(require, exports, module) {
@@ -62,7 +66,7 @@
                  tpl : {
                     ul: '<ul class="'+CLASS_TABLE_VIEW+'  '+CLASS_TABLE_VIEW_CHEVRON+'" ></ul>',
                     li: '<li class="'+CLASS_TABLE_VIEW_CELL+'" data-ui-li = <%=i%> tar = <%=tar%>>'+
-                        '<a class="'+CLASS_NAVIGATE_RIGHT+'"><%=cont%></a></li>' ,
+                        '<a class="'+CLASS_NAVIGATE_RIGHT+'" href = <%=tar%>><%=cont%></a></li>' ,
                     muli: '<li class="'+CLASS_TABLE_VIEW_CELL+'" data-ui-li = <%=i%>>'+
                         '<a class="'+CLASS_NAVIGATE_RIGHT+'"><%=cont%></a></li>' 
                 },
@@ -74,11 +78,13 @@
                  * 点击回调函数
                  * @type {function}
                  */
-                 callback: function(){}
+                 toggle: function(){}
             });
 
         //初始化
         $treeview.prototype.init = function(){
+            var _tv = this,opts = _tv.opts;
+            _tv.toggle = opts.toggle;
             render.call(this);
             bind.call(this);
         };

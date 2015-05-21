@@ -74,7 +74,7 @@ define(function(require, exports, module) {
   };
 
   Base.touchEve = function(str, data){
-    return this.isTouchScreen()? "touchstart" : "mousedown"
+    return this.isTouchScreen()? "tap" : "mousedown"
   };
 
   Base.touchEnd = function(str, data){
@@ -126,7 +126,7 @@ define(function(require, exports, module) {
                  * 点击回调函数
                  * @type {function}
                  */
-                 callback: function(){}
+                 callback: null
          }
         var klass = function(opts) {
             var baseOpts = $.extend(true,{},this.options);
