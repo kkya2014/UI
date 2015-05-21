@@ -57,7 +57,9 @@
                     .children()
                     .addClass( CLASS_SLIDER_ITEM )
                     .toArray();
-            _sl.ref.addClass( CLASS_SLIDER )
+            _sl.ref.addClass( CLASS_SLIDER );
+            //自适应
+            opts.imgZoom&&zoom.call(this);
             _sl.trigger(opts.ref, 'donedom');
             opts.dots&&initDots.call(_sl);
             initWidth.call(_sl);
@@ -133,6 +135,7 @@
             _sl.width = width;
             arrange.call(_sl);
             _sl.height = _sl.ref.height();
+            _sl.trigger(opts.ref,'width.change');
     };
 
     // 重排items
@@ -179,6 +182,38 @@
             //     container.append( _sl.parseTpl(tpl.wrap, vars) );
             // }
         };
+
+     var zoom = function() {
+        var _sl = this, opts = _sl.opts,
+            watches;
+
+        selector = 'img';
+
+        function unWatch() {
+            watches && watches.off( 'load', imgZoom );
+        }
+
+        function watch() {
+            unWatch();
+            watches = _sl._container.find( selector )
+                    .on( 'load', imgZoom );
+        }
+
+        function imgZoom( e ) {
+            var img = e.target || this,
+
+                // 只缩放，不拉伸
+                scale = Math.min( 1, _sl.width / img.naturalWidth,
+                    _sl.height / img.naturalHeight );
+            
+            img.style.width = scale * img.naturalWidth + 'px';
+        }
+
+        watch();
+        _sl.ref.on( 'width.change', function() {
+            watches && watches.each( imgZoom );
+        } );
+    };
     
     /**
      * 图片轮播组件
@@ -235,7 +270,8 @@
                     dots: '.'+CLASS_SLIDER_DOTS,
                     group: '.'+CLASS_SLIDER_GROUP
                 },
-                 tpl : {
+                imgZoom:true,
+                tpl : {
                     item: '<div class="'+CLASS_SLIDER_ITEM+'"><a href="<%= href %>">' +
                             '<img src="<%= pic %>" alt="" /></a>' +
                             '<% if( title ) { %><p><%= title %></p><% } %>' +
