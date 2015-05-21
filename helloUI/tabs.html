@@ -52,6 +52,16 @@
             .oa-contact-name, oa-contact-position {
                 float: left;
             }
+            .wrapper {
+                position: absolute;
+                z-index: 1;
+                top: 0px;
+                bottom: 50px;
+                left: 0;
+                width: 100%;
+                background: #ccc;
+                overflow: hidden;
+            }
         </style>
 </head>
 <body>  
@@ -62,7 +72,7 @@
                 <span class="mui-icon mui-icon-home"></span>
                 <span class="mui-tab-label">首页</span>
             </a>
-            <a href="#tabbar-with-chat">
+            <a href="#wrapper">
                 <span class="mui-icon mui-icon-email"><span class="mui-badge">9</span></span>
                 <span class="mui-tab-label">消息</span>
             </a>
@@ -95,11 +105,11 @@
                 </div>
             </div>
             </div>
-            <div id="tabbar-with-chat">
-                <div  id="left">
-                </div>  
+            <div id="wrapper" class ="wrapper">
+                    <div  id="left">
+                    </div>  
             </div>
-            <div id="tabbar-with-contact">
+            <div id="tabbar-with-contact" class ="wrapper">
                 <div id="muiR">
                 </div>  
             </div>
@@ -141,10 +151,10 @@
         <script src="js/config.js"></script>
 </body>
 <script>
-   seajs.use(['tab','gridview','slider','sliderbtn'], function(){
+   seajs.use(['tab','gridview','slider','sliderbtn','iscroll'], function(){
             $('#tabs1').tab();
             $('#tabs1').on('beforeActivate',function(e){
-                //alert();
+                    $(window).trigger('resize');
             });
             $('#slider').slider( { loop:true });
             var tplLeft = '<li class="mui-table-view-cell mui-media">'+
@@ -327,6 +337,15 @@
                     },
                     data:dataR
                 }); 
+                setTimeout(function(){
+                    $('#wrapper').iScroll({
+                        scrollbars: true
+                    });
+                    $('#tabbar-with-contact').iScroll({
+                        scrollbars: true
+                    });
+                    
+                }, 200);
 
     });
 </script>   

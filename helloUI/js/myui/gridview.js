@@ -35,13 +35,14 @@
                 if (classList.contains(CLASS_TABLE_VIEW_CELL)) {
                     tarEl = ele;
                     tarEl.classList.add(CLASS_ACTIVE);
+                    if ($.isFunction(_gv.callback)) {
+                        _gv.callback.apply(_gv, [ele,evt]);
+                    }
+                    setTimeout(function(){
+                        tarEl.classList.remove(CLASS_ACTIVE);
+                    }, 200);
                 }
-            }).on( _gv.touchEnd() , function(evt) {
-                if (!tarEl) {
-                    return;
-                }
-                tarEl.classList.remove(CLASS_ACTIVE);
-            });
+            })
         };
 
     define(function(require, exports, module) {
