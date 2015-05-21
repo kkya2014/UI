@@ -12,6 +12,10 @@
     <link rel="stylesheet" type="text/css" href="css/assets/widget/slider/slider.default.css" /> 
     <link rel="stylesheet" href="css/mui.css">
    <style>
+            body {
+                font-family: ubuntu, helvetica, arial;
+                overflow: hidden; /* this is important to prevent the whole page to bounce */
+            }
             html,body {
                 background-color: #efeff4;
             }
@@ -57,10 +61,8 @@
                 z-index: 1;
                 top: 0px;
                 bottom: 50px;
-                left: 0;
                 width: 100%;
                 background: #ccc;
-                overflow: hidden;
             }
         </style>
 </head>
@@ -151,7 +153,7 @@
         <script src="js/config.js"></script>
 </body>
 <script>
-   seajs.use(['tab','gridview','slider','sliderbtn','iscroll'], function(){
+   seajs.use(['tab','gridview','slider','sliderbtn','scroll'], function(){
             $('#tabs1').tab();
             $('#tabs1').on('beforeActivate',function(e){
                     $(window).trigger('resize');
@@ -338,11 +340,17 @@
                     data:dataR
                 }); 
                 setTimeout(function(){
-                    $('#wrapper').iScroll({
-                        scrollbars: true
+                    $('#wrapper').scroll({
+                        scrollbars: true,
+                        interactiveScrollbars: true,
+                        shrinkScrollbars: 'scale',
+                        fadeScrollbars: true
                     });
-                    $('#tabbar-with-contact').iScroll({
-                        scrollbars: true
+                    $('#tabbar-with-contact').scroll({
+                        scrollbars: true,
+                        interactiveScrollbars: true,
+                        shrinkScrollbars: 'scale',
+                        fadeScrollbars: true
                     });
                     
                 }, 200);

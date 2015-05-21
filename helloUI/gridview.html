@@ -25,54 +25,67 @@
 				color: #6d6d72;
 				font-size: 15px;
 			}
+
+			#wrapper {
+				position: absolute;
+				z-index: 1;
+				top: 0px;
+				bottom: 0px;
+				left: 0;
+				width: 100%;
+				overflow: hidden;
+			}
 		</style>
 	</head>
 
 	<body>
-		<div class="mui-content" id="base">
-			<div class="title">
-				基礎列表
-			</div>
+	<div id="wrapper">
+		<div id="scroller">
+			<div class="mui-content" id="base">
+				<div class="title">
+					基礎列表
+				</div>
+			</div>	
+			<div class="mui-content" id="left">
+				<div class="title">
+					缩略图居左
+				</div>
+			</div>	
+			<div class="mui-content" id="right">
+				
+				<div class="title">
+					缩略图居右
+				</div>
+			</div>	
+			<div class="mui-content" id="rightC">
+				<div class="title">
+					右侧带导航箭头
+				</div>
+			</div>	
+			<div class="mui-content">
+				<div class="title">
+					card（圆角列表）
+				</div>
+				<div class="mui-card" style="margin-bottom: 35px;" id="card">
+				</div>
+			</div>	
+			<div class="mui-content" id="muiR">
+				<div class="title">
+					多行消息
+				</div>
+			</div>	
+			<div class="mui-content" id="custom">
+				<div class="title">
+					自定義內容
+				</div>
+			</div>	
 		</div>	
-		<div class="mui-content" id="left">
-			<div class="title">
-				缩略图居左
-			</div>
-		</div>	
-		<div class="mui-content" id="right">
-			
-			<div class="title">
-				缩略图居右
-			</div>
-		</div>	
-		<div class="mui-content" id="rightC">
-			<div class="title">
-				右侧带导航箭头
-			</div>
-		</div>	
-		<div class="mui-content">
-			<div class="title">
-				card（圆角列表）
-			</div>
-			<div class="mui-card" style="margin-bottom: 35px;" id="card">
-			</div>
-		</div>	
-		<div class="mui-content" id="muiR">
-			<div class="title">
-				多行消息
-			</div>
-		</div>	
-		<div class="mui-content" id="custom">
-			<div class="title">
-				自定義內容
-			</div>
-		</div>	
-
+	</div>
 		<script src="js/sea.js"></script>
         <script src="js/config.js"></script>
 </body>
 <script>
-   seajs.use(['gridview','switch'], function(){
+   seajs.use(['gridview','switch','scroll'], function(){
 
    				$('#base').gridview({
                 	data:[{
@@ -121,7 +134,7 @@
                 			src:'css/assets/slider/image3.png',
                 			cont:'烤炉',
                 			text:'烤炉模式的城，到黄昏，如同打翻的调色盘一般.'
-                		}]			
+                		}];			
                 $('#left').gridview({
                 	tpl:{
                 		li: tplLeft 
@@ -278,7 +291,16 @@
 					                    'Item 3'+
 					                '</a>'+
 					            '</li>';
-				customGV.appendHtml(badgeSTR);	            
+				customGV.appendHtml(badgeSTR);	    
+				setTimeout(function(){
+					$('#wrapper').scroll({
+						scrollbars: true,
+						interactiveScrollbars: true,
+						shrinkScrollbars: 'scale',
+						fadeScrollbars: true
+					});
+					$(window).trigger('resize');
+				}, 200);        
 
             });
 </script>
