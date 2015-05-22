@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
 	require("zepto");
 	var UI = {},Base = {};
-
+  
 	UI.config = {};
 
   Base.eachObj = function( obj, iterator ) {
@@ -9,21 +9,6 @@ define(function(require, exports, module) {
             iterator( key, obj[ key ] );
         });
   };
-  /**
-     * trigger event
-     * @param {type} element
-     * @param {type} eventType
-     * @param {type} eventData
-     * @returns {_L8.$}
-     */
-  Base.trigger = function(element, eventType, eventData) {
-        return element.dispatchEvent(new CustomEvent(eventType, {
-                  detail: eventData,
-                  bubbles: true,
-                  cancelable: true
-              }));
-        //return goal||this;
-    };
   Base.init = function(){};
   Base.initPlugins = function(){
       var self = this;
@@ -135,7 +120,7 @@ define(function(require, exports, module) {
             this.callback = this.opts.callback;
             this.initPlugins();
             this.init();
-            this.opts.ref&&this.trigger(this.opts.ref, 'readydom');
+            this.opts.ref&&this.ref.trigger('readydom');
         }
         UI[ name ] = Base.extend.call(klass,Base);
         UI[ name ].prototype.options = $.extend(defOpts, options); 

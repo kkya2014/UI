@@ -21,90 +21,49 @@
    seajs.use(['treeview'], function(){
    		$('#treeview').treeview({
    					callback:function(el,evt){
-   						alert(el.innerHTML)
+   						//alert(el.innerHTML)
    					},
                 	data:[{
-						    cont : "消息框(dialog)",
-						    name : "control",
-						    tar : "UIcontrol/dialog.html"
+						    cont : "按钮",
+						    name : "control"
+					    },{
+						    cont : '多选框',
+						    name : "listview",
+						    tar : "checkbox.html"
+					    },{
+						    cont : '弹出框',
+						    name : "listview",
+						    tar : "dialog.html"
 						}, {
-						    cont : "图片轮播(slider)",
+						    cont : "树列表",
 						    contents : [{
-						        cont : '单行列表',
-						        name : "listview",
-						        tar : "UIcontrol/listview.html"
-						    }, {
-						        cont : '单行右侧带箭头',
-						        name : "listview",
-						        tar : "UIcontrol/listview.html"
-						    }, {
-						        cont : '单行带描述右侧带箭头',
-						        name : "listview",
-						        tar : "UIcontrol/listview.html"
-						    }, {
-						        cont : '单行复选',
-						        name : "listview",
-						        tar : "UIcontrol/listview.html"
-						    }, {
-						        cont : '单行单选',
-						        name : "listview",
-						        tar : "UIcontrol/listview.html"
-						    }, {
-						        cont : '单行全包含',
-						        name : "listview",
-						        tar : "UIcontrol/listview.html"
-						    }, {
-						        cont : '单行带控件',
-						        name : "listview",
-						        tar : "UIcontrol/listview.html"
-						    }, {
-						        cont : '多行列表',
-						        name : "listview",
-						        tar : "UIcontrol/listview.html"
-						    }, {
-						        cont : '文字换行缩略',
-						        name : "listview",
-						        tar : "UIcontrol/listview.html"
-						    }]
+							    cont : "按钮",
+							    name : "control",
+							    tar : "button.html"
+						    },{
+							    cont : '多选框',
+							    name : "listview",
+							    tar : "checkbox.html"
+						    },{
+							    cont : '弹出框',
+							    name : "listview",
+							    tar : "dialog.html"
+							}]
 						}, {
-						    cont : "列表(list)",
+						    cont : "树列表",
 						    contents : [{
-						        cont : '单行列表',
-						        name : "listview",
-						        tar : "UIcontrol/listview.html"
-						    }, {
-						        cont : '单行右侧带箭头',
-						        name : "listview",
-						        tar : "UIcontrol/listview.html"
-						    }, {
-						        cont : '单行带描述右侧带箭头',
-						        name : "listview",
-						        tar : "UIcontrol/listview.html"
-						    }, {
-						        cont : '单行复选',
-						        name : "listview",
-						        tar : "UIcontrol/listview.html"
-						    }, {
-						        cont : '单行单选',
-						        name : "listview",
-						        tar : "UIcontrol/listview.html"
-						    }, {
-						        cont : '单行全包含',
-						        name : "listview",
-						        tar : "UIcontrol/listview.html"
-						    }, {
-						        cont : '单行带控件',
-						        name : "listview",
-						        tar : "UIcontrol/listview.html"
-						    }, {
-						        cont : '多行列表',
-						        name : "listview",
-						        tar : "UIcontrol/listview.html"
-						    }, {
-						        cont : '文字换行缩略',
-						        name : "listview",
-						        tar : "UIcontrol/listview.html"
-						    }]
+							    cont : "按钮",
+							    name : "control",
+							    tar : "button.html"
+						    },{
+							    cont : '多选框',
+							    name : "listview",
+							    tar : "checkbox.html"
+						    },{
+							    cont : '弹出框',
+							    name : "listview",
+							    tar : "dialog.html"
+							}]
 						}]
                 });
    })

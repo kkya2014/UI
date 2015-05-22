@@ -21,7 +21,7 @@
 
 
     define(function(require, exports, module) {
-            var UI = require("UI");
+        var UI = require("UI");
 
         //botton
          var $botton = UI.define('Botton',{});

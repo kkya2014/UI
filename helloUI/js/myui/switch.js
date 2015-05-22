@@ -30,17 +30,17 @@
 
         //绑定事件
         var bind = function(){
-            var _tog = this, opts = this.opts,element = opts.ref;
-            element.addEventListener('touchstart', $.proxy(handleEvent, _tog));
-            element.addEventListener('drag', $.proxy(handleEvent, _tog));
-            element.addEventListener('swiperight', $.proxy(handleEvent, _tog));
-            element.addEventListener('touchend', $.proxy(handleEvent, _tog));
-            element.addEventListener('touchcancel', $.proxy(handleEvent, _tog));
-            element.addEventListener('toggle', function(evt) {
+            var _tog = this, opts = this.opts,element = _tog.ref;
+            element.on('touchstart', $.proxy(handleEvent, _tog));
+            element.on('drag', $.proxy(handleEvent, _tog));
+            element.on('swiperight', $.proxy(handleEvent, _tog));
+            element.on('touchend', $.proxy(handleEvent, _tog));
+            element.on('touchcancel', $.proxy(handleEvent, _tog));
+            element.on('toggle', function(evt,isActive) {
                     //event.detail.isActive 可直接获取当前状态
                     var ele = evt.currentTarget;
                 if ($.isFunction(_tog.callback)) {
-                    _tog.callback.apply(_tog, [ele,evt,evt.detail.isActive]);
+                    _tog.callback.apply(_tog, [ele,evt,isActive]);
                 }
             });
         };   
@@ -102,9 +102,8 @@
             if (opts.isDragging) {
                 opts.isDragging = false;
                 evt.stopPropagation();
-                _tog.trigger(element, 'toggle', {
-                    isActive: element.classList.contains(CLASS_ACTIVE)
-                });
+                var active = element.classList.contains(CLASS_ACTIVE);
+                _tog.ref.trigger('toggle', [active]);
             } else {
                 _tog.toggle();
             }
@@ -131,9 +130,8 @@
                 classList.add(CLASS_ACTIVE);
                 _tog._handle.style.webkitTransform = 'translate3d(' + opts.handleX + 'px,0,0)';
             }
-            _tog.trigger(element, 'toggle', {
-                isActive: classList.contains(CLASS_ACTIVE)
-            });
+             var active = classList.contains(CLASS_ACTIVE);
+            _tog.ref.trigger('toggle',[active]);
         };
 
         $switch.prototype.setTranslateX = UI.animationFrame(function(x) {

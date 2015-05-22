@@ -121,10 +121,7 @@
                 from.div = getPanel.call(_tb);
                 from.index = opts.active;
 
-                var eventStatus = _tb.trigger(opts.ref,'beforeActivate',{
-                    to: to,
-                    from: from
-                })
+                var eventStatus = _tb.ref.trigger('beforeActivate',[to,from])
                 if(!eventStatus) return _tb;
 
                 _tb._content.children().removeClass(CLASS_ACTIVE);
@@ -141,18 +138,12 @@
                         _tb._buzy = false;
                         from.div.removeClass('out reverse');
                         to.div.removeClass('in reverse');
-                        _tb.trigger(opts.ref,'animateComplete',{
-                            to: to,
-                            from: from
-                        });
+                        _tb.ref.trigger('animateComplete',[to,from]);
                         fitToContent.call(_tb,to.div);
                     });
                 }
                 opts.active = index;
-                _tb.trigger(opts.ref,'activate',{
-                    to: to,
-                    from: from
-                 });
+                _tb.ref.trigger('activate',[to,from]);
                 opts.transition ||  fitToContent.call(_tb,to.div);
             }
             return _tb;

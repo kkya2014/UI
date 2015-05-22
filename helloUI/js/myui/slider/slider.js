@@ -60,7 +60,7 @@
             _sl.ref.addClass( CLASS_SLIDER );
             //自适应
             opts.imgZoom&&zoom.call(this);
-            _sl.trigger(opts.ref, 'donedom');
+            _sl.ref.trigger('donedom');
             opts.dots&&initDots.call(_sl);
             initWidth.call(_sl);
         };
@@ -72,8 +72,7 @@
                    .on( 'touchend', $.proxy(handleEvent, _sl));
              //dots添加
              if(opts.dots){
-                _sl.ref.on( 'slide', function(evt) {
-                    var to = evt.detail.to, from = evt.detail.from;
+                _sl.ref.on( 'slide', function(evt,to,from) {
                     updateDots.apply(_sl,[to,from]);
                 })
             }
@@ -135,7 +134,7 @@
             _sl.width = width;
             arrange.call(_sl);
             _sl.height = _sl.ref.height();
-            _sl.trigger(opts.ref,'width.change');
+            _sl.ref.trigger('width.change');
     };
 
     // 重排items
@@ -168,9 +167,7 @@
             if ( ~~evt.target.getAttribute( 'data-index' ) !== _sl.index ) {
                 return;
             }
-            _sl.trigger(opts.ref, 'slideend', {
-                index: _sl.index
-            });
+            _sl.ref.trigger('slideend', [_sl.index]);
         };    
 
 
@@ -385,10 +382,7 @@
             _sl.move( to, 0, speed );
 
             _sl.index = to;
-            return _sl.trigger(opts.ref, 'slide', {
-                to: to,
-                from: from
-            },_sl);
+            return _sl.ref.trigger('slide', [to,from]);
         };
 
         /**

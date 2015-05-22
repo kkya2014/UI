@@ -102,12 +102,14 @@
                 if(lis.length>0){
                     $.each(lis, function(index, item){
                         item.i = index + 1;
+                        item.tar|| (item.tar = "#");
                         if(item.contents&&($.isArray(item.contents))){
                             _tv._muliparseFn||(_tv._muliparseFn = _tv.parseTpl(opts.tpl.muli));
                             _lis[index] = _tv._muliparseFn(item);    
                             var mulis = [];
                             $.each(item.contents, function(i, el){
                                 el.i = i + 1;
+                                el.tar|| (el.tar = "#");
                                 mulis[i] = _tv._parseFn(el);
                             })
                             _mulis.push({
