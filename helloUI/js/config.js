@@ -1,7 +1,7 @@
 seajs.config({
     alias: {
     	'zepto': 'base/zepto',
-        'UI': 'base/UI',
+        'UI': 'base/ui',
         'iscroll': 'components/build/iscroll',
         'button' : 'myui/button',
         'checkbox' : 'myui/checkbox',

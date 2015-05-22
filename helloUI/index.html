@@ -73,22 +73,22 @@ body {
 	window.onerror=function(sMsg,sUrl,sLine){
 		alert(sMsg+'   '+sUrl+'    '+sLine);
 	}
-   seajs.use(['treeview','scroll'], function(){
-   		// $('#header').header({
-   		// 		title:'<h1 class="mui-title">UI Widgets</h1>',
-     //            left:{
-     //                content:'<a class="mui-icon mui-icon-bars mui-pull-left"></a>',
-     //                callback:function(chk,el){
-     //                    //alert('首页');
-     //                }
-     //            },
-     //             right:{
-     //                content:'<a id="info" class="mui-icon mui-icon-info-filled mui-pull-right" style="color: #999;"></a>',
-     //                callback:function(chk,el){
-     //                    //alert('首页');
-     //                }
-     //            }
-     //        });
+   seajs.use(['header','treeview','scroll'], function(){
+   		$('#header').header({
+   				title:'<h1 class="mui-title">UI Widgets</h1>',
+                left:{
+                    content:'<a class="mui-icon mui-icon-bars mui-pull-left"></a>',
+                    callback:function(chk,el){
+                        //alert('首页');
+                    }
+                },
+                 right:{
+                    content:'<a id="info" class="mui-icon mui-icon-info-filled mui-pull-right" style="color: #999;"></a>',
+                    callback:function(chk,el){
+                        //alert('首页');
+                    }
+                }
+            });
    		$('#treeview').treeview({
    					callback:function(el,evt){
    						window.location.href=$(el).attr('tar');
