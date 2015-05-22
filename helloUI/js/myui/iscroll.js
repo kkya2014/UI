@@ -17,7 +17,7 @@
                 var self = this;
                 var id = self.getAttribute('data-scroll');
                 if (!id) {
-                    opts = $.extend(opts, { ref : this});
+                    opts = $.extend(opts, { disableMouse : true,disablePointer:true});
                     id = ++UI.uuid;
                     scrollObj = UI.data[id] = new IScroll(self, opts);
                     self.setAttribute('data-scroll', id);
