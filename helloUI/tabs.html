@@ -5,12 +5,12 @@
     <meta charset="utf-8">
     <title>Hello UI Tabs</title>
     <!--demo展示所用css，不用关心 begin-->
+    <link rel="stylesheet" href="css/mui.css">
     <link rel="stylesheet" type="text/css" href="css/assets/transitions.css" />
     <link rel="stylesheet" type="text/css" href="css/assets/widget/tabs/tabs.css" />
     <link rel="stylesheet" type="text/css" href="css/assets/widget/tabs/tabs.default.css" />
     <link rel="stylesheet" type="text/css" href="css/assets/widget/slider/slider.css" />
     <link rel="stylesheet" type="text/css" href="css/assets/widget/slider/slider.default.css" /> 
-    <link rel="stylesheet" href="css/mui.css">
    <style>
             body {
                 font-family: ubuntu, helvetica, arial;
@@ -70,7 +70,7 @@
     
     <div id = "tabs1">
         <nav >
-            <a href="#tabbar">
+            <a href="#slider">
                 <span class="mui-icon mui-icon-home"></span>
                 <span class="mui-tab-label">首页</span>
             </a>
@@ -78,44 +78,26 @@
                 <span class="mui-icon mui-icon-email"><span class="mui-badge">9</span></span>
                 <span class="mui-tab-label">消息</span>
             </a>
-            <a href="#tabbar-with-contact">
+            <a href="#contact">
                 <span class="mui-icon mui-icon-contact"></span>
                 <span class="mui-tab-label">通讯录</span>
             </a>
-            <a href="#tabbar-with-map">
+            <a href="#contor">
                 <span class="mui-icon mui-icon-gear"></span>
                 <span class="mui-tab-label">设置</span>
             </a>
         </nav>
-            <div id="tabbar">
-               <div id="slider">
-                <div>
-                    <a><img src="css/assets/slider/image1.png"></a>
-                    <p>1,让Coron的太阳把自己晒黑—小天</p>
-                </div>
-                <div>
-                    <a href="http://www.baidu.com/"><img src="css/assets/slider/image2.png"></a>
-                    <p>2,让Coron的太阳把自己晒黑—小天</p>
-                </div>
-                <div>
-                    <a href="http://www.baidu.com/"><img src="css/assets/slider/image3.png"></a>
-                    <p>3,让Coron的太阳把自己晒黑—小天</p>
-                </div>
-                <div>
-                    <a href="http://www.baidu.com/"><img src="css/assets/slider/image4.png"></a>
-                    <p>4,让Coron的太阳把自己晒黑—小天</p>
-                </div>
-            </div>
+            <div id="slider">
             </div>
             <div id="wrapper" class ="wrapper">
-                    <div  id="left">
+                    <div  id="content">
                     </div>  
             </div>
-            <div id="tabbar-with-contact" class ="wrapper">
+            <div id="contact" class ="wrapper">
                 <div id="muiR">
                 </div>  
             </div>
-            <div id="tabbar-with-map">
+            <div id="contor">
                 <ul class="mui-table-view">
                     <li class="mui-table-view-cell">
                         <a class="mui-navigate-right">
@@ -155,11 +137,55 @@
 <script>
    seajs.use(['tab','gridview','slider','sliderbtn','scroll'], function(){
             $('#tabs1').tab();
-            $('#tabs1').on('beforeActivate',function(e){
-                    $(window).trigger('resize');
+            $('#tabs1').on('activate',function(evt,to){
+                    switch (to.id) {
+                        case 'wrapper':
+                            wrapper();
+                            break;
+                        case 'contact':
+                            contact();
+                            break;
+                    }
             });
-            $('#slider').slider( { loop:true });
-            var tplLeft = '<li class="mui-table-view-cell mui-media">'+
+             $('#tabs1').on('afteractivate',function(evt,to){
+                    switch (to.id) {
+                        case 'wrapper':
+                        case 'contact':
+                            $(window).trigger('resize');
+                            break;
+                    }
+            });
+             $('#slider').slider( { 
+                    loop:true,
+                    data:[{
+                        pic:'css/assets/slider/image1.png',
+                        title:'1,让Coron的太阳把自己晒黑—小天',
+                        href:'http://www.baidu.com/'
+                    },{
+                        pic:'css/assets/slider/image2.png',
+                        title:'2,让Coron的太阳把自己晒黑—小天',
+                        href:'http://www.baidu.com/'
+                    },{
+                        pic:'css/assets/slider/image3.png',
+                        title:'3,让Coron的太阳把自己晒黑—小天',
+                        href:'http://www.baidu.com/'
+                    },{
+                        pic:'css/assets/slider/image4.png',
+                        title:'4,让Coron的太阳把自己晒黑—小天',
+                        href:'http://www.baidu.com/'
+                    },{
+                        pic:'css/assets/slider/image5.png',
+                        title:'5,让Coron的太阳把自己晒黑—小天',
+                        href:'http://www.baidu.com/'
+                    },{
+                        pic:'css/assets/slider/image6.png',
+                        title:'6,让Coron的太阳把自己晒黑—小天',
+                        href:'http://www.baidu.com/'
+                    }] 
+                });
+
+        var wrapper = function(){
+             var tplLeft = '<li class="mui-table-view-cell mui-media">'+
                                 '<a href="javascript:;">'+
                                     '<img class="mui-media-object mui-pull-left" src="<%=src%>">'+
                                     '<div class="mui-media-body">'+
@@ -235,125 +261,128 @@
                             cont:'烤炉',
                             text:'烤炉模式的城，到黄昏，如同打翻的调色盘一般.'
                         }]          
-                $('#left').gridview({
+                $('#content').gridview({
                     tpl:{
                         li: tplLeft 
                     },
                     data:data
                 });
 
+                $('#wrapper').scroll({
+                        scrollbars: true,
+                        interactiveScrollbars: true,
+                        shrinkScrollbars: 'scale',
+                        fadeScrollbars: true
+                    });
+        }
+
+           
+        var contact = function(){
                 var tplmuiR = '<li class="mui-table-view-cell">'+
-                                    '<div class="mui-table">'+
-                                        '<div class="mui-table-cell mui-col-xs-10">'+
-                                            '<h4 class="mui-ellipsis"><%=ellips%></h4>'+
-                                            '<h5><%=title%></h5>'+
-                                            '<p class="mui-h6 mui-ellipsis">'+
-                                            '<%=cont%>'+
+                                        '<div class="mui-table">'+
+                                            '<div class="mui-table-cell mui-col-xs-10">'+
+                                                '<h4 class="mui-ellipsis"><%=ellips%></h4>'+
+                                                '<h5><%=title%></h5>'+
+                                                '<p class="mui-h6 mui-ellipsis">'+
+                                                '<%=cont%>'+
+                                            '</div>'+
+                                            '<div class="mui-table-cell mui-col-xs-2 mui-text-right">'+
+                                                '<span class="mui-h5"><%=date%></span>'+
+                                            '</div>'+
                                         '</div>'+
-                                        '<div class="mui-table-cell mui-col-xs-2 mui-text-right">'+
-                                            '<span class="mui-h5"><%=date%></span>'+
-                                        '</div>'+
-                                    '</div>'+
-                                '</li>';
-                var ul = '<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">';
-                var dataR = [{
-                            ellips:'信息化推进办公室张彦合同付款信息化',
-                            title:'申请人：李四',
-                            cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
-                            date:'12:25'
-                        },{
-                            ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
-                            title:'申请人：張三',
-                            cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
-                            date:'12:25'
-                        },{
-                            ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
-                            title:'申请人：張三',
-                            cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
-                            date:'12:25'
-                        },{
-                            ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
-                            title:'申请人：張三',
-                            cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
-                            date:'12:25'
-                        },{
-                            ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
-                            title:'申请人：張三',
-                            cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
-                            date:'12:25'
-                        },{
-                            ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
-                            title:'申请人：張三',
-                            cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
-                            date:'12:25'
-                        },{
-                            ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
-                            title:'申请人：張三',
-                            cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
-                            date:'12:25'
-                        },{
-                            ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
-                            title:'申请人：張三',
-                            cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
-                            date:'12:25'
-                        },{
-                            ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
-                            title:'申请人：張三',
-                            cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
-                            date:'12:25'
-                        },{
-                            ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
-                            title:'申请人：張三',
-                            cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
-                            date:'12:25'
-                        },{
-                            ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
-                            title:'申请人：張三',
-                            cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
-                            date:'12:25'
-                        },{
-                            ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
-                            title:'申请人：張三',
-                            cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
-                            date:'12:25'
-                        },{
-                            ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
-                            title:'申请人：張三',
-                            cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
-                            date:'12:25'
-                        },{
-                            ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
-                            title:'申请人：張三',
-                            cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
-                            date:'12:25'
-                        },{
-                            ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
-                            title:'申请人：張三',
-                            cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
-                            date:'12:25'
-                        }]; 
-                $('#muiR').gridview({
-                    tpl:{
-                        ul:ul,
-                        li: tplmuiR 
-                    },
-                    data:dataR
-                }); 
-                setTimeout(function(){
-                    $('#wrapper').scroll({
-                        scrollbars: true,
-                        interactiveScrollbars: true,
-                        shrinkScrollbars: 'scale',
-                        fadeScrollbars: true
-                    });
-                    $('#tabbar-with-contact').scroll({
-                        scrollbars: true,
-                        interactiveScrollbars: true,
-                        shrinkScrollbars: 'scale',
-                        fadeScrollbars: true
-                    });
-                    
-                }, 200);
+                                    '</li>';
+                    var ul = '<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">';
+                    var dataR = [{
+                                ellips:'信息化推进办公室张彦合同付款信息化',
+                                title:'申请人：李四',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            }]; 
+                    $('#muiR').gridview({
+                        tpl:{
+                            ul:ul,
+                            li: tplmuiR 
+                        },
+                        data:dataR
+                    }); 
+
+                    $('#contact').scroll({
+                            scrollbars: true,
+                            interactiveScrollbars: true,
+                            shrinkScrollbars: 'scale',
+                            fadeScrollbars: true
+                        });
+        }
 
     });
 </script>   

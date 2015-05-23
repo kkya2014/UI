@@ -41,6 +41,7 @@
                 opts.items = items;
                 opts.active = Math.max(0, Math.min(items.length-1, opts.active || _tb.callZ(SELECTOR_ACTIVE, _tb.ref).index()||0));
                 getPanel.call(_tb).add(_tb._nav.children().eq(opts.active)).addClass(CLASS_ACTIVE);
+                items[opts.active].actived = true;
             } 
             fitToContent.call(_tb,getPanel.call(_tb));
         };
@@ -143,7 +144,11 @@
                     });
                 }
                 opts.active = index;
-                _tb.ref.trigger('activate',[to,from]);
+                if(!items[opts.active].actived){
+                    items[opts.active].actived = true;
+                    _tb.ref.trigger('activate',[to,from]);
+                } 
+                _tb.ref.trigger('afteractivate',[to,from]);
                 opts.transition ||  fitToContent.call(_tb,to.div);
             }
             return _tb;

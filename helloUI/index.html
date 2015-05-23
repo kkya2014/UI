@@ -70,9 +70,6 @@ body {
         <script src="js/config.js"></script>
 </body>
 <script>
-	window.onerror=function(sMsg,sUrl,sLine){
-		alert(sMsg+'   '+sUrl+'    '+sLine);
-	}
    seajs.use(['header','treeview','scroll'], function(){
    		$('#header').header({
    				title:'<h1 class="mui-title">UI Widgets</h1>',
@@ -91,7 +88,9 @@ body {
             });
    		$('#treeview').treeview({
    					callback:function(el,evt){
-   						window.location.href=$(el).attr('tar');
+   						 //window.location.href=$(el).attr('tar');
+   						var url = $(el).attr('tar');
+   						rd.window.openWindow('pop',0,url,{time:500,direction:rd.window.ANIMATION_SUBTYPE_FROM_TOP,type:rd.window.ANIMATION_TYPE_PUSH});
    					},
    					toggle:function(el,evt){
    						$(window).trigger('resize');
@@ -150,6 +149,10 @@ body {
 						    cont : '树形列表',
 						    name : "listview",
 						    tar : "treeview.html"
+						},{
+						    cont : 'miui首页',
+						    name : "miui",
+						    tar : "mindex.html"
 						}]
                 });
 		setTimeout(function(){

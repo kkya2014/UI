@@ -8,13 +8,23 @@
         CLASS_SLIDER_ITEM = 'ui-slider-item' ,
         CLASS_SLIDER = 'ui-slider';
 
+        /**
+         * @property {Object}  容器的选择器
+         */
+    var selector = {
+            dots: '.'+CLASS_SLIDER_DOTS,
+            group: '.'+CLASS_SLIDER_GROUP
+        };
+    var loading = '<div class="mui-loading">'+
+                    '<div class="mui-spinner"></div>'+
+                    '</div>';  
+
 
     // todo 检测3d是否支持。
     var transitionEnd,translateZ = ' translateZ(0)';
 
     var render = function() {
             var _sl = this, opts = _sl.opts,
-                selector = opts.selector,
                 viewNum = opts.viewNum || 1,
                 items,
                 container;
@@ -26,7 +36,7 @@
             // 没有指定容器则创建容器
             if (!container.length ) {
                 container = $( '<div></div>' );
-                if ( !opts.content ) {
+                if ( !opts.data ) {
                     if ( _sl.ref.is( 'ul' ) ) {
                         _sl.el = container.insertAfter( _sl.ref );
                         container = _sl.ref;
@@ -35,8 +45,10 @@
                         container.append( _sl.ref.children() );
                     }
                 } else {
-                   // createItems.appli(_sl, [container, opts.content] );
+                    _sl.ref.append(loading);
+                    createItems.apply(_sl, [container, opts.data] );
                 }
+                _sl.ref.empty();
                 container.appendTo( _sl.ref );
             }
 
@@ -64,6 +76,18 @@
             opts.dots&&initDots.call(_sl);
             initWidth.call(_sl);
         };
+
+
+
+       var createItems = function( container, items ) {
+            var _sl = this, opts = _sl.opts,i = 0;
+            _sl._parseFn||(_sl._parseFn = _sl.parseTpl(opts.tpl.item));
+            var els = [];
+            $.each(items, function(index, item){
+                els[index] = _sl._parseFn(item);
+            })
+            _sl._items = $(els.join('')).appendTo(container );
+        };    
 
     var bind = function(){
             var _sl = this, opts = _sl.opts;
@@ -109,7 +133,7 @@
 
     var initDots = function(){
         var _sl = this, opts = _sl.opts;
-        var dots = _sl.ref.find( opts.selector.dots );
+        var dots = _sl.ref.find(selector.dots );
 
         if ( !dots.length ) {
             dots = _sl.parseTpl(opts.tpl.dots, {
@@ -168,23 +192,11 @@
                 return;
             }
             _sl.ref.trigger('slideend', [_sl.index]);
-        };    
-
-
-       var createItems = function( container, items ) {
-            // var _sl = this, opts = _sl.opts,i = 0,
-            //     len = items.length;
-
-            // for ( ; i < len; i++ ) {
-            //     container.append( _sl.parseTpl(tpl.wrap, vars) );
-            // }
-        };
+        }; 
 
      var zoom = function() {
         var _sl = this, opts = _sl.opts,
             watches;
-
-        selector = 'img';
 
         function unWatch() {
             watches && watches.off( 'load', imgZoom );
@@ -192,7 +204,7 @@
 
         function watch() {
             unWatch();
-            watches = _sl._container.find( selector )
+            watches = _sl._container.find( 'img' )
                     .on( 'load', imgZoom );
         }
 
@@ -259,18 +271,11 @@
                  * @uses Slider.dots
                  */
                 dots: true,
-
-                /**
-                 * @property {Object}  容器的选择器
-                 */
-                selector: {
-                    dots: '.'+CLASS_SLIDER_DOTS,
-                    group: '.'+CLASS_SLIDER_GROUP
-                },
                 imgZoom:true,
+                data:null,
                 tpl : {
-                    item: '<div class="'+CLASS_SLIDER_ITEM+'"><a href="<%= href %>">' +
-                            '<img src="<%= pic %>" alt="" /></a>' +
+                    item: '<div class="'+CLASS_SLIDER_ITEM+'"><a <% if( href ) { %>href="<%= href %>" <% } %>>' +
+                            '<img src="<%= pic %>" /></a>' +
                             '<% if( title ) { %><p><%= title %></p><% } %>' +
                             '</div>',
                     dots: '<p class="'+CLASS_SLIDER_DOTS+'"><%= new Array( len + 1 )' +
