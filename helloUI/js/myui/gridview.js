@@ -18,31 +18,49 @@
         };
 
          //绑定事件
-        var bind = function(lis){
-            var _gv = this,opts = _gv.opts;
-            if(!lis)lis = _gv.ref.find('li[data-ui-gli = true]');
-            lis.on( _gv.touchEve() , function(evt) {
-                var ele = evt.currentTarget;
+        var bind = function(){
+            var _gv = this,opts = _gv.opts,startY;
+            _gv.ref.on( _gv.touchStart() , function(evt) {
+                _gv.log('touchStart');
+                var touch = evt.touches[0];
+                startY = touch.pageY;
+                _gv.log(startY);
+                tarEl = false;
                 var tar = evt.target;
-                var classList = ele.classList;
+                var ele = $(tar).closest('li.'+CLASS_TABLE_VIEW_CELL);
                 if ((tar.tagName === 'INPUT' && tar.type !== 'radio' && tar.type !== 'checkbox') || tar.tagName === 'BUTTON') {
-                    _gv.stopPropagation(evt);
+                    
                     return;
-                }else if ((ele.querySelector('input') || ele.querySelector('.' +CLASS_BTN) || ele.querySelector('.' + CLASS_TOGGLE))) {
-                     _gv.stopPropagation(evt);
+                }else if ((ele[0].querySelector('input') || ele[0].querySelector('.' +CLASS_BTN) || ele[0].querySelector('.' + CLASS_TOGGLE))) {
+                     
                      return;
                 }
-                if (classList.contains(CLASS_TABLE_VIEW_CELL)) {
+                if (ele.hasClass(CLASS_TABLE_VIEW_CELL)) {
                     tarEl = ele;
-                    tarEl.classList.add(CLASS_ACTIVE);
-                    if ($.isFunction(_gv.callback)) {
-                        _gv.callback.apply(_gv, [ele,evt]);
+                    ele.addClass(CLASS_ACTIVE);
+                }
+            }).on( _gv.touchMove() , function(evt) {
+                _gv.log('touchMove');
+                if (tarEl) {
+                    var touch = evt.touches[0];
+                    _gv.log(touch.pageY);
+                    if(touch.pageY != startY){
+                        tarEl.removeClass(CLASS_ACTIVE);
+                        tarEl = false;
                     }
-                    setTimeout(function(){
-                        tarEl.classList.remove(CLASS_ACTIVE);
-                    }, 200);
+                }
+            }).on( _gv.touchEve() , function(evt) {
+                _gv.log('tab');
+                _gv.stopPropagation(evt);
+                if (tarEl) {
+                    tarEl.removeClass(CLASS_ACTIVE);
+                    if ($.isFunction(_gv.callback)) {
+                        _gv.callback.apply(_gv, [tarEl[0],evt]);
+                    }
+                }else{
                 }
             })
+
         };
 
     define(function(require, exports, module) {
@@ -104,7 +122,7 @@
                 var _gv = this,opts = _gv.opts;
                 var appLis = $(html).appendTo( _gv._ul );
                 appLis.attr('data-ui-gli',true);
-                bind.call(_gv,appLis);
+                //bind.call(_gv,appLis);
                 _gv._lis = _gv._lis.concat(appLis);
             }else{
                 _gv.log('html必須是字符串');
@@ -129,7 +147,7 @@
                     })
                     _lis = $(_lis.join('')).appendTo( _gv._ul );
                     _lis.attr('data-ui-gli',true);
-                    bind.call(_gv,_lis);
+                    //bind.call(_gv,_lis);
                     _gv._lis = _gv._lis.concat(_lis);
                 }
             }else{

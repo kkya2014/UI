@@ -20,36 +20,52 @@
         };
 
          //绑定事件
-        var bind = function(lis){
-            var _tv = this,opts = _tv.opts;
-            if(!lis)lis = $(_tv.ref).find('li[data-ui-tli = true]');
-            lis.on( _tv.touchEve() , function(evt) {
+        var bind = function(){
+            var _tv = this,opts = _tv.opts,startY;
+            _tv.ref.on( _tv.touchStart() , function(evt) {
+                _tv.log('touchStart');
+                var touch = evt.touches[0];
+                startY = touch.pageY;
+                _tv.log(startY);
+                tarEl = false;
+                var ele = $(evt.target).closest('li.'+CLASS_TABLE_VIEW_CELL);
+                if ((!ele.hasClass(CLASS_COLLAPSE))&&ele.hasClass(CLASS_TABLE_VIEW_CELL)) {
+                    //_tv.stopPropagation(evt);
+                    tarEl = ele;
+                    ele.addClass(CLASS_ACTIVE);
+                }
+            }).on( _tv.touchMove() , function(evt) {
+                _tv.log('touchMove');
+                if (tarEl) {
+                    var touch = evt.touches[0];
+                    _tv.log(touch.pageY);
+                    if(touch.pageY != startY){
+                        tarEl.removeClass(CLASS_ACTIVE);
+                        tarEl = false;
+                    }
+                }
+            }).on( _tv.touchEve() , function(evt) {
+                _tv.log('tab');
+                var ele = $(evt.target).closest('li.'+CLASS_TABLE_VIEW_CELL);
                 _tv.stopPropagation(evt);
-                var ele = evt.currentTarget;
-                var tar = evt.target;
-                var classList = ele.classList;
-                if(false){
-
-                }else if (classList.contains(CLASS_COLLAPSE)) {
-                    if (!classList.contains(CLASS_ACTIVE)) { //展开时,需要收缩其他同类
-                        var collapse = ele.parentNode.querySelector('.'+CLASS_COLLAPSE+'.'+CLASS_ACTIVE);
-                        if (collapse) {
-                            collapse.classList.remove(CLASS_ACTIVE);
+                if (!tarEl) {
+                    if (ele.hasClass(CLASS_COLLAPSE)) {
+                        if (!ele.hasClass(CLASS_ACTIVE)) { //展开时,需要收缩其他同类
+                            var collapse = ele[0].parentNode.querySelector('.'+CLASS_COLLAPSE+'.'+CLASS_ACTIVE);
+                            if (collapse) {
+                                collapse.classList.remove(CLASS_ACTIVE);
+                            }
+                        }
+                        ele.toggleClass(CLASS_ACTIVE);
+                        if ($.isFunction(_tv.toggle)) {
+                            _tv.toggle.apply(_tv, [ele[0],evt]);
                         }
                     }
-                    classList.toggle(CLASS_ACTIVE);
-                    if ($.isFunction(_tv.toggle)) {
-                        _tv.toggle.apply(_tv, [ele,evt]);
-                    }
-                }else if (classList.contains(CLASS_TABLE_VIEW_CELL)) {
-                    tarEl = ele;
-                    classList.add(CLASS_ACTIVE);
+                }else{
+                    tarEl.removeClass(CLASS_ACTIVE);
                     if ($.isFunction(_tv.callback)) {
-                        _tv.callback.apply(_tv, [ele,evt]);
+                        _tv.callback.apply(_tv, [tarEl[0],evt]);
                     }
-                    setTimeout(function(){
-                        tarEl.classList.remove(CLASS_ACTIVE);
-                    }, 200);
                 }
             })
         };

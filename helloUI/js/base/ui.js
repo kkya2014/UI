@@ -62,8 +62,24 @@ define(function(require, exports, module) {
     return this.isTouchScreen()? "tap" : "mousedown"
   };
 
+  Base.touchStart = function(str, data){
+    return this.isTouchScreen()? "touchstart" : "mousedown"
+  };
+
   Base.touchEnd = function(str, data){
-    return this.isTouchScreen()? "touchend touchcancel touchmove" : "mouseup"
+    return this.isTouchScreen()? "touchend" : "mouseup"
+  };
+
+  Base.touchCancel = function(str, data){
+    return this.isTouchScreen()? "touchcancel" : "mouseup"
+  };
+
+  Base.touchMove = function(str, data){
+    return this.isTouchScreen()? "touchmove" : "mouseup"
+  };
+
+  Base.touchOver = function(str, data){
+    return this.isTouchScreen()? "touchend touchmove" : "mouseup"
   };
 
   Base.log = function(str){
@@ -81,7 +97,12 @@ define(function(require, exports, module) {
 
   Base.stopPropagation = function(e) {
         e.stopPropagation();
-    };
+  };
+
+  Base.preventDefault = function(e) {
+        e.preventDefault();
+  };
+    
   /*
         判断是否存在原生插件对象
     */
