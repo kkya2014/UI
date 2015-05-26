@@ -59,6 +59,12 @@
                     }
                 }else{
                 }
+            }).on( _gv.longTap() , function(evt) {
+                _gv.log('longTap');
+                if (tarEl) {
+                    tarEl.removeClass(CLASS_ACTIVE);
+                    tarEl = false;
+                }
             })
 
         };

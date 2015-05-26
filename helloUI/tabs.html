@@ -92,10 +92,18 @@
             <div id="wrapper" class ="wrapper">
                     <div  id="content">
                     </div>  
+                    <div id="loading-wrapper" style="height:100%" class="mui-loading">
+                        <div style="height:100%" class="mui-spinner"></div>
+                    </div>  
+                    <div  id="content">
+                    </div>  
             </div>
             <div id="contact" class ="wrapper">
                 <div id="muiR">
                 </div>  
+                <div id="loading-contact" style="height:100%" class="mui-loading">
+                        <div style="height:100%" class="mui-spinner"></div>
+                    </div>
             </div>
             <div id="contor">
                 <ul class="mui-table-view">
@@ -135,15 +143,22 @@
         <script src="js/config.js"></script>
 </body>
 <script>
-   seajs.use(['tab','gridview','slider','sliderbtn','scroll'], function(){
+   seajs.use(['tab','gridview','treeview','slider','sliderbtn','scroll'], function(){
             $('#tabs1').tab();
+            $('#contor').treeview();
             $('#tabs1').on('activate',function(evt,to){
                     switch (to.id) {
                         case 'wrapper':
-                            wrapper();
+                            setTimeout(function() {
+                                $('#loading-wrapper').hide();
+                                wrapper();
+                            }, 200);
                             break;
                         case 'contact':
-                            contact();
+                            setTimeout(function() {
+                                $('#loading-contact').hide();
+                                contact();
+                            }, 200);
                             break;
                     }
             });
@@ -375,7 +390,6 @@
                         },
                         data:dataR
                     }); 
-
                     $('#contact').scroll({
                             scrollbars: true,
                             interactiveScrollbars: true,

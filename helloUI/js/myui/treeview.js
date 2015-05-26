@@ -47,7 +47,7 @@
             }).on( _tv.touchEve() , function(evt) {
                 _tv.log('tab');
                 var ele = $(evt.target).closest('li.'+CLASS_TABLE_VIEW_CELL);
-                _tv.stopPropagation(evt);
+                //_tv.stopPropagation(evt);
                 if (!tarEl) {
                     if (ele.hasClass(CLASS_COLLAPSE)) {
                         if (!ele.hasClass(CLASS_ACTIVE)) { //展开时,需要收缩其他同类
@@ -66,6 +66,12 @@
                     if ($.isFunction(_tv.callback)) {
                         _tv.callback.apply(_tv, [tarEl[0],evt]);
                     }
+                }
+            }).on( _tv.longTap() , function(evt) {
+                _tv.log('longTap');
+                if (tarEl) {
+                    tarEl.removeClass(CLASS_ACTIVE);
+                    tarEl = false;
                 }
             })
         };
@@ -110,7 +116,7 @@
          * lis -> array
          */
         $treeview.prototype.renderData = function(lis){
-            if($.isArray(lis)){
+            if($.isArray(lis)&&lis.length>0){
                 var _tv = this,opts = _tv.opts, _lis = [],_mulis = [];
 
                 _tv._ul.empty();
@@ -150,36 +156,10 @@
                     _tv._lis.attr('data-ui-tli',true);
                 }
             }else{
-                _tv.log('lis必須是數組對象');
-                throw new Error( 'lis必須是數組對象' );
+                this.log('data必須是數組對象');
             }
             
         };
-        //  /**
-        //  * 根據傳入數據附加到列表
-        //  * @type {function}
-        //  * lis -> array
-        //  */
-        // $treeview.prototype.appendData = function(lis){
-        //     if($.isArray(lis)){
-        //         var _tv = this,opts = _tv.opts;
-        //         _tv._parseFn||(_tv._parseFn = _tv.parseTpl(opts.tpl.li));
-        //         var _lis = [];
-        //         if(lis.length>0){
-        //             $.each(lis, function(index, item){
-        //                 _lis[index] = _tv._parseFn(item);
-        //             })
-        //             _lis = $(_lis.join('')).appendTo( _tv._ul );
-        //             _lis.attr('data-ui-gli',true);
-        //             bind.call(_tv,_lis);
-        //             _tv._lis = _tv._lis.concat(_lis);
-        //         }
-        //     }else{
-        //         this.log('lis必須是數組對象');
-        //         throw new Error( 'lis必須是數組對象' );
-        //     }
-            
-        // };
 
         //注册$插件
         $.fn.treeview = function (opts) {

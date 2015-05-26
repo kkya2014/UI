@@ -78,6 +78,10 @@ define(function(require, exports, module) {
     return this.isTouchScreen()? "touchmove" : "mouseup"
   };
 
+  Base.longTap = function(str, data){
+    return this.isTouchScreen()? "longTap" : "mouseup"
+  };
+
   Base.touchOver = function(str, data){
     return this.isTouchScreen()? "touchend touchmove" : "mouseup"
   };
