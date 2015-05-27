@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello UI GridView</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../css/mui.css">
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			header.mui-bar {
+				display: none;
+			}
+			.mui-bar-nav~.mui-content {
+				padding: 0;
+			}
+			.title {
+				margin: 20px 15px 10px;
+				color: #6d6d72;
+				font-size: 15px;
+			}
+		</style>
+	</head>
+
+	<body>
+			<div class="mui-content" id="left">
+				<div class="title">
+					缩略图居左
+				</div>
+			</div>	
+		<script src="../js/sea.js"></script>
+        <script src="../js/config.js"></script>
+        <script src="data.js"></script>
+</body>
+<script>
+   seajs.use(['gridview'], function(){
+
+   				
+   				var	tplLeft = '<li class="mui-table-view-cell mui-media">'+
+								'<a href="javascript:;">'+
+									'<img class="mui-media-object mui-pull-left" src="<%=src%>">'+
+									'<div class="mui-media-body">'+
+										'<%=cont%>'+
+										'<p class="mui-ellipsis"><%=text%></p>'+
+									'</div>'+
+								'</a>'+
+							'</li>';
+				
+                $('#left').gridview({
+                	tpl:{
+                		li: tplLeft 
+                	},
+                	data:data,
+                	iscroll:true
+                });
+
+            });
+</script>
+</html>

@@ -8,9 +8,11 @@
         CLASS_BAR = 'mui-bar',
         CLASS_BAR_TAB = 'mui-bar-tab',
         CLASS_TAB_ITEM = 'mui-tab-item',
+        CLASS_SCROLL_WRAPPER = 'mui-scroll-wrapper',
         CLASS_CONTROL_CONTENT = 'mui-control-content';
 
         SELECTOR_ACTIVE = '.'+CLASS_ACTIVE,
+        SELECTOR_SCROLL_WRAPPER = '.'+CLASS_SCROLL_WRAPPER;
 
         _uid = 1,
         uid = function(){
@@ -25,11 +27,11 @@
             if(_tb._nav) {
                 _tb._content = $('<div></div>').appendTo(_tb.ref).addClass(CLASS_CONTENT);
                 items = [];
-                _tb._nav.addClass(CLASS_BAR+'  '+CLASS_BAR_TAB).children().each(function(){
-                    var $a = _tb.callZ(this).addClass(CLASS_TAB_ITEM), href = $a?$a.attr('href'):_tb.callZ(this).attr('data-url'), id, $content;
+                _tb._nav.children().each(function(){
+                    var $a = $(this), href = $a?$a.attr('href'):_tb.callZ(this).attr('data-url'), id, $content;
                     id = idRE.test(href)? RegExp.$1: 'tabs_'+uid();
                     ($content = _tb.ref.find('#'+id) || $('<div id="'+id+'"></div>'))
-                        .addClass(CLASS_CONTROL_CONTENT+(opts.transition?' '+opts.transition:''))
+                        .addClass(opts.transition?' '+opts.transition:'')
                         .appendTo(_tb._content);
                     items.push({
                         id: id,
@@ -99,10 +101,8 @@
         
         //初始化
         $tabs.prototype.init = function () {
-            var _tb = this, opts = _tb.opts;
-            _tb.ref.addClass(CLASS_CONTENT);
-            render.call(_tb);
-            bind.call(_tb);
+            render.call(this);
+            bind.call(this);
         };
         /**
          * 切换到某个Tab
@@ -147,7 +147,10 @@
                 if(!items[opts.active].actived){
                     items[opts.active].actived = true;
                     _tb.ref.trigger('activate',[to,from]);
-                } 
+                    opts.iscroll = _tb.ref.find(SELECTOR_SCROLL_WRAPPER).length>0;
+                }
+
+                opts.iscroll&&$(window).trigger('resize');
                 _tb.ref.trigger('afteractivate',[to,from]);
                 opts.transition ||  fitToContent.call(_tb,to.div);
             }

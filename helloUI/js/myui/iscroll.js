@@ -2,6 +2,8 @@
  * iscroll组件
  */
 (function() {
+    var CLASS_SCROLL = 'mui-scroll',
+        CLASS_SCROLL_WRAPPER = 'mui-scroll-wrapper';
       // 给$.fn上挂iScroll方法
     define(function(require, exports, module) {
          var UI = require("UI");
@@ -12,9 +14,11 @@
 
             var scrollObjs = [];
             opts|| (opts = {});
+            this.addClass(CLASS_SCROLL_WRAPPER);
             this.each(function() {
                 var scrollObj = null;
                 var self = this;
+                $(self).children().wrapAll('<div class = "'+CLASS_SCROLL+'"/>');
                 var id = self.getAttribute('data-scroll');
                 if (!id) {
                     opts = $.extend(opts, { disableMouse : true,disablePointer:true});

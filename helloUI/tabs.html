@@ -56,7 +56,7 @@
             .oa-contact-name, oa-contact-position {
                 float: left;
             }
-            .wrapper {
+            .mui-bar-tab ~ .mui-content .wrapper {
                 position: absolute;
                 z-index: 1;
                 top: 0px;
@@ -68,44 +68,32 @@
 </head>
 <body>  
     
-    <div id = "tabs1">
-        <nav >
-            <a href="#slider">
+    <div class="mui-content" id = "tabs1">
+        <nav class="mui-bar mui-bar-tab">
+            <a class="mui-tab-item" href="#slider">
                 <span class="mui-icon mui-icon-home"></span>
                 <span class="mui-tab-label">首页</span>
             </a>
-            <a href="#wrapper">
+            <a class="mui-tab-item" href="#wrapper">
                 <span class="mui-icon mui-icon-email"><span class="mui-badge">9</span></span>
                 <span class="mui-tab-label">消息</span>
             </a>
-            <a href="#contact">
+            <a class="mui-tab-item" href="#contact">
                 <span class="mui-icon mui-icon-contact"></span>
                 <span class="mui-tab-label">通讯录</span>
             </a>
-            <a href="#contor">
+            <a class="mui-tab-item" href="#contor">
                 <span class="mui-icon mui-icon-gear"></span>
                 <span class="mui-tab-label">设置</span>
             </a>
         </nav>
-            <div id="slider">
+            <div id="slider" class ="mui-control-content">
             </div>
-            <div id="wrapper" class ="wrapper">
-                    <div  id="content">
-                    </div>  
-                    <div id="loading-wrapper" style="height:100%" class="mui-loading">
-                        <div style="height:100%" class="mui-spinner"></div>
-                    </div>  
-                    <div  id="content">
-                    </div>  
+            <div id="wrapper" class ="mui-control-content wrapper">
             </div>
-            <div id="contact" class ="wrapper">
-                <div id="muiR">
-                </div>  
-                <div id="loading-contact" style="height:100%" class="mui-loading">
-                        <div style="height:100%" class="mui-spinner"></div>
-                    </div>
+            <div id="contact" class ="mui-control-content wrapper">
             </div>
-            <div id="contor">
+            <div id="contor" class ="mui-control-content">
                 <ul class="mui-table-view">
                     <li class="mui-table-view-cell">
                         <a class="mui-navigate-right">
@@ -149,24 +137,10 @@
             $('#tabs1').on('activate',function(evt,to){
                     switch (to.id) {
                         case 'wrapper':
-                            setTimeout(function() {
-                                $('#loading-wrapper').hide();
-                                wrapper();
-                            }, 200);
+                            wrapper();
                             break;
                         case 'contact':
-                            setTimeout(function() {
-                                $('#loading-contact').hide();
-                                contact();
-                            }, 200);
-                            break;
-                    }
-            });
-             $('#tabs1').on('afteractivate',function(evt,to){
-                    switch (to.id) {
-                        case 'wrapper':
-                        case 'contact':
-                            $(window).trigger('resize');
+                            contact();
                             break;
                     }
             });
@@ -276,19 +250,13 @@
                             cont:'烤炉',
                             text:'烤炉模式的城，到黄昏，如同打翻的调色盘一般.'
                         }]          
-                $('#content').gridview({
+                $('#wrapper').gridview({
                     tpl:{
                         li: tplLeft 
                     },
-                    data:data
+                    data:data,
+                    iscroll:true
                 });
-
-                $('#wrapper').scroll({
-                        scrollbars: true,
-                        interactiveScrollbars: true,
-                        shrinkScrollbars: 'scale',
-                        fadeScrollbars: true
-                    });
         }
 
            
@@ -383,19 +351,14 @@
                                 cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
                                 date:'12:25'
                             }]; 
-                    $('#muiR').gridview({
+                    $('#contact').gridview({
                         tpl:{
                             ul:ul,
                             li: tplmuiR 
                         },
-                        data:dataR
+                        data:dataR,
+                        iscroll:true
                     }); 
-                    $('#contact').scroll({
-                            scrollbars: true,
-                            interactiveScrollbars: true,
-                            shrinkScrollbars: 'scale',
-                            fadeScrollbars: true
-                        });
         }
 
     });

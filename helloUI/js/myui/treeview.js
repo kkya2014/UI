@@ -14,7 +14,19 @@
 
         var render = function(){
             var _tv = this,opts = _tv.opts;
-            _tv._ul = $(opts.tpl.ul).appendTo( _tv.ref );
+            if(opts.iscroll){
+                //_gv._wrapper = $( '<div></div>' ).appendTo( _gv.ref ).addClass(CLASS_SCROLL_WRAPPER);
+                //_gv._scroll = $( '<div></div>' ).appendTo( _gv._wrapper ).addClass(CLASS_SCROLL);
+                _tv._ul = $(opts.tpl.ul).appendTo( _tv.ref );
+                _tv.ref.scroll({
+                        scrollbars: true,
+                        interactiveScrollbars: true,
+                        shrinkScrollbars: 'scale',
+                        fadeScrollbars: true
+                });
+            }else{
+                _tv._ul = $(opts.tpl.ul).appendTo( _tv.ref );
+            }
             _tv._lis = [];
             _tv.renderData(opts.data);
         };
@@ -57,6 +69,9 @@
                             }
                         }
                         ele.toggleClass(CLASS_ACTIVE);
+                        if(opts.iscroll){
+                            $(window).trigger('resize');
+                        }
                         if ($.isFunction(_tv.toggle)) {
                             _tv.toggle.apply(_tv, [ele[0],evt]);
                         }
@@ -96,6 +111,7 @@
                  * 渲染數據
                  */
                  data: [],
+                 iscroll:false,
                 /**
                  * 点击回调函数
                  * @type {function}
@@ -116,8 +132,9 @@
          * lis -> array
          */
         $treeview.prototype.renderData = function(lis){
-            if($.isArray(lis)&&lis.length>0){
-                var _tv = this,opts = _tv.opts, _lis = [],_mulis = [];
+            var _tv = this,opts = _tv.opts;
+            if($.isArray(lis)){
+                var _lis = [],_mulis = [];
 
                 _tv._ul.empty();
                 _tv._parseFn||(_tv._parseFn = _tv.parseTpl(opts.tpl.li));
@@ -155,8 +172,9 @@
                     });
                     _tv._lis.attr('data-ui-tli',true);
                 }
-            }else{
-                this.log('data必須是數組對象');
+            }
+            if(opts.iscroll){
+                $(window).trigger('resize');
             }
             
         };

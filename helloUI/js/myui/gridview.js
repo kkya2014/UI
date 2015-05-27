@@ -7,12 +7,30 @@
             CLASS_BTN = 'mui-btn',
             CLASS_TOGGLE = 'mui-switch',
             CLASS_TABLE_VIEW = 'mui-table-view',
+            CLASS_SCROLL_WRAPPER = 'mui-scroll-wrapper',
+            CLASS_SCROLL = 'mui-scroll',
 
             tarEl;
 
+        var loading = '<div class="mui-loading">'+
+                    '<div class="mui-spinner"></div>'+
+                    '</div>';     
+
         var render = function(){
             var _gv = this,opts = _gv.opts;
-            _gv._ul = $(opts.tpl.ul).appendTo( _gv.ref );
+            if(opts.iscroll){
+                //_gv._wrapper = $( '<div></div>' ).appendTo( _gv.ref ).addClass(CLASS_SCROLL_WRAPPER);
+                //_gv._scroll = $( '<div></div>' ).appendTo( _gv._wrapper ).addClass(CLASS_SCROLL);
+                _gv._ul = $(opts.tpl.ul).appendTo( _gv.ref );
+                _gv.ref.scroll({
+                        scrollbars: true,
+                        interactiveScrollbars: true,
+                        shrinkScrollbars: 'scale',
+                        fadeScrollbars: true
+                });
+            }else{
+                _gv._ul = $(opts.tpl.ul).appendTo( _gv.ref );
+            }
             _gv._lis = [];
             _gv.renderData(opts.data);
         };
@@ -28,6 +46,7 @@
                 tarEl = false;
                 var tar = evt.target;
                 var ele = $(tar).closest('li.'+CLASS_TABLE_VIEW_CELL);
+                if(ele.length == 0)return;
                 if ((tar.tagName === 'INPUT' && tar.type !== 'radio' && tar.type !== 'checkbox') || tar.tagName === 'BUTTON') {
                     
                     return;
@@ -71,6 +90,7 @@
 
     define(function(require, exports, module) {
         var UI = require("UI");
+                 require("scroll");
 
         //gridview
         var $gridview = UI.define('Gridview',{
@@ -85,7 +105,8 @@
                 /**
                  * 渲染數據
                  */
-                 data: []
+                 data: [],
+                 iscroll:false
             });
 
         //初始化
@@ -99,8 +120,8 @@
          * lis -> array
          */
         $gridview.prototype.renderData = function(lis){
-            if($.isArray(lis)){
-                var _gv = this,opts = _gv.opts;
+            var _gv = this,opts = _gv.opts;
+            if($.isArray(lis)&&lis.length>0){
                 _gv._ul.empty();
                 _gv._parseFn||(_gv._parseFn = _gv.parseTpl(opts.tpl.li));
                 var _lis = [];
@@ -111,11 +132,21 @@
                     _gv._lis = $(_lis.join('')).appendTo( _gv._ul );
                     _gv._lis.attr('data-ui-gli',true);
                 }
-            }else{
-                _gv.log('lis必須是數組對象');
-                throw new Error( 'lis必須是數組對象' );
             }
-            
+            if(opts.iscroll){
+                $(window).trigger('resize');
+            }
+        };
+
+        /**
+         * 根據后台返回数据數據渲染
+         * @type {function}
+         * lis -> array
+         */
+        $gridview.prototype.ajax = function(uri){
+
+            //_gv._loading = $(loading).appendTo(_gv.ref);
+            //_gv._loading.hide();
         };
 
         /**
