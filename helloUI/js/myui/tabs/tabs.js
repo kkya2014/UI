@@ -11,7 +11,7 @@
         CLASS_SCROLL_WRAPPER = 'mui-scroll-wrapper',
         CLASS_CONTROL_CONTENT = 'mui-control-content';
 
-        SELECTOR_ACTIVE = '.'+CLASS_ACTIVE,
+    var SELECTOR_ACTIVE = '.'+CLASS_ACTIVE,
         SELECTOR_SCROLL_WRAPPER = '.'+CLASS_SCROLL_WRAPPER;
 
         _uid = 1,

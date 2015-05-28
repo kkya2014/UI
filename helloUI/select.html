@@ -10,9 +10,19 @@
         <link rel="stylesheet" href="css/ui-color.css">
         <link rel="stylesheet" href="css/appcan.icon.css">
         <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="css/mui.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+        </style>
     </head>
     <body class="um-vp" ontouchstart>
-    <div id="basesel">
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">复选框（checkbox）</h1>
+    </header>    
+    <div class="mui-content" id="basesel">
         <div class="select uba bc-border bc-text" >
             <div class="text">请选择</div>
             <div class="icon"></div>
@@ -38,12 +48,13 @@
         <script src="js/config.js"></script>
     </body>
     <script>
-         seajs.use(['select'], function(){
-            $('#basesel').select({
-                callback:function(el,eve){
+         seajs.use(['select','button'], function(){
+            $('a.mui-pull-left').button(function(evt){
+                    this.back();
+                })
+            $('#basesel').select(function(el,eve){
                     alert(this.callZ(el).val());
-                }
-            });
+                });
         });
  </script>
 </html>

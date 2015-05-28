@@ -53,14 +53,13 @@
 
 
         //注册$插件
-        $.fn.select = function (opts) {
+        $.fn.select = function (callback) {
             var selectObjs = [];
-            opts|| (opts = {});
             this.each(function() {
                 var selectObj = null;
                 var id = this.getAttribute('data-select');
                 if (!id) {
-                    opts = $.extend(opts, { ref : this});
+                    opts = { ref : this,callback:callback};
                     id = ++UI.uuid;
                     UI.data[id] = new $select(opts);
                     this.setAttribute('data-select', id);

@@ -11,10 +11,8 @@
         /**
          * @property {Object}  容器的选择器
          */
-    var selector = {
-            dots: '.'+CLASS_SLIDER_DOTS,
-            group: '.'+CLASS_SLIDER_GROUP
-        };
+    var SELECTOR_SLIDER_DOTS = '.'+CLASS_SLIDER_DOTS,
+        SELECTOR_SLIDER_GROUP = '.'+CLASS_SLIDER_GROUP;  
     var loading = '<div class="mui-loading">'+
                     '<div class="mui-spinner"></div>'+
                     '</div>';  
@@ -31,7 +29,7 @@
 
             _sl.index = opts.index,
             // 检测容器节点是否指定
-            container = _sl.ref.find( selector.group );
+            container = _sl.ref.find( SELECTOR_SLIDER_GROUP );
 
             // 没有指定容器则创建容器
             if (!container.length ) {
@@ -133,7 +131,7 @@
 
     var initDots = function(){
         var _sl = this, opts = _sl.opts;
-        var dots = _sl.ref.find(selector.dots );
+        var dots = _sl.ref.find(SELECTOR_SLIDER_DOTS );
 
         if ( !dots.length ) {
             dots = _sl.parseTpl(opts.tpl.dots, {

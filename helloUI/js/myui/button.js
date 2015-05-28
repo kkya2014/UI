@@ -23,37 +23,37 @@
     define(function(require, exports, module) {
         var UI = require("UI");
 
-        //botton
-         var $botton = UI.define('Botton',{});
+        //button
+         var $button = UI.define('Button',{});
 
         //初始化
-        $botton.prototype.init = function(){
+        $button.prototype.init = function(){
             render.call(this);
             bind.call(this);
         };
 
         //注册$插件
-        $.fn.botton = function (opts) {
-            var bottonObjs = [];
-            opts|| (opts = {});
+        $.fn.button = function (callback) {
+            var buttonObjs = [];
+
             this.each(function() {
-                var bottonObj = null;
-                var id = this.getAttribute('data-botton');
+                var buttonObj = null;
+                var id = this.getAttribute('data-button');
                 if (!id) {
-                    opts = $.extend(opts, { ref : this});
+                    opts = { ref : this,callback : callback};
                     id = ++UI.uuid;
-                    UI.data[id] = new $botton(opts);
-                    this.setAttribute('data-botton', id);
+                    UI.data[id] = new $button(opts);
+                    this.setAttribute('data-button', id);
                 } else {
-                    bottonObj = UI.data[id];
+                    buttonObj = UI.data[id];
                 }
-                bottonObjs.push(bottonObj);
+                buttonObjs.push(buttonObj);
             });
-            return bottonObjs.length > 1 ? bottonObjs : bottonObjs[0];
+            return buttonObjs.length > 1 ? buttonObjs : buttonObjs[0];
         };
 
         /*module.exports = function(opts){
-            return new botton(opts);
+            return new button(opts);
         };
     */
     });

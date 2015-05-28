@@ -88,6 +88,7 @@ define(function(require, exports, module) {
 
   Base.log = function(str){
     console.log(str);
+    return this;
   };
   Base.callZ = (function() {
             instance = $();
@@ -101,10 +102,12 @@ define(function(require, exports, module) {
 
   Base.stopPropagation = function(e) {
         e.stopPropagation();
+        return this;
   };
 
   Base.preventDefault = function(e) {
         e.preventDefault();
+        return this;
   };
     
   /*
@@ -121,7 +124,14 @@ define(function(require, exports, module) {
         } else {
             element.focus();
         }
+        return this;
     };  
+  Base.back = function() {
+       if (window.history.length > 1) {
+          window.history.back();
+        }
+        return this;
+    }; 
 
   UI.define = function( name, options) {
         if(UI[ name ])return UI[ name ];

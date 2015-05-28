@@ -15,9 +15,8 @@
         var render = function(){
             var _tv = this,opts = _tv.opts;
             if(opts.iscroll){
-                //_gv._wrapper = $( '<div></div>' ).appendTo( _gv.ref ).addClass(CLASS_SCROLL_WRAPPER);
-                //_gv._scroll = $( '<div></div>' ).appendTo( _gv._wrapper ).addClass(CLASS_SCROLL);
-                _tv._ul = $(opts.tpl.ul).appendTo( _tv.ref );
+                _tv._ul = _tv.ref.find('ul.'+CLASS_TABLE_VIEW);
+                (_tv._ul.length>0)||(_tv._ul = $(opts.tpl.ul).appendTo( _tv.ref ));
                 _tv.ref.scroll({
                         scrollbars: true,
                         interactiveScrollbars: true,
@@ -93,7 +92,7 @@
 
     define(function(require, exports, module) {
         var UI = require("UI");
-
+                 require("scroll");
         //treeview
         var $treeview = UI.define('Treeview',{
                 /**
@@ -103,7 +102,7 @@
                  tpl : {
                     ul: '<ul class="'+CLASS_TABLE_VIEW+'  '+CLASS_TABLE_VIEW_CHEVRON+'" ></ul>',
                     li: '<li class="'+CLASS_TABLE_VIEW_CELL+'" data-ui-li = <%=i%> tar = <%=tar%>>'+
-                        '<a class="'+CLASS_NAVIGATE_RIGHT+'" href = <%=tar%>><%=cont%></a></li>' ,
+                        '<a class="'+CLASS_NAVIGATE_RIGHT+'" javascript:;><%=cont%></a></li>' ,
                     muli: '<li class="'+CLASS_TABLE_VIEW_CELL+'" data-ui-li = <%=i%>>'+
                         '<a class="'+CLASS_NAVIGATE_RIGHT+'"><%=cont%></a></li>' 
                 },
@@ -136,7 +135,7 @@
             if($.isArray(lis)){
                 var _lis = [],_mulis = [];
 
-                _tv._ul.empty();
+                //_tv._ul.empty();
                 _tv._parseFn||(_tv._parseFn = _tv.parseTpl(opts.tpl.li));
                 if(lis.length>0){
                     $.each(lis, function(index, item){

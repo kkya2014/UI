@@ -13,9 +13,6 @@
             html,body {
                 background-color: #efeff4;
             }
-            header.mui-bar{
-                display: none;
-            }
             .mui-bar-nav~.mui-content{
                 padding: 0;
             }
@@ -68,7 +65,10 @@
         <script src="js/config.js"></script>
     </body>
         <script>
-            seajs.use(['checkbox'], function(){
+            seajs.use(['checkbox','button'], function(){
+                $('a.mui-pull-left').button(function(evt){
+                    this.back();
+                })
                 $('#basecheck').checkbox({
                     callback:function(el,evt){
                         alert($(el).val());

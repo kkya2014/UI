@@ -14,12 +14,6 @@
             html,body {
                 background-color: #efeff4;
             }
-            header.mui-bar{
-                display: none;
-            }
-            .mui-bar-nav~.mui-content{
-                padding: 0;
-            }
             input, button, .mui-btn {
                 margin-top: 10px;
                 margin-left: 10px;
@@ -29,6 +23,7 @@
    
 </head>
 <body>
+
 	<header class="mui-bar mui-bar-nav">
             <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
             <h1 class="mui-title">按钮（Button）</h1>
@@ -93,26 +88,21 @@
 </body>
      <script>
         seajs.use(['button'], function(){
-            $('#basebtn').botton({
-                callback:function(el,evt){
+            $('a.mui-pull-left').button(function(evt){
+                this.back();
+            })
+            $('#basebtn').button(function(el,evt){
                     alert(el.innerHTML);
-                }
-            });
-            $('#bluebtn').botton({
-                callback:function(el,evt){
+                });
+            $('#bluebtn').button(function(el,evt){
                     alert(el.innerHTML);
-                }
-            });
-            $('#greenbtn').botton({
-                callback:function(el,evt){
+                });
+            $('#greenbtn').button(function(el,evt){
                     alert(el.innerHTML);
-                }
-            });
-            $('#yelowbtn').botton({
-                callback:function(el,evt){
+                });
+            $('#yelowbtn').button(function(el,evt){
                     alert(el.innerHTML);
-                }
-            });
+                });
         });
     </script>
 </html>

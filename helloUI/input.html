@@ -83,6 +83,10 @@
    
 </head>
 <body>
+         <header class="mui-bar mui-bar-nav">
+            <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+            <h1 class="mui-title">文本框（input）</h1>
+        </header>
 	   <div class="mui-content">
             <div class="mui-content-padded" style="margin: 5px;">
                 <h5>默认搜索框：</h5>
@@ -124,7 +128,10 @@
      <script src="js/config.js"></script>
 </body>
      <script>
-        seajs.use(['input'], function(){
+        seajs.use(['input','button'], function(){
+            $('a.mui-pull-left').button(function(evt){
+                    this.back();
+                })
         });
     </script>
 </html>

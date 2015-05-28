@@ -19,12 +19,6 @@
             html,body {
                 background-color: #efeff4;
             }
-            header.mui-bar{
-                display: none;
-            }
-            .mui-bar-nav~.mui-content{
-                padding-top: 0;
-            }
             .title{
                 margin: 20px 15px 10px;
                 color: #6d6d72;
@@ -59,7 +53,7 @@
             .mui-bar-tab ~ .mui-content .wrapper {
                 position: absolute;
                 z-index: 1;
-                top: 0px;
+                top: 44px;
                 bottom: 50px;
                 width: 100%;
                 background: #ccc;
@@ -67,7 +61,10 @@
         </style>
 </head>
 <body>  
-    
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">选项卡（tabs）</h1>
+    </header>  
     <div class="mui-content" id = "tabs1">
         <nav class="mui-bar mui-bar-tab">
             <a class="mui-tab-item" href="#slider">
@@ -131,7 +128,10 @@
         <script src="js/config.js"></script>
 </body>
 <script>
-   seajs.use(['tab','gridview','treeview','slider','sliderbtn','scroll'], function(){
+   seajs.use(['tab','gridview','treeview','slider','sliderbtn','scroll','button'], function(){
+            $('a.mui-pull-left').button(function(evt){
+                    this.back();
+                })
             $('#tabs1').tab();
             $('#contor').treeview();
             $('#tabs1').on('activate',function(evt,to){

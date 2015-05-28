@@ -43,7 +43,7 @@
                 var checkObj = null;
                 var id = this.getAttribute('data-checkbox');
                 if (!id) {
-                    opts = $.extend(opts, { ref : this,type : 'checkbox'});
+                    opts = { ref : this,type : 'checkbox',callback:callback};
                     id = ++UI.uuid;
                     UI.data[id] = new $checkbox(opts);
                     this.setAttribute('data-checkbox', id);
@@ -54,14 +54,13 @@
             });
             return checkObjs.length > 1 ? checkObjs : checkObjs[0];
         };
-        $.fn.radio = function (opts) {
+        $.fn.radio = function (callback) {
             var radioObjs = [];
-            opts|| (opts = {});
             this.each(function() {
                 var radioObj = null;
                 var id = this.getAttribute('data-radio');
                 if (!id) {
-                    opts = $.extend(opts, { ref : this,type : 'radio'});
+                    opts = { ref : this,type : 'radio',callback:callback};
                     id = ++UI.uuid;
                     UI.data[id] = new $checkbox(opts);
                     this.setAttribute('data-radio', id);

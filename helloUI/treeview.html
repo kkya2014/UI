@@ -9,8 +9,21 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 		 <link rel="stylesheet" href="css/mui.css">
+		 <style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			.mui-content > .mui-table-view:first-child {
+			   margin-top: 0px; 
+			}
+		</style>
 	</head>
 	<body>
+		<header class="mui-bar mui-bar-nav">
+            <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+            <h1 class="mui-title">树形列表（Treeview）</h1>
+        </header>
 		<div class="mui-content" id='treeview'>
 				
 		</div>
@@ -18,7 +31,10 @@
         <script src="js/config.js"></script>
 </body>
 <script>
-   seajs.use(['treeview'], function(){
+   seajs.use(['treeview','button'], function(){
+   		$('a.mui-pull-left').button(function(evt){
+                    this.back();
+                })
    		$('#treeview').treeview({
    					callback:function(el,evt){
    						//alert(el.innerHTML)

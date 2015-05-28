@@ -13,11 +13,8 @@
 			body {
 				background-color: #efeff4;
 			}
-			header.mui-bar {
-				display: none;
-			}
-			.mui-bar-nav~.mui-content {
-				padding: 0;
+			.mui-content > .mui-table-view:first-child {
+			   margin-top: 0px; 
 			}
 		</style>
 	</head>
@@ -83,7 +80,10 @@
 		<script src="js/sea.js"></script>
      	<script src="js/config.js"></script>
 		<script>
-			 seajs.use(['switch'], function(){
+			 seajs.use(['switch','button'], function(){
+			 	$('a.mui-pull-left').button(function(evt){
+                    this.back();
+                })
 			 	$('.mui-content .mui-switch').switch({
                     callback:function(el,event,isActive){
                         el.parentNode.querySelector('span').innerText = '状态：' + ( isActive? 'true' : 'false');

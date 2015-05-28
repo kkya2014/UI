@@ -31,96 +31,28 @@
 	<body>
 		<div class="mui-content" >
 			<header id="header" class="mui-bar mui-bar-nav">
-	        </header> 
+          <h1 class="mui-title">UI Widgets</h1>
+          <a class="mui-icon mui-icon-bars mui-pull-left"></a>
+          <a id="info" class="mui-icon mui-icon-info-filled mui-pull-right" style="color: #999;"></a>
+	    </header> 
 			<div class="wrapper"  id='treeview'>
 			</div>
 		</div>
 		<script src="js/sea.js"></script>
         <script src="js/config.js"></script>
+        <script src="data/data-index.js"></script>
 </body>
 <script>
-   seajs.use(['header','treeview','scroll'], function(){
-   		$('#header').header({
-   				title:'<h1 class="mui-title">UI Widgets</h1>',
-                left:{
-                    content:'<a class="mui-icon mui-icon-bars mui-pull-left"></a>',
-                    callback:function(chk,el){
-                        //alert('首页');
-                    }
-                },
-                 right:{
-                    content:'<a id="info" class="mui-icon mui-icon-info-filled mui-pull-right" style="color: #999;"></a>',
-                    callback:function(chk,el){
-                        //alert('首页');
-                    }
-                }
-            });
+   seajs.use(['treeview','scroll'], function(){
+   	
    		$('#treeview').treeview({
    					callback:function(el,evt){
-   						 // window.location.href=$(el).attr('tar');
+   						  //window.location.href=$(el).attr('tar');
    						var url = $(el).attr('tar');
    						rd.window.openWindow('pop',0,url,{time:500,direction:rd.window.ANIMATION_SUBTYPE_FROM_TOP,type:rd.window.ANIMATION_TYPE_PUSH});
    					},
                     iscroll:true,
-                	data:[{
-						    cont : "按钮",
-						    name : "control",
-						    tar : "button.html"
-					    },{
-						    cont : '多选框',
-						    name : "listview",
-						    tar : "checkbox.html"
-					    },{
-						    cont : '弹出框',
-						    name : "listview",
-						    tar : "dialog.html"
-						},{
-						    cont : '列表',
-						    name : "listview",
-						    tar : "gridview.html"
-						},{
-						    cont : '导航',
-						    name : "listview",
-						    tar : "header.html"
-						},{
-						    cont : '文本框',
-						    name : "listview",
-						    tar : "input.html"
-						},{
-						    cont : '单选框',
-						    tar : "radio.html"
-						},{
-						    cont : '下拉列表',
-						    name : "listview",
-						    tar : "select.html"
-						},{
-						    cont : '轮播图',
-						    name : "listview",
-						    tar : "slider.html"
-						},{
-						    cont : '开关',
-						    name : "listview",
-						    tar : "switche.html"
-						},{
-						    cont : "图片轮播(slider)",
-						    contents : [{
-						        cont : '图片轮播(slider)',
-						        name : "listview",
-						        tar : "slider.html"
-						    }]
-						},{
-						    cont : 'Tab bar',
-						    name : "listview",
-						    tar : "tabs.html"
-						},{
-						    cont : '树形列表',
-						    name : "listview",
-						    tar : "treeview.html"
-						},{
-						    cont : 'miui首页',
-						    name : "miui",
-						    tar : "mindex.html"
-						}]
+                	data:data
                 });
    })
    </script>

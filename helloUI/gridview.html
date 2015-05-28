@@ -14,22 +14,24 @@
 			body {
 				background-color: #efeff4;
 			}
-			header.mui-bar {
-				display: none;
-			}
-			.mui-bar-nav~.mui-content {
-				padding: 0;
-			}
 			.title {
 				margin: 20px 15px 10px;
 				color: #6d6d72;
 				font-size: 15px;
 			}
+			.mui-bar-nav ~ .wrapper {
+                top: 44px;
+                width: 100%;
+            }
 		</style>
 	</head>
 
 	<body>
-	<div id="wrapper">
+	<header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">列表（gridview）</h1>
+    </header>  
+	<div class="wrapper" id="wrapper">
 			<div class="mui-content" id="base">
 				<div class="title">
 					基礎列表
@@ -73,8 +75,10 @@
         <script src="js/config.js"></script>
 </body>
 <script>
-   seajs.use(['gridview','switch','scroll'], function(){
-
+   seajs.use(['gridview','switch','scroll','button'], function(){
+   				$('a.mui-pull-left').button(function(evt){
+                    this.back();
+                })
    				$('#base').gridview({
                 	data:[{
                 			cont:'远眺'
