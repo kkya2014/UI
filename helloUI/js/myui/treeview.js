@@ -37,7 +37,7 @@
                 _tv.log('touchStart');
                 var touch = evt.touches[0];
                 startY = touch.pageY;
-                _tv.log(startY);
+                _tv.log('touchStart -->'+startY);
                 tarEl = false;
                 var ele = $(evt.target).closest('li.'+CLASS_TABLE_VIEW_CELL);
                 if ((!ele.hasClass(CLASS_COLLAPSE))&&ele.hasClass(CLASS_TABLE_VIEW_CELL)) {
@@ -49,7 +49,7 @@
                 _tv.log('touchMove');
                 if (tarEl) {
                     var touch = evt.touches[0];
-                    _tv.log(touch.pageY);
+                    _tv.log('touchEnd -->'+touch.pageY);
                     if(touch.pageY != startY){
                         tarEl.removeClass(CLASS_ACTIVE);
                         tarEl = false;

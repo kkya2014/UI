@@ -42,7 +42,7 @@
                 _gv.log('touchStart');
                 var touch = evt.touches[0];
                 startY = touch.pageY;
-                _gv.log(startY);
+                _gv.log('touchStart -->'+startY);
                 tarEl = false;
                 var tar = evt.target;
                 var ele = $(tar).closest('li.'+CLASS_TABLE_VIEW_CELL);
@@ -62,7 +62,7 @@
                 _gv.log('touchMove');
                 if (tarEl) {
                     var touch = evt.touches[0];
-                    _gv.log(touch.pageY);
+                    _gv.log('touchEnd -->'+touch.pageY);
                     if(touch.pageY != startY){
                         tarEl.removeClass(CLASS_ACTIVE);
                         tarEl = false;

@@ -24,6 +24,12 @@
                     opts = $.extend(opts, { disableMouse : true,disablePointer:true});
                     id = ++UI.uuid;
                     scrollObj = UI.data[id] = new IScroll(self, opts);
+                    scrollObj.on('scrollStart', function () {
+                            console.log('scrollStart --> '+this.y);
+                    });
+                    scrollObj.on('scrollEnd', function () {
+                            console.log('scrollEnd --> '+this.y);
+                    });
                     self.setAttribute('data-scroll', id);
                 } else {
                     scrollObj = UI.data[id];
