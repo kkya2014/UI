@@ -10,13 +10,17 @@
 
 		 <link rel="stylesheet" href="css/mui.css">
 <style type="text/css">
+  html,body {
+      background-color: #efeff4;
+    }
 	#header {
 		background: #CD235C;
 		padding: 0;
 		color: #eee;
 		font-weight: bold;
 	}
-	.mui-bar-nav ~ .wrapper {
+	.mui-bar-nav ~ .mui-content .wrapper {
+                position:absolute;
                 top: 44px;
                 bottom: 0px;
                 width: 100%;
@@ -29,12 +33,12 @@
 </style>
 	</head>
 	<body>
-		<div class="mui-content" >
 			<header id="header" class="mui-bar mui-bar-nav">
           <h1 class="mui-title">UI Widgets</h1>
           <a class="mui-icon mui-icon-bars mui-pull-left"></a>
           <a id="info" class="mui-icon mui-icon-info-filled mui-pull-right" style="color: #999;"></a>
 	    </header> 
+    <div class="mui-content" >
 			<div class="wrapper"  id='treeview'>
 			</div>
 		</div>
@@ -47,11 +51,11 @@
    	
    		$('#treeview').treeview({
    					callback:function(el,evt){
-   						  //window.location.href=$(el).attr('tar');
-   						var url = $(el).attr('tar');
-   						rd.window.openWindow('pop',0,url,{time:500,direction:rd.window.ANIMATION_SUBTYPE_FROM_TOP,type:rd.window.ANIMATION_TYPE_PUSH});
+   						  window.location.href=$(el).attr('tar');
+   						// var url = $(el).attr('tar');
+   						// rd.window.openWindow('pop',0,url,{time:500,direction:rd.window.ANIMATION_SUBTYPE_FROM_TOP,type:rd.window.ANIMATION_TYPE_PUSH});
    					},
-                    iscroll:true,
+                  iscroll:true,  
                 	data:data
                 });
    })

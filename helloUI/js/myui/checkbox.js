@@ -37,7 +37,7 @@
             bind.call(this);
         };
         //注册$插件
-        $.fn.checkbox = function (opts) {
+        $.fn.checkbox = function (callback) {
             var checkObjs = [];
             this.each(function() {
                 var checkObj = null;

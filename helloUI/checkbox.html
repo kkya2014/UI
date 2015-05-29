@@ -13,9 +13,6 @@
             html,body {
                 background-color: #efeff4;
             }
-            .mui-bar-nav~.mui-content{
-                padding: 0;
-            }
         </style>
     
     </head>
@@ -69,11 +66,9 @@
                 $('a.mui-pull-left').button(function(evt){
                     this.back();
                 })
-                $('#basecheck').checkbox({
-                    callback:function(el,evt){
+                $('#basecheck').checkbox(function(el,evt){
                         alert($(el).val());
-                    }
-                });
+                    });
             });
         </script>
 </html>
