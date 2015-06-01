@@ -1,6 +1,6 @@
 seajs.config({
     alias: {
-    	'zepto': 'base/zepto',
+    	'$': 'base/zepto',
         'UI': 'base/ui',
         'iscroll': 'components/build/iscroll',
         'button' : 'myui/button',
