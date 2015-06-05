@@ -38,11 +38,52 @@ var data = [{
                                                     name : "listview",
                                                     tar : "switche.html"
                                                 },{
-                                                    cont : "图片轮播(slider)",
+                                                    cont : "Native",
                                                     contents : [{
-                                                        cont : '图片轮播(slider)',
-                                                        name : "listview",
-                                                        tar : "slider.html"
+                                                        cont : 'accelerometer',
+                                                        tar : "accelerometer.html"
+                                                    },{
+                                                        cont : 'alert',
+                                                        tar : "alert.html"
+                                                    },{
+                                                        cont : 'audio',
+                                                        tar : "audio.html"
+                                                    },{
+                                                        cont : 'barcode',
+                                                        tar : "barcode.html"
+                                                    },{
+                                                        cont : 'camera',
+                                                        tar : "camera.html"
+                                                    },{
+                                                        cont : 'contacts',
+                                                        tar : "contacts.html"
+                                                    },{
+                                                        cont : 'databace',
+                                                        tar : "databace.html"
+                                                    },{
+                                                        cont : 'device',
+                                                        tar : "device.html"
+                                                    },{
+                                                        cont : 'download',
+                                                        tar : "download.html"
+                                                    },{
+                                                        cont : 'gallery',
+                                                        tar : "gallery.html"
+                                                    },{
+                                                        cont : 'geolocation',
+                                                        tar : "geolocation.html"
+                                                    },{
+                                                        cont : 'storage',
+                                                        tar : "storage.html"
+                                                    },{
+                                                        cont : 'testLog',
+                                                        tar : "testLog.html"
+                                                    },{
+                                                        cont : 'windowTest',
+                                                        tar : "windowTest.html"
+                                                    },{
+                                                        cont : 'zip',
+                                                        tar : "zip.html"
                                                     }]
                                                 },{
                                                     cont : 'Tab bar',

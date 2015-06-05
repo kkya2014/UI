@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <meta charset = "UTF-8"/>
+        <title>barcode</title>
+        <script type = "text/javascript">
+            
+            var PositionOption = {
+                enableHighAccuracy : true,
+                timeout: 10,
+                maximumAge : 10,
+                provider : 'ios'
+            }
+        
+        function GeolocationSuccessCallback(position){
+            alert(position.coords.latitude);
+        }
+        
+        function GeolocationErrorCallback(error){
+            alert(error);
+        }
+        
+        
+        function  getCurrentPosition(){
+            rd.geolocation.getCurrentPosition(GeolocationSuccessCallback, GeolocationErrorCallback, PositionOption);
+        }
+        
+        function watchPosition(){
+            rd.geolocation.watchPosition(GeolocationSuccessCallback, GeolocationErrorCallback, PositionOption);
+        }
+        
+        function clearWatch(){
+            rd.geolocation.clearWatch();
+        }
+        
+            </script>
+    </head>
+    <body>
+        
+        
+        <h1  onclick ="getCurrentPosition()">getCurrentPosition</h2>
+            
+            <h1  onclick ="watchPosition()">watchPosition</h2>
+                
+                <h1  onclick ="clearWatch()">clearWatch</h2>
+                </body>
+</html>
+

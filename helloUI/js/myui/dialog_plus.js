@@ -191,12 +191,7 @@
                  * @property {Element} [container=null] 弹出框容器
                  * @namespace options
                  */
-                container: null,
-                /**
-                 * @property {Element} [position=null] 需要dialog.position插件才能用
-                 * @namespace options
-                 */
-                position: null //
+                container: null
             });
 
         //初始化

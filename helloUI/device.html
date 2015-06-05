@@ -1,0 +1,90 @@
+<html>
+    <head>
+        <meta charset = "UTF-8"/>
+        <title>barcode</title>
+        <script type = "text/javascript">
+            function dial(){
+                rd.device.dail( '10000', false );
+            }
+        
+        function beep(){
+            rd.device.beep( 3242232 );
+        }
+        
+        
+        
+        function vibrate(){
+            rd.device.vibrate( 3242232 );
+        }
+        
+        function setWakelock(){
+            rd.device.setWakelock( true );
+        }
+        
+        function isWakelock(){
+            var state =  rd.device.isWakelock();
+            alert(state);
+        }
+        
+   
+        
+        function setVolume(){
+            rd.device.setVolume(1);
+     
+        }
+        
+        function getVolume(){
+           var state =   rd.device.getVolume();
+            alert(state);
+        }
+        
+        
+        function setBrightness(){
+            rd.screen.setBrightness(1);
+           
+        }
+        
+        function getBrightness(){
+            var v = rd.screen.getBrightness();
+            alert(v);
+        }
+        
+<!--        function getCurrentType(){-->
+<!--            var tttt = rd.networkinfo.getCurrentType();-->
+<!--            alert(tttt);-->
+<!--        }-->
+        
+        
+        function model(){
+            alert(rd.device.uuid);
+        }
+        
+        
+        
+       
+            </script>
+    </head>
+    <body>
+        
+        
+        <h1  onclick ="dial()">dial</h1>
+            
+            <h1  onclick ="vibrate()">vibrate</h1>
+                
+                <h1  onclick ="beep()">beep</h1>
+                    
+                    <h1  onclick ="setWakelock()">setWakelock</h1>
+                       
+                        <h1  onclick ="isWakelock()">isWakelock</h1>
+                        
+                        <h1  onclick ="setVolume()">setVolume</h1>
+                        <h1  onclick ="getVolume()">getVolume</h1>
+                        <h1  onclick ="setBrightness()">setBrightness</h1>
+                        <h1  onclick ="getBrightness()">getBrightness</h1>
+                        <h1  onclick ="getCurrentType()">getCurrentType</h1>
+                        <h1  onclick ="getVolume()">getVolume</h1>
+                         <h1  onclick ="model()">model</h1>
+                        
+                    </body>
+</html>
+

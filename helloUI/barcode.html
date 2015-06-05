@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <meta charset = "UTF-8"/>
+        <title>barcode</title>
+        <script type = "text/javascript">
+            
+            function BarcodeSuccessCallback( type, code, file ) {
+                alert(type +'---' + code + '---' + file);
+            }
+        
+        
+            function BarcodeErrorCallback ( error ) {
+                alert(error);
+            }
+        
+        var  fielterArray = [rd.barcode.QR, rd.barcode.EAN13, rd.barcode.EAN8];
+        
+        var option = {
+            conserve : true,
+            filename : ''
+            
+        }
+        
+            
+        function  scan(){
+               
+            rd.barcode.scan(BarcodeSuccessCallback , BarcodeErrorCallback, fielterArray);
+                
+            }
+        
+        
+        function start(){
+            
+            rd.barcode.start(BarcodeSuccessCallback, BarcodeErrorCallback, option);
+        }
+            
+        </script>
+    </head>
+    <body>
+        
+        
+        <h1  onclick ="scan()">相册</h2>
+            
+             <h1  onclick ="start()">相机</h2>
+    </body>
+</html>
+

@@ -1,0 +1,73 @@
+<html> 
+    <head>
+    <meta charset = "UTF-8"/>
+    <title>My Awesome Page</title>
+    <script type = "text/javascript">
+
+    function addContacts()
+    {
+        
+       rd.contacts.getAddressBook(contacts.ADDRESSBOOK_PHONE,function(addressBook){
+                                var contact = addressBook.creat();
+                                contact.name = {givenName:"应熊",familyName:"Jimmy"};
+                                contact.phoneNumbers = [{type:"mobile",value:"88888888"},{type:"main",value:"99999999900"}];
+                                contact.nickName = "平西王";
+                                contact.note = "拳打广东一省，脚踢苏杭二州";
+                                contact.organizations = {name:"瑞德",department:"运维部",title:"经理"};
+                                contact.addresses = [{type:"home",country:"美国",region:"北京",locality:"海淀",postalCode:"100000",streetAddress:"永嘉路"}];
+                                contat.emails = [{type:"home",value:"4523452345@163.com"},{type:"work",value:"4523452345@163.com"}];
+                                  contact.save(function(success){alert(success);},function(e){alert(e)};);
+                                },function(error){
+                                    alert(error);
+                                });
+
+    }
+ 
+ 
+    function findPerson()
+    {
+        rd.contacts.getAddressBook(contacts.ADDRESSBOOK_PHONE,function(addressBook){
+                                addressBook.find(function(success){
+                                                var contact = success[0];
+                                                contact.name.givenName = '事实上s';
+                                                 alert(const.name.givenName);
+                                                },function(e){
+                                                 
+                                                 alert(e);
+                                                 
+                                                },{name:"Jimmy"});
+                                },
+                                function(error){
+                                
+                                    alert(error);
+                               
+                                });
+       
+    }
+    
+    function deletePerson()
+    {
+        rd.contacts.getAddressBook(contacts.ADDRESSBOOK_PHONE,function(addressBook){
+                                addressBook.find(function(s){
+                                                 var contact = s[0];
+                                                 contact.remove(function(success){alert(success)},function(e){alert(e)});
+                                                 },function(e){
+                                                 alert(e);
+                                                 },{name:"Jimmy"});
+                                },function(e){
+                                
+                                     alert(e);
+                                
+                                });
+    }
+ 
+    </script>
+    </head>
+    <body>
+        <h1>联系人操作</h1>
+        <h2 onclick ="addContacts()">添加联系人</h2>
+        <h2 onclick ="findPerson()">查找联系人</h2>
+        <h2 onclick ="deletePerson()">删除联系人</h2>
+    </body>
+</html>
+

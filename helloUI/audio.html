@@ -1,0 +1,105 @@
+<html>
+    <head>
+        <title>shenyong Test page</title>
+        <script type = "text/javascript">
+       
+        var recorder;
+        var player;
+
+        function onSuccess( recordFile ) {
+            alert(recordFile);
+        }
+        
+        
+        function onError( error ) {
+            alert(error);
+        }
+        function test()
+        {
+            
+            recorder = rd.audio.getRecorder();
+            var recordOption = {filename:'',samplerate:'44100',format:'aac'};
+            
+            recorder.record(recordOption,onSuccess, onError);
+        }
+        
+        
+        function test2(){
+            recorder.stop();
+        }
+        
+        function test3(){
+            recorder.playJustRecord();
+            
+        }
+        
+        function test4(){
+            
+            var path = rd.audio.getMusicPath();
+            player = rd.audio.createPlayer(path);
+            
+            player.play(function (a){alert(a);}, function (b){alert(b);});
+        }
+        
+        function test5()
+        {
+            player.pause();
+        }
+        
+        function test6()
+        {
+            player.resume();
+        }
+        
+        function test7()
+        {
+            player.stop();
+        }
+        
+        function test8()
+        {
+            player.seekTo(20);
+        }
+        
+        
+        function test9()
+        {
+            var duration = player.getDuration();
+            alert(duration);
+        }
+        
+        
+        function test10()
+        {
+            var position = player.getPosition();
+            alert(position);
+        }
+        
+        
+        
+        function test11()
+        {
+            player.setRoute(1);
+            
+        }
+        
+            </script>
+    </head>
+    <body>
+        <h1 id="foo" onclick ="test()">start record</h1>
+        <h1 id="foo" onclick ="test2()">stop record</h1>
+        <h1 id="foo" onclick ="test3()">play record</h1>
+        <br/>
+        <h1 id="foo" onclick ="test4()">play play</h1>
+        <h1 id="foo" onclick ="test5()">play pause</h1>
+        <h1 id="foo" onclick ="test6()">play resum</h1>
+        <h1 id="foo" onclick ="test7()">play stop</h1>
+        <h1 id="foo" onclick ="test8()">play seekTo</h1>
+        <h1 id="foo" onclick ="test9()">play duration</h1>
+        <h1 id="foo" onclick ="test10()">play position</h1>
+        <h1 id="foo" onclick ="test11()">play route1</h1>
+        
+        
+        
+    </body>
+</html>

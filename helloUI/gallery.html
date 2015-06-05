@@ -1,0 +1,70 @@
+<html>
+    <head>
+        <meta charset = "UTF-8"/>
+        <title>My Awesome Page</title>
+        <script type = "text/javascript">
+            
+        function singlePick()
+        {
+                rd.gallery.pick(function(success)
+                             {
+                             alert(success);
+                             },function(e)
+                             {
+                             alert(e);
+                             },
+                             {filter:"image",multiple:false});
+        }
+        
+        function multiplePick()
+        {
+            rd.gallery.pick(function(success)
+                         {
+                         alert(success);
+                         },function(e)
+                         {
+                         alert(e);
+                         },
+                         {filter:"none",multiple:true});
+        }
+        
+        function saveImage()
+        {
+            rd.gallery.save("/Users/NinjaJun/Desktop/G.jpg",
+                         function(success)
+                         {
+                         alert(success);
+                         },
+                         function(e)
+                         {
+                         alert(e);
+                         }
+                         );
+        }
+        
+        function saveVideo()
+        {
+            rd.gallery.save("~doc/1.mp4",
+                         function(success)
+                         {
+                         alert(success);
+                         },
+                         function(e)
+                         {
+                         alert(e);
+                         }
+                         );
+        }
+
+        
+            </script>
+        
+    </head>
+    <body>
+        <h2  onclick ="singlePick()">单选图片</h2>
+        <h2 onclick ="multiplePick()">多选多媒体文件</h2>
+        <h2 onclick ="saveImage()">保存图片</h2>
+        <h2 onclick ="saveVideo()">保存视频</h2>
+
+    </body>
+</html>

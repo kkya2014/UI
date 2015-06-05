@@ -1,0 +1,92 @@
+<html> 
+    <head>
+    <title>My Awesome Page</title>
+    <script type = "text/javascript">
+    
+    
+    var downloader = null;
+    var dtask = null;
+    
+    function createDownload() {
+        
+        downloader = rd.framework_internal.get('downloader');
+        var option = {httpMethod:'GET',timeout:5,retry:3};
+         dtask = downloader.createDownload('https://developer.apple.com/library/ios/documentation/DataManagement/Conceptual/CloudKitQuickStart/CloudKit_Quick_Start.pdf',option);
+        //dtask.addCompletedListener(function(download, status){if(download.state == 5)download.resume();});
+        
+         dtask.addEventListener(function(download, status){if(download.state == 5)download.resume();document.getElementById('foo').innerHTML = download.downloadedSize.toString()+'_'+status.toString();});
+         //dtask.removeEventListener();
+    }
+    
+    function removetaskEventListener() {
+        dtask.removeEventListener();
+    }
+    
+    function addtaskEventListener() {
+        dtask.addEventListener(function(download, status){if(download.state == 5)download.resume();document.getElementById('foo').innerHTML = download.downloadedSize.toString()+'_'+status.toString();});
+    }
+    
+    function pauseDownload() {
+        dtask.pause();
+    }
+    function resumeDownload() {
+        dtask.resume();
+    }
+    function abortDownload() {
+        dtask.abort();
+    }
+    
+    function startAllDownload() {
+        downloader.startAll();
+    }
+    function enumerateDownload() {
+        downloader.enumerate(-1);
+    }
+    function clearDownload() {
+        downloader.clear(1);
+    }
+
+function createDownload2() {
+    downloader = rd.framework_internal.get('downloader');
+    var option = {httpMethod:'GET',timeout:200,retry:3};
+    downloader.createDownload('https://developer.apple.com/library/ios/documentation/DataManagement/Conceptual/CloudKitQuickStart/CloudKit_Quick_Start.pdf',option);
+}
+    
+    function createDownload3() {
+        downloader = rd.framework_internal.get('downloader');
+        var option = {httpMethod:'GET',timeout:200,retry:3};
+        downloader.createDownload('https://developer.apple.com/library/ios/documentation/DataManagement/Conceptual/CloudKitQuickStart/CloudKit_Quick_Start.pdf',option);
+    }
+    
+    function openwindow() {
+        var window = rd.framework_internal.get('window');
+        window.open('download');
+    }
+    
+    function closewindow() {
+        var window = rd.framework_internal.get('window');
+        window.close();
+    }
+    
+    //rd.window.onLoad = function(){rd.window.setWinAttr({bounces:false})};
+    </script>
+    </head>
+    <body>
+        <h1 style="font-size:30px"  onclick="createDownload()">createDownload</h1>
+        <h1 style="font-size:30px"  onclick="pauseDownload()">pauseDownload</h1>
+        <h1 style="font-size:30px" onclick="resumeDownload()">resumeDownload</h1>
+        <h1 style="font-size:30px"  onclick="abortDownload()">abortDownload</h1>
+        <h1 style="font-size:30px" onclick="clearDownload()">clearDownload</h1>
+        <h1 style="font-size:30px"  onclick="startAllDownload()">startAllDownload</h1>
+        <h1 style="font-size:30px"  onclick="enumerateDownload()">enumerateDownload</h1>
+        <input style="font-size:30px"  onclick="abortDownload()">abortDownload</input>
+        <h1 style="font-size:30px"  onclick="createDownload2()">createDownload2</h1>
+        <h1 style="font-size:30px"  onclick="createDownload3()">createDownload3</h1>
+        <h1 style="font-size:30px"  onclick="removetaskEventListener()">removetaskEventListener</h1>
+        <h1 style="font-size:30px"  onclick="addtaskEventListener()">addtaskEventListener</h1>
+        <hi style="font-size:30px"  onclick="openwindow()">openwindow</h1>
+        <h1 style="font-size:30px"  onclick="closewindow()">closewindow</h1>
+        <h1 id="foo" style="font-size:30px"  onclick="xianshi()">xianshi</h1>
+    </body>
+</html>
+

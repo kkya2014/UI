@@ -1,0 +1,181 @@
+<html> 
+    <head>
+    <meta charset = "UTF-8"/>
+    <title>My Awesome Page</title>
+    <script type = "text/javascript">
+        
+    function addContacts()
+    {
+        var contacts = rd.framework_internal.get('contacts');
+        contacts.getAddressBook(contacts.ADDRESSBOOK_PHONE,function(addressBook){
+                                var contact = addressBook.creat();
+                                contact.name = {givenName:"应熊",familyName:"Jimmy"};
+                                contact.phoneNumbers = [{type:"mobile",value:"88888888"},{type:"main",value:"99999999900"}];
+                                contact.nickName = "世玉";
+                                contact.note = "拳打广东一省，脚踢苏杭二州";
+                                contact.organizations = {name:"瑞德",department:"运维部",title:"经理"};
+                                contact.addresses = [{type:"home",country:"美国",region:"北京",locality:"海淀",postalCode:"100000",streetAddress:"永嘉路"}];
+                                contact.emails = [{type:"home",value:"4523452345@163.com"},{type:"work",value:"4523452345@163.com"}];
+                                contact.save(function(success){alert(success)},function(e ){alert(e)});
+                                },function(error){
+                              
+                                alert(error);
+                                
+                                });
+
+    }
+    function findPerson()
+    {
+        var contacts = rd.framework_internal.get('contacts');
+        contacts.getAddressBook(contacts.ADDRESSBOOK_PHONE,function(addressBook){
+                                addressBook.find(function(success){
+                                                var contact = success[0];
+                                                contact.name.givenName = '事实上s';
+                                                contact.save(function(){},function(){});
+                                                contact.rd_close();
+                                                },function(e){
+                                                 
+                                                 alert(e);
+                                                 
+                                                },{name:"雷"});
+                                },
+                                function(error){
+                                
+                                alert(error);
+                               
+                                });
+       
+    }
+    
+    function deletePerson()
+    {
+        var contacts = rd.framework_internal.get('contacts');
+        contacts.getAddressBook(contacts.ADDRESSBOOK_PHONE,function(addressBook){
+                                addressBook.find(function(s){
+                                                 var contact = s[0];
+                                                 contact.remove(function(success){alert(success)},function(e){alert(e)});
+                                                 },function(e){
+                                                 alert(e);
+                                                 },{name:"Jimmy"});
+                                },function(e){
+                                
+                                alert(e);
+                                
+                                });
+        
+        
+    }
+    
+    function platformInfo()
+    {
+        var platform = rd.framework_internal.get('plugincontainer');
+       // platform.getPlatform(function(s){
+          //                  alert(s);
+             //               },function(e){});
+ //platform.cleanCache();
+           platform.parsingXml("/Users/NinjaJun/Desktop/application.xml");
+    }
+    
+    function test()
+    {
+        var camera = rd.framework_internal.get('camera');
+        var a = camera.supportedImageResolutions[3];
+        
+        var option = {resolution:a,index:0};
+        
+       camera.captureImage(function(path){alert(path)},function(error){alert(error)},JSON.stringify(option));
+       //camera1.open(555,function(args){var array = args.productTest2Array();for(var i=0;i<array.length;i++){array[i].test2();}});
+    }
+    
+    function test2(){
+        var s = rd.framework_internal.get('barCode');
+       s.scan(function(type,code){alert(type +'---'+code);},function(error){alert(error);}, '[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]');
+    }
+    
+    function test3(){
+        var s = rd.framework_internal.get('barCode');
+        var option = {conserve:'true',filename:''};
+        s.start(function(type, code, file){alert(type+':'+code+':'+file);}, function(error){alert(error);},JSON.stringify(option));
+        
+    }
+    
+    function test4(){
+        var s = rd.framework_internal.get('device');
+       // var a = s.getVolume();
+        //alert(a);
+        s.setVolume('0.7');
+        
+    }
+    
+    function test5(){
+        rd.window.lockRotate(0);
+
+        
+    }
+    
+    function test6(){
+        rd.window.lockRotate(1);
+
+        
+    }
+    
+    function test7(){
+        rd.window.removefooterRereshing();
+
+        
+    }
+    
+    
+    function test8()
+    {
+        rd.window.removeHeaderRereshing();
+    }
+    
+    function test9()
+    {
+        rd.window.addfooterRereshing(function(){document.getElementById('food').innerHTML = 'ccc'});
+
+    }
+    
+    function test10()
+    {
+        rd.window.addHeaderRereshing(function(){document.getElementById('food').innerHTML = 'ddd'});
+    }
+    rd.window.onLoad = function(){rd.window.setWinAttr({bounces:false})};
+    //alert(123);
+    </script>
+    </head>
+    <body>
+        <h2  onclick ="addContacts()">添加联系人</h2>
+        
+        <h2 onclick ="findPerson()">查找联系人</h2>
+        
+        <h1 id="foow" onclick ="test()">BarCode Click me!</h1>
+        <h2 onclick ="deletePerson()">删除联系人</h2>
+        
+        <h2 onclick ="platformInfo()">platformInfo</h2>
+        
+        <h1 id="foo" onclick ="test()">BarCode Click me!</h1>
+        
+        <h1 id="foo" onclick ="test2()">BarCode Click me!</h1>
+        
+        <input id="foo" >BarCode Click me!</input>
+        
+         <h1 id="foo" onclick ="test4()">device Click me!</h1>
+         
+         <h1 id="foo" onclick ="test5()">Screen Click me!</h1>
+         
+          <h1 id="foo" onclick ="test6()">networkinfo Click me!</h1>
+         
+         <h1 id="fooa" onclick ="test7()">removefooterRereshing</h1>
+         
+         <h1 id="foob" onclick ="test8()">removeHeaderRereshing</h1>
+         
+         
+         <h1 id="fooc" onclick = "test9()">addfooterRereshing</h1>
+         
+         
+         <h1 id="food" onclick = "test10()">addHeaderRereshing</h1>
+    </body>
+</html>
+

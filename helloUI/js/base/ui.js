@@ -1,8 +1,36 @@
 define(function(require, exports, module) {
+  window.onerror = function(message, url, line) {
+     if (!url) return;
+     var msg = {};
+ 
+     //记录客户端环境
+     msg.ua = window.navigator.userAgent;
+ 
+     //只记录message里的message属性就好了，
+     //错误信息可能会比较晦涩，有些信息完全无用，应酌情过滤
+     msg.message = message;
+     msg.url = url;
+     msg.line = line;
+     msg.page = window.location.href;
+ 
+     var s = [];
+ 
+     //将错误信息转换成字符串
+     for(var key in msg){
+          s.push(key + '=' + msg[key]);
+     }
+     s = s.join('----');
+ 
+     //这里是用增加标签的方法调用日志收集接口，优点是比较简洁。
+     alert(s);  
+  };
 	require("$");
-	var UI = {},Base = {};
-  
+	var UI = {},Base = {},$local = {},$N = window.rd;
 	UI.config = {};
+   /*
+        判断是否存在原生插件对象
+    */
+  UI.plus = Base.isPlus = !!$N;
 
   Base.eachObj = function( obj, iterator ) {
         obj && Object.keys( obj ).forEach(function( key ) {
@@ -110,12 +138,7 @@ define(function(require, exports, module) {
         return this;
   };
     
-  /*
-        判断是否存在原生插件对象
-    */
-  Base.isPlus = function(){
-        return false;
-    };  
+ 
   Base.focus = function(element) {
         if ($.os.ios) {
             setTimeout(function() {
@@ -126,12 +149,13 @@ define(function(require, exports, module) {
         }
         return this;
     };  
-  Base.back = function() {
-       if (window.history.length > 1) {
-          window.history.back();
-        }
-        return this;
+  Base.back = function(id,ottions) {
+        id = id||'root';
+       $local.Win.backWin(id,ottions);
     }; 
+  Base.openWin = function(url,id,options,type) {
+       $local.Win.openWin(url,id,options,type);
+    };   
 
   UI.define = function( name, options) {
         if(UI[ name ])return UI[ name ];
@@ -154,7 +178,7 @@ define(function(require, exports, module) {
             this.ref = $(this.opts.ref);
             this.callback = this.opts.callback;
             this.initPlugins();
-            this.init();
+            this.init($N);
             this.opts.ref&&this.ref.trigger('readydom');
         }
         UI[ name ] = Base.extend.call(klass,Base);
@@ -199,286 +223,43 @@ define(function(require, exports, module) {
     };
 
 
-    //exports
-    module.exports = UI;
-        /**
-     *  @file 实现了通用highlight方法。
-     *  @name Highlight
-     *  @desc 点击高亮效果
-     *  @import zepto.js
-     */
-    ;(function( $ ) {
-        var $doc = $( document ),
-            $el,    // 当前按下的元素
-            timer;    // 考虑到滚动操作时不能高亮，所以用到了100ms延时
-
-        // 负责移除className.
-        function dismiss() {
-            var cls = $el.attr( 'hl-cls' );
-
-            clearTimeout( timer );
-            $el.removeClass( cls ).removeAttr( 'hl-cls' );
-            $el = null;
-            $doc.off( 'touchend touchmove touchcancel', dismiss );
-        }
-
-        /**
-         * @name highlight
-         * @desc 禁用掉系统的高亮，当手指移动到元素上时添加指定class，手指移开时，移除该class.
-         * 当不传入className是，此操作将解除事件绑定。
-         * 
-         * 此方法支持传入selector, 此方式将用到事件代理，允许dom后加载。
-         * @grammar  highlight(className, selector )   ⇒ self
-         * @grammar  highlight(className )   ⇒ self
-         * @grammar  highlight()   ⇒ self
-         * @example var div = $('div');
-         * div.highlight('div-hover');
-         *
-         * $('a').highlight();// 把所有a的自带的高亮效果去掉。
-         */
-        $.fn.highlight = function( className, selector ) {
-            return this.each(function() {
-                var $this = $( this );
-
-                $this.css( '-webkit-tap-highlight-color', 'rgba(255,255,255,0)' )
-                        .off( 'touchstart.hl' );
-
-                className && $this.on( 'touchstart.hl', function( e ) {
-                    var match;
-
-                    $el = selector ? (match = $( e.target ).closest( selector,
-                            this )) && match.length && match : $this;
-
-                    // selctor可能找不到元素。
-                    if ( $el ) {
-                        $el.attr( 'hl-cls', className );
-                        timer = setTimeout( function() {
-                            $el.addClass( className );
-                        }, 100 );
-                        $doc.on( 'touchend touchmove touchcancel', dismiss );
-                    }
-                } );
-            });
-        };
-    })( Zepto );
-
-    //     Zepto.js
-    //     (c) 2010-2015 Thomas Fuchs
-    //     Zepto.js may be freely distributed under the MIT license.
-
-    ;(function($){
-      function detect(ua, platform){
-        var os = this.os = {}, browser = this.browser = {},
-          webkit = ua.match(/Web[kK]it[\/]{0,1}([\d.]+)/),
-          android = ua.match(/(Android);?[\s\/]+([\d.]+)?/),
-          osx = !!ua.match(/\(Macintosh\; Intel /),
-          ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
-          ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/),
-          iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/),
-          webos = ua.match(/(webOS|hpwOS)[\s\/]([\d.]+)/),
-          win = /Win\d{2}|Windows/.test(platform),
-          wp = ua.match(/Windows Phone ([\d.]+)/),
-          touchpad = webos && ua.match(/TouchPad/),
-          kindle = ua.match(/Kindle\/([\d.]+)/),
-          silk = ua.match(/Silk\/([\d._]+)/),
-          blackberry = ua.match(/(BlackBerry).*Version\/([\d.]+)/),
-          bb10 = ua.match(/(BB10).*Version\/([\d.]+)/),
-          rimtabletos = ua.match(/(RIM\sTablet\sOS)\s([\d.]+)/),
-          playbook = ua.match(/PlayBook/),
-          chrome = ua.match(/Chrome\/([\d.]+)/) || ua.match(/CriOS\/([\d.]+)/),
-          firefox = ua.match(/Firefox\/([\d.]+)/),
-          firefoxos = ua.match(/\((?:Mobile|Tablet); rv:([\d.]+)\).*Firefox\/[\d.]+/),
-          ie = ua.match(/MSIE\s([\d.]+)/) || ua.match(/Trident\/[\d](?=[^\?]+).*rv:([0-9.].)/),
-          webview = !chrome && ua.match(/(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/),
-          safari = webview || ua.match(/Version\/([\d.]+)([^S](Safari)|[^M]*(Mobile)[^S]*(Safari))/)
-
-        // Todo: clean this up with a better OS/browser seperation:
-        // - discern (more) between multiple browsers on android
-        // - decide if kindle fire in silk mode is android or not
-        // - Firefox on Android doesn't specify the Android version
-        // - possibly devide in os, device and browser hashes
-
-        if (browser.webkit = !!webkit) browser.version = webkit[1]
-
-        if (android) os.android = true, os.version = android[2]
-        if (iphone && !ipod) os.ios = os.iphone = true, os.version = iphone[2].replace(/_/g, '.')
-        if (ipad) os.ios = os.ipad = true, os.version = ipad[2].replace(/_/g, '.')
-        if (ipod) os.ios = os.ipod = true, os.version = ipod[3] ? ipod[3].replace(/_/g, '.') : null
-        if (wp) os.wp = true, os.version = wp[1]
-        if (webos) os.webos = true, os.version = webos[2]
-        if (touchpad) os.touchpad = true
-        if (blackberry) os.blackberry = true, os.version = blackberry[2]
-        if (bb10) os.bb10 = true, os.version = bb10[2]
-        if (rimtabletos) os.rimtabletos = true, os.version = rimtabletos[2]
-        if (playbook) browser.playbook = true
-        if (kindle) os.kindle = true, os.version = kindle[1]
-        if (silk) browser.silk = true, browser.version = silk[1]
-        if (!silk && os.android && ua.match(/Kindle Fire/)) browser.silk = true
-        if (chrome) browser.chrome = true, browser.version = chrome[1]
-        if (firefox) browser.firefox = true, browser.version = firefox[1]
-        if (firefoxos) os.firefoxos = true, os.version = firefoxos[1]
-        if (ie) browser.ie = true, browser.version = ie[1]
-        if (safari && (osx || os.ios || win)) {
-          browser.safari = true
-          if (!os.ios) browser.version = safari[1]
-        }
-        if (webview) browser.webview = true
-
-        os.tablet = !!(ipad || playbook || (android && !ua.match(/Mobile/)) ||
-          (firefox && ua.match(/Tablet/)) || (ie && !ua.match(/Phone/) && ua.match(/Touch/)))
-        os.phone  = !!(!os.tablet && !os.ipod && (android || iphone || webos || blackberry || bb10 ||
-          (chrome && ua.match(/Android/)) || (chrome && ua.match(/CriOS\/([\d.]+)/)) ||
-          (firefox && ua.match(/Mobile/)) || (ie && ua.match(/Touch/))))
-      }
-
-      detect.call($, navigator.userAgent, navigator.platform)
-      // make available to unit tests
-      $.__detect = detect
-
-    })(Zepto);
-
     /**
-     * @file 来自zepto/touch.js, zepto自1.0后，已不默认打包此文件。
-     * @import zepto.js
-     */
-    //     Zepto.js
-    //     (c) 2010-2012 Thomas Fuchs
-    //     Zepto.js may be freely distributed under the MIT license.
-
-    ;(function($){
-      var touch = {},
-        touchTimeout, tapTimeout, swipeTimeout,
-        longTapDelay = 750, longTapTimeout
-
-      function parentIfText(node) {
-        return 'tagName' in node ? node : node.parentNode
-      }
-
-      function swipeDirection(x1, x2, y1, y2) {
-        var xDelta = Math.abs(x1 - x2), yDelta = Math.abs(y1 - y2)
-        return xDelta >= yDelta ? (x1 - x2 > 0 ? 'Left' : 'Right') : (y1 - y2 > 0 ? 'Up' : 'Down')
-      }
-
-      function longTap() {
-        longTapTimeout = null
-        if (touch.last) {
-          touch.el.trigger('longTap')
-          touch = {}
-        }
-      }
-
-      function cancelLongTap() {
-        if (longTapTimeout) clearTimeout(longTapTimeout)
-        longTapTimeout = null
-      }
-
-      function cancelAll() {
-        if (touchTimeout) clearTimeout(touchTimeout)
-        if (tapTimeout) clearTimeout(tapTimeout)
-        if (swipeTimeout) clearTimeout(swipeTimeout)
-        if (longTapTimeout) clearTimeout(longTapTimeout)
-        touchTimeout = tapTimeout = swipeTimeout = longTapTimeout = null
-        touch = {}
-      }
-
-      $(document).ready(function(){
-        var now, delta
-
-        $(document.body)
-          .bind('touchstart', function(e){
-            now = Date.now()
-            delta = now - (touch.last || now)
-            touch.el = $(parentIfText(e.touches[0].target))
-            touchTimeout && clearTimeout(touchTimeout)
-            touch.x1 = e.touches[0].pageX
-            touch.y1 = e.touches[0].pageY
-            if (delta > 0 && delta <= 250) touch.isDoubleTap = true
-            touch.last = now
-            longTapTimeout = setTimeout(longTap, longTapDelay)
-          })
-          .bind('touchmove', function(e){
-            cancelLongTap()
-            touch.x2 = e.touches[0].pageX
-            touch.y2 = e.touches[0].pageY
-            if (Math.abs(touch.x1 - touch.x2) > 10)
-              e.preventDefault()
-          })
-          .bind('touchend', function(e){
-             cancelLongTap()
-
-            // swipe
-            if ((touch.x2 && Math.abs(touch.x1 - touch.x2) > 30) ||
-                (touch.y2 && Math.abs(touch.y1 - touch.y2) > 30))
-
-              swipeTimeout = setTimeout(function() {
-                touch.el.trigger('swipe')
-                touch.el.trigger('swipe' + (swipeDirection(touch.x1, touch.x2, touch.y1, touch.y2)))
-                touch = {}
-              }, 0)
-
-            // normal tap
-            else if ('last' in touch)
-
-              // delay by one tick so we can cancel the 'tap' event if 'scroll' fires
-              // ('tap' fires before 'scroll')
-              tapTimeout = setTimeout(function() {
-
-                // trigger universal 'tap' with the option to cancelTouch()
-                // (cancelTouch cancels processing of single vs double taps for faster 'tap' response)
-                var event = $.Event('tap')
-                event.cancelTouch = cancelAll
-                touch.el.trigger(event)
-
-                // trigger double tap immediately
-                if (touch.isDoubleTap) {
-                  touch.el.trigger('doubleTap')
-                  touch = {}
-                }
-
-                // trigger single tap after 250ms of inactivity
-                else {
-                  touchTimeout = setTimeout(function(){
-                    touchTimeout = null
-                    touch.el.trigger('singleTap')
-                    touch = {}
-                  }, 250)
-                }
-
-              }, 0)
-
-          })
-          .bind('touchcancel', cancelAll)
-
-        $(window).bind('scroll', cancelAll)
-      })
-
-      ;['swipe', 'swipeLeft', 'swipeRight', 'swipeUp', 'swipeDown', 'doubleTap', 'tap', 'singleTap', 'longTap'].forEach(function(m){
-        $.fn[m] = function(callback){ return this.bind(m, callback) }
-      })
-    })(Zepto);
-
-
-    /**
-     * mui fixed requestAnimationFrame
+     * ui native window
      * @param {type} window
      * @returns {undefined}
      */
-    ;(function(window) {
-        if (!window.requestAnimationFrame) {
-            var lastTime = 0;
-            window.requestAnimationFrame = window.webkitRequestAnimationFrame || function(callback, element) {
-                var currTime = new Date().getTime();
-                var timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
-                var id = window.setTimeout(function() {
-                    callback(currTime + timeToCall);
-                }, timeToCall);
-                lastTime = currTime + timeToCall;
-                return id;
-            };
-            window.cancelAnimationFrame = window.webkitCancelAnimationFrame || window.webkitCancelRequestAnimationFrame || function(id) {
-                clearTimeout(id);
-            };
-        };
-    }(window));
+    (function($,window) {
+       $.Win = {
+          openWin : function(url,id,options,type){
+              if(UI.plus){
+                id = id||url;
+                type = type||0;
+                options = options||{type:$N.window.ANIMATION_TYPE_PUSH,time:150,curve:$N.window.ANIMATION_CURVE_LINEAR};
+                $N.window.openWindow(id,type,url,options);
+              }else{
+                window.location.href=url;
+              }
+              return this;
+            },
+
+          backWin : function(id,options){
+              if(UI.plus){
+                options = options||{type:$N.window.ANIMATION_TYPE_PUSH,time:150,curve:$N.window.ANIMATION_CURVE_LINEAR};
+                $N.window.backToWindow(id,options);
+              }else{
+                if(window.history.length > 1) {
+                  window.history.back();
+                }
+              }
+              return this;
+            }  
+       }
+        window.$local = $;
+    }($local,window));
+
+
+
+    //exports
+    module.exports = UI;
 
 });

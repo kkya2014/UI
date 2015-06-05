@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <link rel="stylesheet" href="css/mui.css">
+        <link rel="stylesheet" href="css/ui.css">
 
         <!--demo展示所用css，不用关心 begin-->
         <link rel="stylesheet" type="text/css" href="css/assets/reset.css" />
@@ -19,8 +19,6 @@
         <!--组件依赖css end-->
 
         <!--demo展示所用css，不用关心 begin-->
-        <link rel="stylesheet" type="text/css" href="css/assets/widget/button/button.css" />
-        <link rel="stylesheet" type="text/css" href="css/assets/widget/button/button.default.css" />
         <link rel="stylesheet" type="text/css" href="css/assets/dialog_demo.css"/>
         <!--demo展示所用css end-->
 
@@ -28,7 +26,7 @@
             html,body {
                 background-color: #efeff4;
             }
-            .mui-btn{
+            .ui-btn{
                 display: block;
                 width: 120px;
                 margin: 10px auto;
@@ -41,17 +39,19 @@
     </head>
 
     <body>
-        <header class="mui-bar mui-bar-nav">
-            <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-            <h1 class="mui-title">消息框（dialog）</h1>
+        <header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">消息框（dialog）</h1>
         </header>
-        <div class="mui-content">
-            <div class="mui-content-padded" style="margin: 5px;text-align: center;">
-                <button id='alertBtn' type="button" class="mui-btn mui-btn-blue mui-btn-outlined">分享框</button>
-                <button id='confirmBtn' type="button" class="mui-btn mui-btn-blue mui-btn-outlined">评分框</button>
-                <button id='promptBtn' type="button" class="mui-btn mui-btn-blue mui-btn-outlined">提示框</button>
-                <button id='toastBtn' type="button" class="mui-btn mui-btn-blue mui-btn-outlined">个性化提示框</button>
-                <div id="info">
+        <div class="ui-content">
+            <div class="ui-content-padded" style="margin: 5px;text-align: center;">
+                <button id='alertBtn' type="button" class="ui-btn ui-btn-blue ui-btn-outlined">分享框</button>
+                <button id='confirmBtn' type="button" class="ui-btn ui-btn-blue ui-btn-outlined">评分框</button>
+                <button id='promptBtn' type="button" class="ui-btn ui-btn-blue ui-btn-outlined">提示框</button>
+                <button id='toastBtn' type="button" class="ui-btn ui-btn-blue ui-btn-outlined">个性化提示框</button>
+                <button id='alert' type="button" class="ui-btn ui-btn-blue ui-btn-outlined">alert</button>
+                <button id='confirm' type="button" class="ui-btn ui-btn-blue ui-btn-outlined">confirm</button>
+                <button id='prompt' type="button" class="ui-btn ui-btn-blue ui-btn-outlined">prompt</button>
         
                 </div>
             </div>
@@ -61,7 +61,7 @@
     </body>
      <script>
             seajs.use(['dialog','button'], function(){
-                $('.mui-pull-left').button(function(evt){
+                $('.ui-pull-left').button(function(evt){
                     this.back();
                 })
                 $('#alertBtn').button(function(btn,el){
@@ -117,8 +117,6 @@
                     });
                 $('#toastBtn').button(function(btn,el){
                         Dialog.dialog({
-                            autoOpen: false,
-                            closeBtn: false,
                             buttons: {
                                 '取消': function(){
                                     this.close();
@@ -131,10 +129,31 @@
                             content: '<p>登录后, 获得更多个性化特色功能</p><p>特色功能1：个性化首页</p>' +
                                     '<p>特色功能2：各产品线自动关联，无需再次登录，一站式服务</p><p>特色功能3：记录您当前的活动状态</p>' +
                                     '<p>特色功能4：个性化提醒</p>'
-                        })._wrap.addClass('login-dialog login-dialog-dark')
+                        })._wrap.addClass('login-dialog')
 
                         //Dialog.prompt('444');
                     });
+                $('#alert').button(function(){
+                        Dialog.alert('消息内容',{
+                            title : '单按钮alert',
+                            callback:function(psuccess,perror){
+                                alert(psuccess.buttonIndex);
+                                alert(perror);
+                            }
+                        });
+                });        
+                $('#confirm').button(function(){
+                        Dialog.confirm('消息内容',{
+                            title : '单按钮alert',
+                            buttons : ['确认','放弃','取消'],
+                            callback:function(psuccess,perror){
+                                alert(psuccess.buttonIndex);
+                            }
+                        });
+                });       
+                $('#prompt').button(function(){
+                        Dialog.prompt('消息内容');
+                });        
             });
         </script>
 </html>

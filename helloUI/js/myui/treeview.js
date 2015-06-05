@@ -2,13 +2,13 @@
  * @file 列表组件
  */
 (function() {
-        var CLASS_ACTIVE = 'mui-active',
-            CLASS_TABLE_VIEW_CELL = 'mui-table-view-cell',
-            CLASS_COLLAPSE = 'mui-collapse',
-            CLASS_CONTENT = 'mui-content',
-            CLASS_TABLE_VIEW = 'mui-table-view',
-            CLASS_TABLE_VIEW_CHEVRON = 'mui-table-view-chevron',
-            CLASS_NAVIGATE_RIGHT = 'mui-navigate-right',
+        var CLASS_ACTIVE = 'ui-active',
+            CLASS_TABLE_VIEW_CELL = 'ui-table-view-cell',
+            CLASS_COLLAPSE = 'ui-collapse',
+            CLASS_CONTENT = 'ui-content',
+            CLASS_TABLE_VIEW = 'ui-table-view',
+            CLASS_TABLE_VIEW_CHEVRON = 'ui-table-view-chevron',
+            CLASS_NAVIGATE_RIGHT = 'ui-navigate-right',
 
             tarEl;
 

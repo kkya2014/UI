@@ -1,0 +1,44 @@
+<html> 
+    <head>
+    <meta charset = "UTF-8"/>
+    <title>My Awesome Page</title>
+    <script type = "text/javascript">
+    
+    function compressDoc()
+    {
+        var srcpath = "/Users/NinjaJun/Desktop/apple";
+        var zipfile = "/photozip.zip";
+        rd.zip.compress(srcpath,zipfile,function(success)
+                     {
+                        alert(success);
+                     },
+                     function(e)
+                     {
+                        alert(e);
+                     });
+    }
+    
+    function deccompressDoc()
+    {
+        var zipfile = "/Users/NinjaJun/Desktop/Audio.zip";
+        var target = "/banana";
+        rd.zip.decompress(zipfile,target,
+                       function(success)
+                       {
+                          alert(success);
+                       },
+                       function(e)
+                       {
+                          alert(e);
+                       });
+    }
+
+    </script>
+    
+    </head>
+    <body>
+        <h2  onclick ="compressDoc()">压缩文件</h2>
+        <h2 onclick ="deccompressDoc()">解压文件</h2>
+    </body>
+</html>
+

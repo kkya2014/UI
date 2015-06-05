@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <title>Accelerometer Example</title>
+        <script type="text/javascript">
+            
+        function captureImage()
+            {
+                var a = rd.camera.supportedImageResolutions[3];
+                
+                var option = {resolution:a,index:0};
+                
+                rd.camera.captureImage(function(path){alert(path)},function(error){alert(error)},option);
+            }
+        function captureVideo()
+        {
+            var a = rd.camera.supportedImageResolutions[3];
+            
+            var option = {resolution:a,index:0};
+            
+            rd.camera.captureVideo(function(path){alert(path)},function(error){alert(error)},option);
+
+        }
+        
+        </script>
+    </head>
+    <body>
+
+        <button onclick="captureImage()">captureImage</button>
+        <button onclick="captureVideo()">captureVideo</button>
+    </body>
+</html>

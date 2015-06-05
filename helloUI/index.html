@@ -8,7 +8,7 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-		 <link rel="stylesheet" href="css/mui.css">
+		 <link rel="stylesheet" href="css/ui.css">
 <style type="text/css">
   html,body {
       background-color: #efeff4;
@@ -19,42 +19,39 @@
 		color: #eee;
 		font-weight: bold;
 	}
-	.mui-bar-nav ~ .mui-content .wrapper {
+	.ui-bar-nav ~ .ui-content .wrapper {
                 position:absolute;
                 top: 44px;
                 bottom: 0px;
                 width: 100%;
                 background: #ccc;
             }
-    .mui-bar-nav.mui-bar .mui-icon {
+    .ui-bar-nav.ui-bar .ui-icon {
 	   margin-right: 0px;
 	   margin-left: 0px;
 	}        
 </style>
 	</head>
 	<body>
-			<header id="header" class="mui-bar mui-bar-nav">
-          <h1 class="mui-title">UI Widgets</h1>
-          <a class="mui-icon mui-icon-bars mui-pull-left"></a>
-          <a id="info" class="mui-icon mui-icon-info-filled mui-pull-right" style="color: #999;"></a>
+			<header id="header" class="ui-bar ui-bar-nav">
+          <h1 class="ui-title">UI Widgets</h1>
+          <a class="ui-icon ui-icon-bars ui-pull-left"></a>
+          <a id="info" class="ui-icon ui-icon-info-filled ui-pull-right" style="color: #999;"></a>
 	    </header> 
-    <div class="mui-content" >
+    <div class="ui-content" >
 			<div class="wrapper"  id='treeview'>
 			</div>
 		</div>
-		<script src="js/sea.js"></script>
+		    <script src="js/sea.js"></script>
         <script src="js/config.js"></script>
         <script src="data/data-index.js"></script>
 </body>
 <script>
-   seajs.use(['treeview','scroll'], function(){
-   	
+   	seajs.use(['treeview'], function(){
    		$('#treeview').treeview({
-   					callback:function(el,evt){
-   						  window.location.href=$(el).attr('tar');
-   						// var url = $(el).attr('tar');
-   						// rd.window.openWindow('pop',0,url,{time:500,direction:rd.window.ANIMATION_SUBTYPE_FROM_TOP,type:rd.window.ANIMATION_TYPE_PUSH});
-   					},
+         					callback:function(el,evt){
+         						  $local.Win.openWin($(el).attr('tar'));
+         					},
                   iscroll:true,  
                 	data:data
                 });

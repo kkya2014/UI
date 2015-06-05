@@ -1,0 +1,29 @@
+<html> 
+    <head>
+    <meta charset = "UTF-8"/>
+    <title>My Awesome Page</title>
+    <script type = "text/javascript">
+    
+    function errorLog(){
+        rd.remoteLog.logError('this is a error log...'+ 1);
+        alert('错误log');
+    }
+    function warnLog(){
+        rd.remoteLog.logWarn('this is a warn log...'+ 2);
+        alert('警告log');
+    }
+    function infoLog(){
+        rd.remoteLog.logInfo('this is a info log...'+ 3);
+        alert('信息log');
+    }
+    
+    rd.window.onLoad = function(){document.getElementById('foow').innerHTML = rd.window.name};
+    //alert(123);
+    </script>
+    </head>
+    <body>
+        <h2 id="foo"  onclick ="errorLog()">错误log</h2>
+        <h2 id="foo"  onclick ="warnLog()">警告log</h2>
+        <h2 id="foo"  onclick ="infoLog()">信息log</h2>
+    </body>
+</html>

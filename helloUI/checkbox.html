@@ -8,7 +8,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-        <link rel="stylesheet" href="css/mui.css">
+        <link rel="stylesheet" href="css/ui.css">
         <style>
             html,body {
                 background-color: #efeff4;
@@ -17,40 +17,40 @@
     
     </head>
     <body>
-        <header class="mui-bar mui-bar-nav">
-            <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-            <h1 class="mui-title">复选框（checkbox）</h1>
+        <header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">复选框（checkbox）</h1>
         </header>
-        <div class="mui-content" id="basecheck">
-            <h5 class="mui-content-padded">图标左对齐</h5>
-            <div class="mui-card">
-                <form class="mui-input-group">
-                    <div class="mui-input-row mui-checkbox mui-left">
+        <div class="ui-content" id="basecheck">
+            <h5 class="ui-content-padded">图标左对齐</h5>
+            <div class="ui-card">
+                <form class="ui-input-group">
+                    <div class="ui-input-row ui-checkbox ui-left">
                         <label>checkbox</label>
                         <input name="checkbox" type="checkbox" value="0">
                     </div>
-                    <div class="mui-input-row mui-checkbox mui-left">
+                    <div class="ui-input-row ui-checkbox ui-left">
                         <label>checkbox</label>
                         <input  name="checkbox" type="checkbox" value="1" checked>
                     </div>
-                    <div id="discheck" class="mui-input-row mui-checkbox mui-left">
+                    <div id="discheck" class="ui-input-row ui-checkbox ui-left">
                         <label>disabled checkbox</label>
                         <input name="checkbox" type="checkbox" value="2" disabled="disabled">
                     </div>
                 </form>
             </div>
-            <h5 class="mui-content-padded">图标右对齐</h5>
-            <div class="mui-card">
-                <form class="mui-input-group">
-                    <div class="mui-input-row mui-checkbox">
+            <h5 class="ui-content-padded">图标右对齐</h5>
+            <div class="ui-card">
+                <form class="ui-input-group">
+                    <div class="ui-input-row ui-checkbox">
                         <label>checkbox</label>
                         <input name="checkbox1" type="checkbox" >
                     </div>
-                    <div class="mui-input-row mui-checkbox">
+                    <div class="ui-input-row ui-checkbox">
                         <label>checkbox</label>
                         <input name="checkbox1" type="checkbox" checked>
                     </div>
-                    <div class="mui-input-row mui-checkbox">
+                    <div class="ui-input-row ui-checkbox">
                         <label>disabled checkbox</label>
                         <input name="checkbox1" type="checkbox" disabled="disabled">
                     </div>
@@ -63,11 +63,11 @@
     </body>
         <script>
             seajs.use(['checkbox','button'], function(){
-                $('a.mui-pull-left').button(function(evt){
+                $('a.ui-pull-left').button(function(evt){
                     this.back();
                 })
                 $('#basecheck').checkbox(function(el,evt){
-                        alert($(el).val());
+                       if(el.checked)  alert($(el).val());
                     });
             });
         </script>

@@ -1,0 +1,7 @@
+<!--模块名是否要和component文件夹一致-->
+<component version="1.1.1">
+    <index>index.html</index>
+    <description/>
+    <version/>
+    <bgcolor>#1E90FF</bgcolor>
+</component>

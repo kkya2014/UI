@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <title>My Awesome Page</title>
+        <script type = "text/javascript">
+
+        function getLength() {
+            var length = rd.storage.getLength();
+            alert(length);
+        }
+        function getItem() {
+            var item = rd.storage.getItem('age');
+            alert(item);
+
+        }
+        function setItem() {
+            rd.storage.setItem('name','daniel');
+            rd.storage.setItem('age',25);
+        }
+        function removeItem() {
+            rd.storage.removeItem('age');
+        }
+        
+        function clearStorage() {
+            rd.storage.clear();
+        }
+        
+        function key() {
+           var key = rd.storage.key(0);
+           alert(key);
+        }
+
+        </script>
+    </head>
+    <body>
+        <h1 style="font-size:30px"  onclick="getLength()">getLength</h1>
+        <h1 style="font-size:30px"  onclick="getItem()">getItem</h1>
+        <h1 style="font-size:30px" onclick="setItem()">setItem</h1>
+        <h1 style="font-size:30px"  onclick="removeItem()">removeItem</h1>
+        <h1 style="font-size:30px" onclick="clearStorage()">clear</h1>
+        <h1 style="font-size:30px"  onclick="key()">key</h1>
+    </body>
+</html>

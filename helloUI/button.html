@@ -9,12 +9,12 @@
     <title>Hello UI Button</title>
 
     <!-- Style -->
-    <link rel="stylesheet" href="css/mui.css">
+    <link rel="stylesheet" href="css/ui.css">
         <style>
             html,body {
                 background-color: #efeff4;
             }
-            input, button, .mui-btn {
+            input, button, .ui-btn {
                 margin-top: 10px;
                 margin-left: 10px;
             }
@@ -24,53 +24,53 @@
 </head>
 <body>
 
-	<header class="mui-bar mui-bar-nav">
-            <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-            <h1 class="mui-title">按钮（Button）</h1>
+	<header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">按钮（Button）</h1>
         </header>
-        <div class="mui-content">
-            <div class="mui-content-padded">
+        <div class="ui-content">
+            <div class="ui-content-padded">
                 <h5>底色按钮：</h5>
-                <button type="button" class="mui-btn" id="basebtn">
+                <button type="button" class="ui-btn" id="basebtn">
                     默认
                 </button>
-                <div class="mui-btn mui-btn-primary" id="bluebtn">
+                <div class="ui-btn ui-btn-primary" id="bluebtn">
                     蓝色
                 </div>
-                <span class="mui-btn mui-btn-success" id="greenbtn">
+                <span class="ui-btn ui-btn-success" id="greenbtn">
                     绿色
                 </span>
-                <button type="button" class="mui-btn mui-btn-warning" id="yelowbtn">
+                <button type="button" class="ui-btn ui-btn-warning" id="yelowbtn">
                     黄色
                 </button>
-                <button type="button" class="mui-btn mui-btn-danger">
+                <button type="button" class="ui-btn ui-btn-danger">
                     红色
                 </button>
-                <button type="button" class="mui-btn mui-btn-royal">
+                <button type="button" class="ui-btn ui-btn-royal">
                     紫色
                 </button>
         
                 <h5 style="margin-top: 10px;">无底色按钮（使用父元素的背景色）：</h5>    
-                <button type="button" class="mui-btn mui-btn-outlined">
+                <button type="button" class="ui-btn ui-btn-outlined">
                     默认
                 </button>
-                <button type="button" class="mui-btn mui-btn-primary mui-btn-outlined">
+                <button type="button" class="ui-btn ui-btn-primary ui-btn-outlined">
                     操作
                 </button>
-                <button type="button" class="mui-btn mui-btn-success mui-btn-outlined">
+                <button type="button" class="ui-btn ui-btn-success ui-btn-outlined">
                     成功
                 </button>
-                <button type="button" class="mui-btn mui-btn-warning mui-btn-outlined">
+                <button type="button" class="ui-btn ui-btn-warning ui-btn-outlined">
                     警告
                 </button>
-                <button type="button" class="mui-btn mui-btn-danger mui-btn-outlined">
+                <button type="button" class="ui-btn ui-btn-danger ui-btn-outlined">
                     危险
                 </button>
-                <button type="button" class="mui-btn mui-btn-royal mui-btn-outlined">
+                <button type="button" class="ui-btn ui-btn-royal ui-btn-outlined">
                     高贵
                 </button>
                 <h5 style="margin-top: 15px;">链接按钮：</h5>    
-                <button type="button" class="mui-btn mui-btn-link">
+                <button type="button" class="ui-btn ui-btn-link">
                     添加
                 </button>
                 <h5 style="margin-top: 10px;">默认input标签样式：</h5> 
@@ -88,7 +88,7 @@
 </body>
      <script>
         seajs.use(['button'], function(){
-            $('a.mui-pull-left').button(function(evt){
+            $('a.ui-pull-left').button(function(evt){
                 this.back();
             })
             $('#basebtn').button(function(el,evt){

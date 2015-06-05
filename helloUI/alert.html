@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <title>shenyong Test page</title>
+        <meta charset="utf-8">
+        <script type = "text/javascript">
+            
+            
+        function fuck(psuccess,perror){
+            alert('index: ' + psuccess.buttonIndex + '; text: ' + psuccess.text);
+        }
+            
+            function alerts(){
+                
+                var  alertparames={
+                    title : '单按钮alert',
+                    msg : '只能显示一个按钮',
+                    buttons : ['第一个按钮','第二个按钮','第三个按钮']
+                }
+                
+                
+                rd.alert.alert(alertparames, fuck);
+            }
+        
+        
+        function prompts(){
+            var promptParams = {
+                title : '这是一个prompt对话框',
+                msg : '现在弹出了一个prompt对话框',
+                text : '这是默认文字',
+                type : 'text',
+                buttons : ['确认','放弃','取消']
+            
+            }
+            rd.prompt.prompt(promptParams, fuck);
+        }
+        
+        function confirm(){
+            var  confirmparames={
+                title : '多按钮confirm',
+                msg : '多按钮confirm--xixi haha',
+                buttons : ['确认','放弃','取消']
+            }
+            rd.confirm.confirm(confirmparames, fuck);
+        }
+        </script>
+    </head>
+    <body>
+        <h1 id="foo" onclick ="alerts()">alert</h1>
+        
+            <h1 id="foo" onclick ="confirm()">confirm</h1>
+         <h1 id="foo" onclick ="prompts()">prompts</h1>
+      
+        
+        
+    </body>
+</html>

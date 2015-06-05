@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <title>Accelerometer Example</title>
+        <script type="text/javascript">
+            
+            function getAcceleration(){
+                var acc = document.getElementById("acc");
+                rd.accelerometer.getCurrentAcceleration(function( a ){
+                                                        acc.innerHTML = "x:" + a.xAxis + "\ny:" + a.yAxis + "\nz:" + a.zAxis;
+                                                        },function(error) {
+                                                        alert(error);
+                                                        }
+                                                        );
+            }
+        
+        function watAcceleration()
+        {
+            var acc = document.getElementById("acc");
+            rd.accelerometer.watchAcceleration
+            (
+             function( a )
+             {
+             acc.innerHTML =  "x:" + a.xAxis + "\ny:" + a.yAxis + "\nz:" + a.zAxis;
+             },
+             function(error)
+             {
+             alert(error);
+             },
+             {frequency:500}
+             );
+        }
+        function cancel() {
+            rd.accelerometer.clearWatch();
+        }
+        </script>
+    </head>
+    <body>
+        <h1 onclick="getAcceleration()">getAcceleration</h1>
+        <h1 onclick="watAcceleration()">watchAcceleration</h1>
+        <h1 id="acc">Acceleration</h1>
+        <button onclick="cancel()">Cancel</button>
+    </body>
+</html>
