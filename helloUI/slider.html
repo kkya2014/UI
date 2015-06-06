@@ -5,24 +5,36 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <!--demo展示所用css，不用关心 begin-->
+    <link rel="stylesheet" href="css/ui.css">
     <link rel="stylesheet" type="text/css" href="css/assets/reset.css" />
     <!--demo展示所用css end-->
     <!--组件依赖css begin-->
     <link rel="stylesheet" type="text/css" href="css/assets/widget/slider/slider.css" />
     <link rel="stylesheet" type="text/css" href="css/assets/widget/slider/slider.default.css" /> 
     <link rel="stylesheet" type="text/css" href="css/loading.css" /> 
-    <link rel="stylesheet" href="css/mui.css">
     <!--皮肤文件，若不使用该皮肤，可以不加载-->
     <!--组件依赖css end-->
+    <style>
+                .ui-slider .ui-slider-group .ui-slider-item {
+                  position: relative;
+                  display: inline-block;
+                  width: 100%;
+                   height: 148px; 
+                  font-size: 14px;
+                  vertical-align: top;
+                }
+        </style>
+
+   
 </head>
 <body>
-    <header class="mui-bar mui-bar-nav">
-        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-        <h1 class="mui-title">轮播图（slider）</h1>
+    <header class="ui-bar ui-bar-nav">
+        <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+        <h1 class="ui-title">轮播图（slider）</h1>
     </header>    
-    <div class="mui-content" id="slider">
-            <div class="mui-loading">
-                <div class="mui-spinner">
+    <div class="ui-content" id="slider">
+            <div class="ui-loading">
+                <div class="ui-spinner">
                 </div>
             </div>                         
     </div>
@@ -31,7 +43,7 @@
 </body>
 <script>
    seajs.use(['slider','sliderbtn','button'], function(){
-                $('a.mui-pull-left').button(function(evt){
+                $('a.ui-pull-left').button(function(evt){
                     this.back();
                 })
                 $('#slider').slider( { 

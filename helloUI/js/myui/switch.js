@@ -4,11 +4,11 @@
 (function() {
 
 
-        var CLASS_SWITCH = 'mui-switch',
-            CLASS_SWITCH_HANDLE = 'mui-switch-handle',
-            CLASS_ACTIVE = 'mui-active',
-            CLASS_DRAGGING = 'mui-dragging',
-            CLASS_DISABLED = 'mui-disabled',
+        var CLASS_SWITCH = 'ui-switch',
+            CLASS_SWITCH_HANDLE = 'ui-switch-handle',
+            CLASS_ACTIVE = 'ui-active',
+            CLASS_DRAGGING = 'ui-dragging',
+            CLASS_DISABLED = 'ui-disabled',
 
             SELECTOR_SWITCH_HANDLE = '.' + CLASS_SWITCH_HANDLE;
 

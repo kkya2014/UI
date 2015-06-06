@@ -3,13 +3,13 @@
  */
 
 (function() {
-    var CLASS_CONTENT = 'mui-content',
-        CLASS_ACTIVE = 'mui-active',
-        CLASS_BAR = 'mui-bar',
-        CLASS_BAR_TAB = 'mui-bar-tab',
-        CLASS_TAB_ITEM = 'mui-tab-item',
-        CLASS_SCROLL_WRAPPER = 'mui-scroll-wrapper',
-        CLASS_CONTROL_CONTENT = 'mui-control-content';
+    var CLASS_CONTENT = 'ui-content',
+        CLASS_ACTIVE = 'ui-active',
+        CLASS_BAR = 'ui-bar',
+        CLASS_BAR_TAB = 'ui-bar-tab',
+        CLASS_TAB_ITEM = 'ui-tab-item',
+        CLASS_SCROLL_WRAPPER = 'ui-scroll-wrapper',
+        CLASS_CONTROL_CONTENT = 'ui-control-content';
 
     var SELECTOR_ACTIVE = '.'+CLASS_ACTIVE,
         SELECTOR_SCROLL_WRAPPER = '.'+CLASS_SCROLL_WRAPPER;

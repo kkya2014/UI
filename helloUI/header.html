@@ -9,9 +9,9 @@
     <title>Hello UI Header</title>
 
     <!-- Style -->
-    <link rel="stylesheet" href="css/mui.css">
+    <link rel="stylesheet" href="css/ui.css">
        <style>
-       .mui-bar-nav ~ .mui-bar-nav {
+       .ui-bar-nav ~ .ui-bar-nav {
                 top: 44px;
             }
         </style>
@@ -19,18 +19,18 @@
    
 </head>
 <body>
-	<header  class="mui-bar mui-bar-nav">
-        <h1 class="mui-title">导航栏</h1>
-        <a class="mui-icon mui-icon-bars mui-pull-right"></a>
-        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<header  class="ui-bar ui-bar-nav">
+        <h1 class="ui-title">导航栏</h1>
+        <a class="ui-icon ui-icon-bars ui-pull-right"></a>
+        <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
     </header>
-    <header  class="mui-bar mui-bar-nav">
-        <h1 class="mui-title">导航栏</h1>
-        <button class="mui-action-back mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left">
-            <span class="mui-icon mui-icon-left-nav"></span>
+    <header  class="ui-bar ui-bar-nav">
+        <h1 class="ui-title">导航栏</h1>
+        <button class="ui-action-back ui-btn ui-btn-blue ui-btn-link ui-btn-nav ui-pull-left">
+            <span class="ui-icon ui-icon-left-nav"></span>
             首页
         </button>
-        <button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right">
+        <button class="ui-btn ui-btn-blue ui-btn-link ui-pull-right">
             编辑
         </button>
     </header>
@@ -39,10 +39,10 @@
 </body>
      <script>
         seajs.use(['button'], function(){
-            $('a.mui-pull-left').button(function(evt){
+            $('a.ui-pull-left').button(function(evt){
                 this.back();
             })
-            $('a.mui-pull-right').button(function(evt){
+            $('a.ui-pull-right').button(function(evt){
                 alert('右边');
             })
         });

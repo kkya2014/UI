@@ -2,18 +2,18 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Hello MUI</title>
+		<title>Hello ui</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-		<link rel="stylesheet" href="css/mui.css">
+		<link rel="stylesheet" href="css/ui.css">
 		<style>
 			html,
 			body {
 				background-color: #efeff4;
 			}
-			.mui-content > .mui-table-view:first-child {
+			.ui-content > .ui-table-view:first-child {
 			   margin-top: 0px; 
 			}
 		</style>
@@ -21,58 +21,58 @@
 
 	<body>
 
-		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">开关（switch）</h1>
+		<header class="ui-bar ui-bar-nav">
+			<a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+			<h1 class="ui-title">开关（switch）</h1>
 		</header>
-		<div class="mui-content">
-			<ul class="mui-table-view">
-				<li class="mui-table-view-cell">
+		<div class="ui-content">
+			<ul class="ui-table-view">
+				<li class="ui-table-view-cell">
 					<span></span>
-					<div class="mui-switch mui-active">
-						<div class="mui-switch-handle"></div>
+					<div class="ui-switch ui-active">
+						<div class="ui-switch-handle"></div>
 					</div>
 				</li>
-				<li class="mui-table-view-cell">
+				<li class="ui-table-view-cell">
 					<span></span>
-					<div class="mui-switch">
-						<div class="mui-switch-handle"></div>
+					<div class="ui-switch">
+						<div class="ui-switch-handle"></div>
 					</div>
 				</li>
-				<li class="mui-table-view-cell">
+				<li class="ui-table-view-cell">
 					<span></span>
-					<div class="mui-switch mui-switch-mini mui-active ">
-						<div class="mui-switch-handle"></div>
+					<div class="ui-switch ui-switch-mini ui-active ">
+						<div class="ui-switch-handle"></div>
 					</div>
 				</li>
-				<li class="mui-table-view-cell">
+				<li class="ui-table-view-cell">
 					<span></span>
-					<div class="mui-switch mui-switch-mini">
-						<div class="mui-switch-handle"></div>
+					<div class="ui-switch ui-switch-mini">
+						<div class="ui-switch-handle"></div>
 					</div>
 				</li>
-				<li class="mui-table-view-cell">
+				<li class="ui-table-view-cell">
 					<span></span>
-					<div class="mui-switch mui-switch-blue mui-active">
-						<div class="mui-switch-handle"></div>
+					<div class="ui-switch ui-switch-blue ui-active">
+						<div class="ui-switch-handle"></div>
 					</div>
 				</li>
-				<li class="mui-table-view-cell">
+				<li class="ui-table-view-cell">
 					<span></span>
-					<div class="mui-switch mui-switch-blue">
-						<div class="mui-switch-handle"></div>
+					<div class="ui-switch ui-switch-blue">
+						<div class="ui-switch-handle"></div>
 					</div>
 				</li>
-				<li class="mui-table-view-cell">
+				<li class="ui-table-view-cell">
 					<span></span>
-					<div class="mui-switch mui-switch-blue mui-switch-mini mui-active">
-						<div class="mui-switch-handle"></div>
+					<div class="ui-switch ui-switch-blue ui-switch-mini ui-active">
+						<div class="ui-switch-handle"></div>
 					</div>
 				</li>
-				<li class="mui-table-view-cell">
+				<li class="ui-table-view-cell">
 					<span></span>
-					<div class="mui-switch mui-switch-blue mui-switch-mini">
-						<div class="mui-switch-handle"></div>
+					<div class="ui-switch ui-switch-blue ui-switch-mini">
+						<div class="ui-switch-handle"></div>
 					</div>
 				</li>
 			</ul>
@@ -81,16 +81,16 @@
      	<script src="js/config.js"></script>
 		<script>
 			 seajs.use(['switch','button'], function(){
-			 	$('a.mui-pull-left').button(function(evt){
+			 	$('a.ui-pull-left').button(function(evt){
                     this.back();
                 })
-			 	$('.mui-content .mui-switch').switch({
+			 	$('.ui-content .ui-switch').switch({
                     callback:function(el,event,isActive){
                         el.parentNode.querySelector('span').innerText = '状态：' + ( isActive? 'true' : 'false');
                     }
                 });
-			 	$('.mui-content .mui-switch').each(function() { //循环所有toggle
-					this.parentNode.querySelector('span').innerText = '状态：' + (this.classList.contains('mui-active') ? 'true' : 'false');
+			 	$('.ui-content .ui-switch').each(function() { //循环所有toggle
+					this.parentNode.querySelector('span').innerText = '状态：' + (this.classList.contains('ui-active') ? 'true' : 'false');
 				});
         	});
 		</script>

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <title>Hello UI Tabs</title>
     <!--demo展示所用css，不用关心 begin-->
-    <link rel="stylesheet" href="css/mui.css">
+    <link rel="stylesheet" href="css/ui.css">
     <link rel="stylesheet" type="text/css" href="css/assets/transitions.css" />
     <link rel="stylesheet" type="text/css" href="css/assets/widget/tabs/tabs.css" />
     <link rel="stylesheet" type="text/css" href="css/assets/widget/tabs/tabs.default.css" />
@@ -25,7 +25,7 @@
                 font-size: 15px;
             }
             
-            .oa-contact-cell.mui-table .mui-table-cell {
+            .oa-contact-cell.ui-table .ui-table-cell {
                 padding: 11px 0;
                 vertical-align: middle;
             }
@@ -50,7 +50,7 @@
             .oa-contact-name, oa-contact-position {
                 float: left;
             }
-            .mui-bar-tab ~ .mui-content .wrapper {
+            .ui-bar-tab ~ .ui-content .wrapper {
                 position: absolute;
                 z-index: 1;
                 top: 44px;
@@ -58,65 +58,73 @@
                 width: 100%;
                 background: #ccc;
             }
+            .ui-slider .ui-slider-group .ui-slider-item {
+                  position: relative;
+                  display: inline-block;
+                  width: 100%;
+                   height: 148px; 
+                  font-size: 14px;
+                  vertical-align: top;
+                }
         </style>
 </head>
 <body>  
-    <header class="mui-bar mui-bar-nav">
-        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-        <h1 class="mui-title">选项卡（tabs）</h1>
+    <header class="ui-bar ui-bar-nav">
+        <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+        <h1 class="ui-title">选项卡（tabs）</h1>
     </header>  
-    <div class="mui-content" id = "tabs1">
-        <nav class="mui-bar mui-bar-tab">
-            <a class="mui-tab-item" href="#slider">
-                <span class="mui-icon mui-icon-home"></span>
-                <span class="mui-tab-label">首页</span>
+    <div class="ui-content" id = "tabs1">
+        <nav class="ui-bar ui-bar-tab">
+            <a class="ui-tab-item" href="#slider">
+                <span class="ui-icon ui-icon-home"></span>
+                <span class="ui-tab-label">首页</span>
             </a>
-            <a class="mui-tab-item" href="#wrapper">
-                <span class="mui-icon mui-icon-email"><span class="mui-badge">9</span></span>
-                <span class="mui-tab-label">消息</span>
+            <a class="ui-tab-item" href="#wrapper">
+                <span class="ui-icon ui-icon-email"><span class="ui-badge">9</span></span>
+                <span class="ui-tab-label">消息</span>
             </a>
-            <a class="mui-tab-item" href="#contact">
-                <span class="mui-icon mui-icon-contact"></span>
-                <span class="mui-tab-label">通讯录</span>
+            <a class="ui-tab-item" href="#contact">
+                <span class="ui-icon ui-icon-contact"></span>
+                <span class="ui-tab-label">通讯录</span>
             </a>
-            <a class="mui-tab-item" href="#contor">
-                <span class="mui-icon mui-icon-gear"></span>
-                <span class="mui-tab-label">设置</span>
+            <a class="ui-tab-item" href="#contor">
+                <span class="ui-icon ui-icon-gear"></span>
+                <span class="ui-tab-label">设置</span>
             </a>
         </nav>
-            <div id="slider" class ="mui-control-content">
+            <div id="slider" class ="ui-control-content">
             </div>
-            <div id="wrapper" class ="mui-control-content wrapper">
+            <div id="wrapper" class ="ui-control-content wrapper">
             </div>
-            <div id="contact" class ="mui-control-content wrapper">
+            <div id="contact" class ="ui-control-content wrapper">
             </div>
-            <div id="contor" class ="mui-control-content">
-                <ul class="mui-table-view">
-                    <li class="mui-table-view-cell">
-                        <a class="mui-navigate-right">
+            <div id="contor" class ="ui-control-content">
+                <ul class="ui-table-view">
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
                             新消息通知
                         </a>
                     </li>
-                    <li class="mui-table-view-cell">
-                        <a class="mui-navigate-right">
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
                             隐私
                         </a>
                     </li>
-                    <li class="mui-table-view-cell">
-                        <a class="mui-navigate-right">
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
                             通用
                         </a>
                     </li>
                 </ul>
-                <ul class="mui-table-view" style="margin-top: 25px;">
-                    <li class="mui-table-view-cell">
-                        <a class="mui-navigate-right">
+                <ul class="ui-table-view" style="margin-top: 25px;">
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
                             关于
                         </a>
                     </li>
                 </ul>
-                <ul class="mui-table-view" style="margin-top: 25px;">
-                    <li class="mui-table-view-cell">
+                <ul class="ui-table-view" style="margin-top: 25px;">
+                    <li class="ui-table-view-cell">
                         <a style="text-align: center;color: #FF3B30;">
                             退出登录
                         </a>
@@ -129,7 +137,7 @@
 </body>
 <script>
    seajs.use(['tab','gridview','treeview','slider','sliderbtn','scroll','button'], function(){
-            $('a.mui-pull-left').button(function(evt){
+            $('a.ui-pull-left').button(function(evt){
                     this.back();
                 })
             $('#tabs1').tab();
@@ -174,12 +182,12 @@
                 });
 
         var wrapper = function(){
-             var tplLeft = '<li class="mui-table-view-cell mui-media">'+
+             var tplLeft = '<li class="ui-table-view-cell ui-media">'+
                                 '<a href="javascript:;">'+
-                                    '<img class="mui-media-object mui-pull-left" src="<%=src%>">'+
-                                    '<div class="mui-media-body">'+
+                                    '<img class="ui-media-object ui-pull-left" src="<%=src%>">'+
+                                    '<div class="ui-media-body">'+
                                         '<%=cont%>'+
-                                        '<p class="mui-ellipsis"><%=text%></p>'+
+                                        '<p class="ui-ellipsis"><%=text%></p>'+
                                     '</div>'+
                                 '</a>'+
                             '</li>';
@@ -261,20 +269,20 @@
 
            
         var contact = function(){
-                var tplmuiR = '<li class="mui-table-view-cell">'+
-                                        '<div class="mui-table">'+
-                                            '<div class="mui-table-cell mui-col-xs-10">'+
-                                                '<h4 class="mui-ellipsis"><%=ellips%></h4>'+
+                var tpluiR = '<li class="ui-table-view-cell">'+
+                                        '<div class="ui-table">'+
+                                            '<div class="ui-table-cell ui-col-xs-10">'+
+                                                '<h4 class="ui-ellipsis"><%=ellips%></h4>'+
                                                 '<h5><%=title%></h5>'+
-                                                '<p class="mui-h6 mui-ellipsis">'+
+                                                '<p class="ui-h6 ui-ellipsis">'+
                                                 '<%=cont%>'+
                                             '</div>'+
-                                            '<div class="mui-table-cell mui-col-xs-2 mui-text-right">'+
-                                                '<span class="mui-h5"><%=date%></span>'+
+                                            '<div class="ui-table-cell ui-col-xs-2 ui-text-right">'+
+                                                '<span class="ui-h5"><%=date%></span>'+
                                             '</div>'+
                                         '</div>'+
                                     '</li>';
-                    var ul = '<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">';
+                    var ul = '<ul class="ui-table-view ui-table-view-striped ui-table-view-condensed">';
                     var dataR = [{
                                 ellips:'信息化推进办公室张彦合同付款信息化',
                                 title:'申请人：李四',
@@ -354,7 +362,7 @@
                     $('#contact').gridview({
                         tpl:{
                             ul:ul,
-                            li: tplmuiR 
+                            li: tpluiR 
                         },
                         iscroll:true,
                         data:dataR

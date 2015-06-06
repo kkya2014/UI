@@ -8,7 +8,7 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-		<link rel="stylesheet" href="css/mui.css">
+		<link rel="stylesheet" href="css/ui.css">
 		<style>
 			html,
 			body {
@@ -19,7 +19,7 @@
 				color: #6d6d72;
 				font-size: 15px;
 			}
-			.mui-bar-nav ~ .wrapper {
+			.ui-bar-nav ~ .wrapper {
                 top: 44px;
                 width: 100%;
             }
@@ -27,45 +27,45 @@
 	</head>
 
 	<body>
-	<header class="mui-bar mui-bar-nav">
-        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-        <h1 class="mui-title">列表（gridview）</h1>
+	<header class="ui-bar ui-bar-nav">
+        <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+        <h1 class="ui-title">列表（gridview）</h1>
     </header>  
 	<div class="wrapper" id="wrapper">
-			<div class="mui-content" id="base">
+			<div class="ui-content" id="base">
 				<div class="title">
 					基礎列表
 				</div>
 			</div>	
-			<div class="mui-content" id="left">
+			<div class="ui-content" id="left">
 				<div class="title">
 					缩略图居左
 				</div>
 			</div>	
-			<div class="mui-content" id="right">
+			<div class="ui-content" id="right">
 				
 				<div class="title">
 					缩略图居右
 				</div>
 			</div>	
-			<div class="mui-content" id="rightC">
+			<div class="ui-content" id="rightC">
 				<div class="title">
 					右侧带导航箭头
 				</div>
 			</div>	
-			<div class="mui-content">
+			<div class="ui-content">
 				<div class="title">
 					card（圆角列表）
 				</div>
-				<div class="mui-card" style="margin-bottom: 35px;" id="card">
+				<div class="ui-card" style="margin-bottom: 35px;" id="card">
 				</div>
 			</div>	
-			<div class="mui-content" id="muiR">
+			<div class="ui-content" id="uiR">
 				<div class="title">
 					多行消息
 				</div>
 			</div>	
-			<div class="mui-content" id="custom">
+			<div class="ui-content" id="custom">
 				<div class="title">
 					自定義內容
 				</div>
@@ -76,7 +76,7 @@
 </body>
 <script>
    seajs.use(['gridview','switch','scroll','button'], function(){
-   				$('a.mui-pull-left').button(function(evt){
+   				$('a.ui-pull-left').button(function(evt){
                     this.back();
                 })
    				$('#base').gridview({
@@ -87,28 +87,28 @@
                 		},{
                 			cont:'烤炉'
                 		}]
-                }).appendHtml('<li class="mui-table-view-cell">'+
-									'<a class="mui-navigate-right">'+
+                }).appendHtml('<li class="ui-table-view-cell">'+
+									'<a class="ui-navigate-right">'+
 										'Item 1'+
 									'</a>'+
 								'</li>'+
-								'<li class="mui-table-view-cell">'+
-									'<a class="mui-navigate-right">'+
+								'<li class="ui-table-view-cell">'+
+									'<a class="ui-navigate-right">'+
 										'Item 2'+
 									'</a>'+
 								'</li>'+
-								'<li class="mui-table-view-cell">'+
-									'<a class="mui-navigate-right">'+
+								'<li class="ui-table-view-cell">'+
+									'<a class="ui-navigate-right">'+
 										'Item 3'+
 									'</a>'+
 								'</li>');
 
-			   var	tplLeft = '<li class="mui-table-view-cell mui-media">'+
+			   var	tplLeft = '<li class="ui-table-view-cell ui-media">'+
 								'<a href="javascript:;">'+
-									'<img class="mui-media-object mui-pull-left" src="<%=src%>">'+
-									'<div class="mui-media-body">'+
+									'<img class="ui-media-object ui-pull-left" src="<%=src%>">'+
+									'<div class="ui-media-body">'+
 										'<%=cont%>'+
-										'<p class="mui-ellipsis"><%=text%></p>'+
+										'<p class="ui-ellipsis"><%=text%></p>'+
 									'</div>'+
 								'</a>'+
 							'</li>';
@@ -139,12 +139,12 @@
                 	},
                 	data:data
                 });
-                var	tplright = '<li class="mui-table-view-cell mui-media">'+
+                var	tplright = '<li class="ui-table-view-cell ui-media">'+
 								'<a href="javascript:;">'+
-									'<img class="mui-media-object mui-pull-right" src="<%=src%>">'+
-									'<div class="mui-media-body">'+
+									'<img class="ui-media-object ui-pull-right" src="<%=src%>">'+
+									'<div class="ui-media-body">'+
 										'<%=cont%>'+
-										'<p class="mui-ellipsis"><%=text%></p>'+
+										'<p class="ui-ellipsis"><%=text%></p>'+
 									'</div>'+
 								'</a>'+
 							'</li>';	
@@ -154,17 +154,17 @@
                 	},
                 	data:data
                 });
-                var	tplrightC = '<li class="mui-table-view-cell mui-media">'+
-								'<a class="mui-navigate-right">'+
-									'<img class="mui-media-object mui-pull-left" src="<%=src%>">'+
-									'<div class="mui-media-body">'+
+                var	tplrightC = '<li class="ui-table-view-cell ui-media">'+
+								'<a class="ui-navigate-right">'+
+									'<img class="ui-media-object ui-pull-left" src="<%=src%>">'+
+									'<div class="ui-media-body">'+
 										'<%=cont%>'+
-										'<p class="mui-ellipsis"><%=text%></p>'+
+										'<p class="ui-ellipsis"><%=text%></p>'+
 									'</div>'+
 								'</a>'+
 							'</li>';
                 
-                var ul = '<ul class="mui-table-view mui-table-view-chevron">';
+                var ul = '<ul class="ui-table-view ui-table-view-chevron">';
                 $('#rightC').gridview({
                 	tpl:{
                 		ul:ul,
@@ -172,21 +172,21 @@
                 	},
                 	data:data
                 });	
-                var	tplmuiR = '<li class="mui-table-view-cell">'+
-						            '<div class="mui-table">'+
-						                '<div class="mui-table-cell mui-col-xs-10">'+
-						                    '<h4 class="mui-ellipsis"><%=ellips%></h4>'+
+                var	tpluiR = '<li class="ui-table-view-cell">'+
+						            '<div class="ui-table">'+
+						                '<div class="ui-table-cell ui-col-xs-10">'+
+						                    '<h4 class="ui-ellipsis"><%=ellips%></h4>'+
 						                    '<h5><%=title%></h5>'+
-						                    '<p class="mui-h6 mui-ellipsis">'+
+						                    '<p class="ui-h6 ui-ellipsis">'+
 						                    '<%=cont%>'+
 						                '</div>'+
-						                '<div class="mui-table-cell mui-col-xs-2 mui-text-right">'+
-						                    '<span class="mui-h5"><%=date%></span>'+
+						                '<div class="ui-table-cell ui-col-xs-2 ui-text-right">'+
+						                    '<span class="ui-h5"><%=date%></span>'+
 						                '</div>'+
 						            '</div>'+
 						        '</li>';
                 
-                ul = '<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">';
+                ul = '<ul class="ui-table-view ui-table-view-striped ui-table-view-condensed">';
                 var dataR = [{
                 			ellips:'信息化推进办公室张彦合同付款信息化',
                 			title:'申请人：李四',
@@ -198,47 +198,47 @@
                 			cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
                 			date:'12:25'
                 		}];	
-                $('#muiR').gridview({
+                $('#uiR').gridview({
                 	tpl:{
                 		ul:ul,
-                		li: tplmuiR 
+                		li: tpluiR 
                 	},
                 	data:dataR
                 });	
 
-                var customSTR = '<li class="mui-table-view-cell">'+
+                var customSTR = '<li class="ui-table-view-cell">'+
 									'card（圆角列表）'+
-									'<div id="M_Toggle" class="mui-switch mui-active">'+
-										'<div class="mui-switch-handle"></div>'+
+									'<div id="M_Toggle" class="ui-switch ui-active">'+
+										'<div class="ui-switch-handle"></div>'+
 									'</div>'+
 								'</li>'+
-								'<li class="mui-table-view-cell">'+
+								'<li class="ui-table-view-cell">'+
 									'Item 1'+
-									'<button type="button" class="mui-btn">'+
+									'<button type="button" class="ui-btn">'+
 										'Button'+
 									'</button>'+
 								'</li>'+
-								'<li class="mui-table-view-cell">'+
+								'<li class="ui-table-view-cell">'+
 									'Item 2'+
-									'<button type="button" class="mui-btn mui-btn-primary">'+
+									'<button type="button" class="ui-btn ui-btn-primary">'+
 										'Button'+
 									'</button>'+
 								'</li>'+
-								'<li class="mui-table-view-cell">'+
+								'<li class="ui-table-view-cell">'+
 									'Item 3'+
-									'<div class="mui-switch mui-active">'+
-										'<div class="mui-switch-handle"></div>'+
+									'<div class="ui-switch ui-active">'+
+										'<div class="ui-switch-handle"></div>'+
 									'</div>'+
 								'</li>'+
-								'<li class="mui-table-view-cell">'+
+								'<li class="ui-table-view-cell">'+
 									'Item 4'+
-									'<div class="mui-switch mui-switch-blue mui-switch-mini mui-active">'+
-										'<div class="mui-switch-handle"></div>'+
+									'<div class="ui-switch ui-switch-blue ui-switch-mini ui-active">'+
+										'<div class="ui-switch-handle"></div>'+
 									'</div>'+
 								'</li>';
                 var customGV = $('#custom').gridview({
                 		tpl:{
-	                		li: '<li class="mui-table-view-cell mui-radio mui-left">'+
+	                		li: '<li class="ui-table-view-cell ui-radio ui-left">'+
 									'<input name="radio" type="radio"><%=itme%>'+
 								'</li>'
 	                	}
@@ -260,26 +260,26 @@
                     }
                 });
 
-                var  badgeSTR = '<li class="mui-table-view-divider">右侧无导航箭头</li>'+
-					            '<li class="mui-table-view-cell">Item 1 <span class="mui-badge mui-badge-primary">14</span></li>'+
-					            '<li class="mui-table-view-cell">Item 2 <span class="mui-badge mui-badge-success">1</span></li>'+
-					            '<li class="mui-table-view-cell">Item 3 <span class="mui-badge">5</span></li>'+
-					            '<li class="mui-table-view-divider">右侧有导航箭头</li>'+
-					            '<li class="mui-table-view-cell">'+
-					                '<a class="mui-navigate-right">'+
-					                    '<span class="mui-badge mui-badge-danger">15</span>'+
+                var  badgeSTR = '<li class="ui-table-view-divider">右侧无导航箭头</li>'+
+					            '<li class="ui-table-view-cell">Item 1 <span class="ui-badge ui-badge-primary">14</span></li>'+
+					            '<li class="ui-table-view-cell">Item 2 <span class="ui-badge ui-badge-success">1</span></li>'+
+					            '<li class="ui-table-view-cell">Item 3 <span class="ui-badge">5</span></li>'+
+					            '<li class="ui-table-view-divider">右侧有导航箭头</li>'+
+					            '<li class="ui-table-view-cell">'+
+					                '<a class="ui-navigate-right">'+
+					                    '<span class="ui-badge ui-badge-danger">15</span>'+
 					                    'Item 1'+
 					                '</a>'+
 					            '</li>'+
-					            '<li class="mui-table-view-cell">'+
-					                '<a class="mui-navigate-right">'+
-					                    '<span class="mui-badge mui-badge-purple">5</span>'+
+					            '<li class="ui-table-view-cell">'+
+					                '<a class="ui-navigate-right">'+
+					                    '<span class="ui-badge ui-badge-purple">5</span>'+
 					                    'Item 2'+
 					                '</a>'+
 					            '</li>'+
-					            '<li class="mui-table-view-cell">'+
-					                '<a class="mui-navigate-right">'+
-					                    '<span class="mui-badge mui-badge-warning">5</span>'+
+					            '<li class="ui-table-view-cell">'+
+					                '<a class="ui-navigate-right">'+
+					                    '<span class="ui-badge ui-badge-warning">5</span>'+
 					                    'Item 3'+
 					                '</a>'+
 					            '</li>';

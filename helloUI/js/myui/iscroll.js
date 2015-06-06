@@ -2,8 +2,8 @@
  * iscroll组件
  */
 (function() {
-    var CLASS_SCROLL = 'mui-scroll',
-        CLASS_SCROLL_WRAPPER = 'mui-scroll-wrapper';
+    var CLASS_SCROLL = 'ui-scroll',
+        CLASS_SCROLL_WRAPPER = 'ui-scroll-wrapper';
       // 给$.fn上挂iScroll方法
     define(function(require, exports, module) {
          var UI = require("UI");

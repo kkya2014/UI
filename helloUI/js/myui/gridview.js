@@ -2,18 +2,18 @@
  * @file 列表组件
  */
 (function() {
-        var CLASS_ACTIVE = 'mui-active',
-            CLASS_TABLE_VIEW_CELL = 'mui-table-view-cell',
-            CLASS_BTN = 'mui-btn',
-            CLASS_TOGGLE = 'mui-switch',
-            CLASS_TABLE_VIEW = 'mui-table-view',
-            CLASS_SCROLL_WRAPPER = 'mui-scroll-wrapper',
-            CLASS_SCROLL = 'mui-scroll',
+        var CLASS_ACTIVE = 'ui-active',
+            CLASS_TABLE_VIEW_CELL = 'ui-table-view-cell',
+            CLASS_BTN = 'ui-btn',
+            CLASS_TOGGLE = 'ui-switch',
+            CLASS_TABLE_VIEW = 'ui-table-view',
+            CLASS_SCROLL_WRAPPER = 'ui-scroll-wrapper',
+            CLASS_SCROLL = 'ui-scroll',
 
             tarEl;
 
-        var loading = '<div class="mui-loading">'+
-                    '<div class="mui-spinner"></div>'+
+        var loading = '<div class="ui-loading">'+
+                    '<div class="ui-spinner"></div>'+
                     '</div>';     
 
         var render = function(){

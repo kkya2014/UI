@@ -2,26 +2,26 @@
  * Input(TODO resize)
  */
 (function(window, document) {
-    var CLASS_ICON = 'mui-icon',
-        CLASS_ACTIVE = 'mui-active',
-        CLASS_ICON_CLEAR = 'mui-icon-clear',
-        CLASS_ICON_SPEECH = 'mui-icon-speech',
-        CLASS_ICON_SEARCH = 'mui-icon-search',
-        CLASS_INPUT_ROW = 'mui-input-row',
-        CLASS_PLACEHOLDER = 'mui-placeholder',
-        CLASS_TOOLTIP = 'mui-tooltip',
-        CLASS_HIDDEN = 'mui-hidden',
-        CLASS_FOCUSIN = 'mui-focusin',
-        CLASS_SEARCH = 'mui-search',
-        CLASS_INPUT_RANGE = 'mui-input-range',
-        CLASS_INPUT_CLEAR = 'mui-input-clear',
-        CLASS_INPUT_SPEECH = 'mui-input-speech',
+    var CLASS_ICON = 'ui-icon',
+        CLASS_ACTIVE = 'ui-active',
+        CLASS_ICON_CLEAR = 'ui-icon-clear',
+        CLASS_ICON_SPEECH = 'ui-icon-speech',
+        CLASS_ICON_SEARCH = 'ui-icon-search',
+        CLASS_INPUT_ROW = 'ui-input-row',
+        CLASS_PLACEHOLDER = 'ui-placeholder',
+        CLASS_TOOLTIP = 'ui-tooltip',
+        CLASS_HIDDEN = 'ui-hidden',
+        CLASS_FOCUSIN = 'ui-focusin',
+        CLASS_SEARCH = 'ui-search',
+        CLASS_INPUT_RANGE = 'ui-input-range',
+        CLASS_INPUT_CLEAR = 'ui-input-clear',
+        CLASS_INPUT_SPEECH = 'ui-input-speech',
 
         SELECTOR_ICON_CLOSE = '.' + CLASS_ICON_CLEAR,
         SELECTOR_ICON_SPEECH = '.' + CLASS_ICON_SPEECH,
         SELECTOR_PLACEHOLDER = '.' + CLASS_PLACEHOLDER,
         SELECTOR_TOOLTIP = '.' + CLASS_TOOLTIP,
-        SELECTOR_ACTION = '.mui-input-row input';
+        SELECTOR_ACTION = '.ui-input-row input';
         
 
         var findRow = function(target) {

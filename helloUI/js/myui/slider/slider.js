@@ -13,8 +13,8 @@
          */
     var SELECTOR_SLIDER_DOTS = '.'+CLASS_SLIDER_DOTS,
         SELECTOR_SLIDER_GROUP = '.'+CLASS_SLIDER_GROUP;  
-    var loading = '<div class="mui-loading">'+
-                    '<div class="mui-spinner"></div>'+
+    var loading = '<div class="ui-loading">'+
+                    '<div class="ui-spinner"></div>'+
                     '</div>';  
 
 

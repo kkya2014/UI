@@ -9,7 +9,7 @@
     <title>Hello UI Input</title>
 
     <!-- Style -->
-    <link rel="stylesheet" href="css/mui.css">
+    <link rel="stylesheet" href="css/ui.css">
       <style>
             html,
             body {
@@ -29,7 +29,7 @@
                 background-size: 100% 100%;
                 border-radius: 60px;
             }
-            .mui-content-padded {
+            .ui-content-padded {
                 margin-top: 20px;
             }
             .ui-login-form {
@@ -50,7 +50,7 @@
             .ui-login-form input:first-child {
                 margin-bottom: 1px;
             }
-            .mui-btn-block {
+            .ui-btn-block {
                 padding: 12px 0px;
             }
             #reg {
@@ -58,14 +58,14 @@
                 margin-top: 45px;
                 text-align: center;
             }
-            .mui-checkbox label {
+            .ui-checkbox label {
                 display: inline-block;
                 width: auto;
                 vertical-align: text-bottom;
                 padding: 2px 0px;
                 color: #777;
             }
-            .mui-checkbox input {
+            .ui-checkbox input {
                 position: relative !important;
                 top: auto!important;
                 left: auto!important;
@@ -75,7 +75,7 @@
                 padding: 0px;
                 vertical-align: text-bottom;
             }
-            .mui-checkbox {
+            .ui-checkbox {
                 margin: 3px 10px;
             }
         </style>
@@ -83,43 +83,43 @@
    
 </head>
 <body>
-         <header class="mui-bar mui-bar-nav">
-            <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-            <h1 class="mui-title">文本框（input）</h1>
+         <header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">文本框（input）</h1>
         </header>
-	   <div class="mui-content">
-            <div class="mui-content-padded" style="margin: 5px;">
+	   <div class="ui-content">
+            <div class="ui-content-padded" style="margin: 5px;">
                 <h5>默认搜索框：</h5>
-                <div class="mui-input-row mui-search">
-                    <input type="search" class="mui-input-clear" placeholder="">
+                <div class="ui-input-row ui-search">
+                    <input type="search" class="ui-input-clear" placeholder="">
                 </div>
                 <h5>语音输入搜索框：</h5>
-                <div class="mui-input-row mui-search">
-                    <input id="search" type="search" class="mui-input-speech mui-input-clear" placeholder="带语音输入的搜索框">
+                <div class="ui-input-row ui-search">
+                    <input id="search" type="search" class="ui-input-speech ui-input-clear" placeholder="带语音输入的搜索框">
                 </div>
-                <form class="mui-input-group">
-                    <div class="mui-input-row">
+                <form class="ui-input-group">
+                    <div class="ui-input-row">
                         <label>Input</label>
                         <input type="text" placeholder="普通输入框">
                     </div>
-                    <div class="mui-input-row">
-                        <input type="text" class="mui-input-clear" placeholder="带清除按钮的输入框">
+                    <div class="ui-input-row">
+                        <input type="text" class="ui-input-clear" placeholder="带清除按钮的输入框">
                     </div>
 
-                    <div class="mui-input-row">
+                    <div class="ui-input-row">
                         <label>Input</label>
-                        <input type="text" class="mui-input-speech mui-input-clear" placeholder="语音输入">
+                        <input type="text" class="ui-input-speech ui-input-clear" placeholder="语音输入">
                     </div>
-                    <div class="mui-button-row">
-                        <button type="button" class="mui-btn mui-btn-primary" onclick="return false;">确认</button>&nbsp;&nbsp;
-                        <button type="button" class="mui-btn mui-btn-danger" onclick="return false;">取消</button>
+                    <div class="ui-button-row">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="return false;">确认</button>&nbsp;&nbsp;
+                        <button type="button" class="ui-btn ui-btn-danger" onclick="return false;">取消</button>
                     </div>
                 </form>
                 <form class="ui-login-form">
-                    <input id='account' type="text" class="mui-input-clear mui-input" placeholder="账号">
-                    <input id='password' type="password" class="mui-input-clear mui-input" placeholder="密码">
+                    <input id='account' type="text" class="ui-input-clear ui-input" placeholder="账号">
+                    <input id='password' type="password" class="ui-input-clear ui-input" placeholder="密码">
                 </form>
-                <div class="mui-input-row" style="margin: 10px 5px;">
+                <div class="ui-input-row" style="margin: 10px 5px;">
                     <textarea id="textarea" rows="5" placeholder="多行文本框"></textarea>
                 </div>
             </div>
@@ -129,7 +129,7 @@
 </body>
      <script>
         seajs.use(['input','button'], function(){
-            $('a.mui-pull-left').button(function(evt){
+            $('a.ui-pull-left').button(function(evt){
                     this.back();
                 })
         });
