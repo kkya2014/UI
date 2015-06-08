@@ -15,8 +15,16 @@
           
         };
 
-        var alt = function(params){
-            $N.alert.alert(params, params.callback);
+        var alt = function(params,funs){
+            var ssssss = 1111;
+            $N.alert.alert(params, function(psuccess,perror){
+                // alert(ssssss);
+                // alert(this);
+                // var fun = params.buttons[psuccess.buttonIndex-1];
+                // if ($.isFunction(funs[fun])) {
+                //     funs[fun].call(this);
+                // }
+            });
         };
         var conf = function(params){
             $N.confirm.confirm(params, params.callback);
@@ -42,15 +50,22 @@
         $dialog.prototype.alert = function(message,opts){
                 var _dog = this
                 if (_dog.isPlus) {
-                    var params = {
-                        title:'',
-                        'msg':message,
-                        buttons:['确定'],
-                        callback:function(){}
-                    }
                     opts|| (opts = {});
-                    params = $.extend(params, opts);
-                    alt(params);
+                    var buttons = [],funs = {};
+                    if(opts.buttons){
+                        _dog.eachObj( opts.buttons, function( key, val ) {
+                              buttons.push(key);
+                              funs[key] = val;
+                          } );
+                    }else{
+                        buttons.push('确定');
+                    }
+                    var params = {
+                        title:opts.title||'',
+                        'msg':message,
+                        buttons:buttons
+                    }
+                    alt.apply(_dog,[params,funs]);
                 }else{
                     window.alert(message);
                 }

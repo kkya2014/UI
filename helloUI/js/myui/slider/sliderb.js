@@ -15,13 +15,6 @@
                 prev: '<span class="ui-slider-pre"></span>',
                 next: '<span class="ui-slider-next"></span>'
             },
-            /**
-             * @property {Boolean} [arrow=true] 是否显示点
-             * @namespace options
-             * @for Slider
-             * @uses Slider.arrow
-             */
-            arrow: true,
 
             /**
              * @property {Object} [select={prev:'.ui-slider-pre',next:'.ui-slider-next'}] 上一张和下一张按钮的选择器

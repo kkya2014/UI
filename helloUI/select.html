@@ -4,12 +4,6 @@
         <title>Hello UI Select</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
-        <link rel="stylesheet" href="fonts/font-awesome.min.css">
-        <link rel="stylesheet" href="css/ui-box.css">
-        <link rel="stylesheet" href="css/ui-base.css">
-        <link rel="stylesheet" href="css/ui-color.css">
-        <link rel="stylesheet" href="css/appcan.icon.css">
-        <link rel="stylesheet" href="css/appcan.control.css">
         <link rel="stylesheet" href="css/ui.css">
         <style>
             html,body {
@@ -23,25 +17,24 @@
         <h1 class="ui-title">复选框（checkbox）</h1>
     </header>    
     <div class="ui-content" id="basesel">
-        <div class="select uba bc-border bc-text" >
-            <div class="text">请选择</div>
-            <div class="icon"></div>
-            <select selectedindex="0">
-                <option value=0>选项一</option>
-                <option value=1>选项二</option>
-                <option value=2>选项三</option>
-                <option value=3>选项四</option>
-            </select>
-        </div>
-        <div class="select uba bc-border bc-text" id="insel">
-            <div class="text">请选择</div>
-            <div class="icon"></div>
-            <select selectedindex="0">
-                <option value=0>选项一</option>
-                <option value=1>选项二</option>
-                <option value=2>选项三</option>
-                <option value=3>选项四</option>
-            </select>
+        <div class="ui-input-group">
+            <div class="ui-input-row">
+                <label>请选择</label>
+                <select>
+                        <option value=0>选项一</option>
+                        <option value=1>选项二</option>
+                        <option value=2>选项三</option>
+                        <option value=3>选项四</option>
+                </select>
+            </div>
+            <div class="ui-input-row">
+                <label>dataType:</label>
+                <select>
+                    <option value="html">HTML</option>
+                    <option value="json">JSON</option>
+                    <option value="xml">XML</option>
+                </select>
+            </div>    
         </div>
     </div>
         <script src="js/sea.js"></script>

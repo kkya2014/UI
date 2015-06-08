@@ -1,10 +1,14 @@
 
-##checkbox##
+##Checkbox##
 
 	复选框组件可以将页面上指定节点内的checkbox定义为一个复选框对象，
 	并提供选择状态变化时的回调事件
 
 ui组件底层基于[zepto](https://github.com/madrobby/zepto)([api](http://www.css88.com/doc/zeptojs_api/))来构建，其加载依赖于[seajs](http://seajs.org/docs/)。
+
+$(selector).checkbox(callback) 
+
+*	返回值：复选框对象（多个时返回数组）
 
 ##组件构成##
 * html+css

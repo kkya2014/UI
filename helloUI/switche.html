@@ -84,11 +84,11 @@
 			 	$('a.ui-pull-left').button(function(evt){
                     this.back();
                 })
-			 	$('.ui-content .ui-switch').switch({
-                    callback:function(el,event,isActive){
+			 	var sw = $('.ui-content .ui-switch').switch({
+                    callback:function(el,evt,isActive){
                         el.parentNode.querySelector('span').innerText = '状态：' + ( isActive? 'true' : 'false');
                     }
-                });
+                })[0].toggle();
 			 	$('.ui-content .ui-switch').each(function() { //循环所有toggle
 					this.parentNode.querySelector('span').innerText = '状态：' + (this.classList.contains('ui-active') ? 'true' : 'false');
 				});

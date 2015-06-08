@@ -136,6 +136,7 @@
             if(opts.iscroll){
                 $(window).trigger('resize');
             }
+            return _gv;
         };
 
         /**
@@ -165,7 +166,7 @@
                 _gv.log('html必須是字符串');
                 throw new Error( 'html必須是字符串' );
             }
-            
+            return _gv;
         };
 
          /**
@@ -191,7 +192,7 @@
                 this.log('lis必須是數組對象');
                 throw new Error( 'lis必須是數組對象' );
             }
-            
+            return _gv;
         };
 
         //注册$插件

@@ -82,14 +82,16 @@
                 $('#confirmBtn').button(function(btn,el){
                         Dialog.dialog({
                             title:'文档评分',
-                            autoOpen: false,
-                            closeBtn: true,
                             scrollMove: false,
                             buttons: {
                                 '取消': function(){
                                     this.close();
                                 },
                                 '确定': function(){
+                                    this.close();
+                                }
+                                ,
+                                '放弃': function(){
                                     this.close();
                                 }
                             },
@@ -100,8 +102,6 @@
                 $('#promptBtn').button(function(btn,el){
                        Dialog.dialog({
                             title:'登陆提示',
-                            autoOpen: false,
-                            closeBtn: false,
                             buttons: {
                                 '取消': function(){
                                     this.close();
@@ -110,7 +110,7 @@
                                     this.close();
                                 }
                             },
-                            content:  '<div style="display:block"><p>登录后, 获得更多个性化特色功能</p></div>'
+                            content:  '<div style="display:block"><p>恭喜您, 您是我们第1000000000000个用户</p></div>'
                         })//.opts['_wrap'].addClass('login-dialog').addClass('login-dialog login-dialog-dark');;
 
                         //Dialog.prompt('333');
@@ -136,9 +136,10 @@
                 $('#alert').button(function(){
                         Dialog.alert('消息内容',{
                             title : '单按钮alert',
-                            callback:function(psuccess,perror){
-                                alert(psuccess.buttonIndex);
-                                alert(perror);
+                            buttons : {
+                                '确定': function(){
+                                    alert(this+'确定');
+                                }
                             }
                         });
                 });        
@@ -152,7 +153,14 @@
                         });
                 });       
                 $('#prompt').button(function(){
-                        Dialog.prompt('消息内容');
+                        Dialog.prompt('消息内容',{
+                            title : '单按钮alert',
+                            type:'number',
+                            buttons : ['确认','放弃','取消'],
+                            callback:function(psuccess,perror){
+                                alert(psuccess.buttonIndex);
+                            }
+                        });
                 });        
             });
         </script>

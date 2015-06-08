@@ -2,7 +2,7 @@
  * switch组件
  */
 (function() {
-
+        var setTranslateX;
 
         var CLASS_SWITCH = 'ui-switch',
             CLASS_SWITCH_HANDLE = 'ui-switch-handle',
@@ -85,7 +85,7 @@
                 }
             }
             if (opts.isDragging) {
-                _tog.setTranslateX(detail.deltaX);
+                setTranslateX.call(_tog,detail.deltaX);
                 evt.stopPropagation();
                 detail.gesture.preventDefault();
             }
@@ -132,9 +132,10 @@
             }
              var active = classList.contains(CLASS_ACTIVE);
             _tog.ref.trigger('toggle',[active]);
+            return _tog;
         };
 
-        $switch.prototype.setTranslateX = UI.animationFrame(function(x) {
+        setTranslateX = UI.animationFrame(function(x) {
             var _tog = this, opts = _tog.opts,element = opts.ref,classList = element.classList;
             if (!opts.isDragging) {
                 return;
@@ -168,7 +169,7 @@
                 if (!id) {
                     opts = $.extend(opts, { ref : this});
                     id = ++UI.uuid;
-                    UI.data[id] = new $switch(opts);
+                    switchObj = UI.data[id] = new $switch(opts);
                     this.setAttribute('data-switch', id);
                 } else {
                     switchObj = UI.data[id];

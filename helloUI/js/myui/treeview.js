@@ -72,7 +72,7 @@
                             $(window).trigger('resize');
                         }
                         if ($.isFunction(_tv.toggle)) {
-                            _tv.toggle.apply(_tv, [ele[0],evt]);
+                            _tv.toggle.apply(_tv, [ele[0],evt,ele.hasClass(CLASS_ACTIVE)]);
                         }
                     }
                 }else{

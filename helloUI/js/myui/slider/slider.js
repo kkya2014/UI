@@ -114,7 +114,7 @@
                 case 'touchend':
                 case 'touchcancel':
                 case 'slideend':
-                    _sl.resume();
+                    _sl.play();
                     break;
             }
         }; 
@@ -291,13 +291,13 @@
             //绑定事件
             bind.call(this);
             //自动轮播
-            opts.autoPlay&&_sl.resume();
+            opts.autoPlay&&_sl.play();
         };
 
         /**
          * 自动播放。
          */
-        $slider.prototype.resume = function() {
+        $slider.prototype.play = function() {
             var _sl = this,opts = _sl.opts;
 
             if ( opts.autoPlay && !_sl._timer ) {
@@ -385,7 +385,8 @@
             _sl.move( to, 0, speed );
 
             _sl.index = to;
-            return _sl.ref.trigger('slide', [to,from]);
+            _sl.ref.trigger('slide', [to,from]);
+            return _sl;
         };
 
         /**

@@ -5,6 +5,10 @@
 
 ui组件底层基于[zepto](https://github.com/madrobby/zepto)([api](http://www.css88.com/doc/zeptojs_api/))来构建，其加载依赖于[seajs](http://seajs.org/docs/)。
 
+$(selector).button(callback) 
+
+*	返回值：button对象（多个时返回数组）
+
 ##组件构成##
 * html+css
 * js
