@@ -18,19 +18,8 @@
 
         var render = function(){
             var _gv = this,opts = _gv.opts;
-            if(opts.iscroll){
-                //_gv._wrapper = $( '<div></div>' ).appendTo( _gv.ref ).addClass(CLASS_SCROLL_WRAPPER);
-                //_gv._scroll = $( '<div></div>' ).appendTo( _gv._wrapper ).addClass(CLASS_SCROLL);
-                _gv._ul = $(opts.tpl.ul).appendTo( _gv.ref );
-                _gv.ref.scroll({
-                        scrollbars: true,
-                        interactiveScrollbars: true,
-                        shrinkScrollbars: 'scale',
-                        fadeScrollbars: true
-                });
-            }else{
-                _gv._ul = $(opts.tpl.ul).appendTo( _gv.ref );
-            }
+            $(opts.tpl.ul).appendTo( _gv.ref );
+            _gv._ul = _gv.ref.find('ul.'+CLASS_TABLE_VIEW);
             _gv._lis = [];
             _gv.renderData(opts.data);
         };
@@ -59,10 +48,8 @@
                     ele.addClass(CLASS_ACTIVE);
                 }
             }).on( _gv.touchMove() , function(evt) {
-                _gv.log('touchMove');
                 if (tarEl) {
                     var touch = evt.touches[0];
-                    _gv.log('touchEnd -->'+touch.pageY);
                     if(touch.pageY != startY){
                         tarEl.removeClass(CLASS_ACTIVE);
                         tarEl = false;
@@ -79,7 +66,11 @@
                 }else{
                 }
             }).on( _gv.longTap() , function(evt) {
-                _gv.log('longTap');
+                if (tarEl) {
+                    tarEl.removeClass(CLASS_ACTIVE);
+                    tarEl = false;
+                }
+            }).on( _gv.touchCancel() , function(evt) {
                 if (tarEl) {
                     tarEl.removeClass(CLASS_ACTIVE);
                     tarEl = false;
@@ -90,7 +81,6 @@
 
     define(function(require, exports, module) {
         var UI = require("UI");
-                 require("scroll");
 
         //gridview
         var $gridview = UI.define('Gridview',{
@@ -111,8 +101,19 @@
 
         //初始化
         $gridview.prototype.init = function(){
-            render.call(this);
-            bind.call(this);
+            var _gv = this,opts = _gv.opts;
+            render.call(_gv);
+            bind.call(_gv);
+            if(opts.iscroll){
+                require.async('scroll', function() {
+                    _gv.ref.scroll({
+                            scrollbars: true,
+                            interactiveScrollbars: true,
+                            shrinkScrollbars: 'scale',
+                            fadeScrollbars: true
+                    });
+                });
+            }
         };
         /**
          * 根據傳入數據渲染
