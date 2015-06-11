@@ -857,6 +857,8 @@ global.define = _define && isFunction(_define) ? function() {
   Module.define.apply(global, arguments)
 } : Module.define
 
+seajs.isFunction = isFunction
+seajs.parseDependencies = parseDependencies
 
 // For Developers
 

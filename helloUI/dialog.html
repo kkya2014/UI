@@ -74,7 +74,9 @@
                                 }
                             },
                             content: '<ul class="share-list"><li class="renren">人人网</li><li class="sina">新浪微博</li><li class="sms">短信息</li><li class="email">用电子邮件发送信息</li></ul>'
-                        })._wrap.addClass('share-dialog');
+                            },function(dialog){
+                                dialog._wrap.addClass('share-dialog');
+                            });
 
                         //Dialog.alert('111');
                     });
@@ -96,7 +98,7 @@
                                 }
                             },
                             content:  '<div  class="vote-dialog" style="display:block"><p class="vote"></p><p>星级从1到5，获得越多星星，表示等级越高</p></div>'
-                        });
+                            });
                         //Dialog.prompt('222');
                     });
                 $('#promptBtn').button(function(btn,el){
@@ -138,7 +140,7 @@
                             title : '单按钮alert',
                             buttons : {
                                 '确定': function(){
-                                    alert(this+'确定');
+                                    alert('确定');
                                 }
                             }
                         });
@@ -146,9 +148,16 @@
                 $('#confirm').button(function(){
                         Dialog.confirm('消息内容',{
                             title : '单按钮alert',
-                            buttons : ['确认','放弃','取消'],
-                            callback:function(psuccess,perror){
-                                alert(psuccess.buttonIndex);
+                            buttons : {
+                                '确定': function(){
+                                    alert('确定');
+                                },
+                                '放弃': function(){
+                                    alert('放弃');
+                                },
+                                '取消': function(){
+                                    alert('取消');
+                                }
                             }
                         });
                 });       

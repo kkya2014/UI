@@ -18,7 +18,8 @@
         var alt = function(params,funs){
             var ssssss = 1111;
             $N.alert.alert(params, function(psuccess,perror){
-                // alert(ssssss);
+                 alert(ssssss);
+                 //alert(params);
                 // alert(this);
                 // var fun = params.buttons[psuccess.buttonIndex-1];
                 // if ($.isFunction(funs[fun])) {
@@ -34,7 +35,7 @@
         };
 
     define(function(require, exports, module) {
-    var UI = require("UI"),dialog_plus = require("dialog_plus");
+        var UI = require("UI");
 
         //pop
         var $dialog = UI.define('Dialog',{});
@@ -110,8 +111,14 @@
         };
 
         //输入对话框
-        $dialog.prototype.dialog = function(opts){
-            return dialog_plus(opts);
+        $dialog.prototype.dialog = function(opts,fun){
+            require.async('dialog_plus', function(dialog_plus) {
+                var dPlus = dialog_plus(opts);
+                if ($.isFunction(fun)) {
+                        fun.call(this, dPlus);
+                    }
+            });
+            //return dialog_plus(opts);
         };
 
         // //注册$插件

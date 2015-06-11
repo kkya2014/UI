@@ -21,8 +21,6 @@ seajs.config({
         'treeview' : 'myui/treeview',
         'scroll' : 'myui/iscroll'
     },
-
-    vars : [
-
-    ]
+    preload: ['$'],
+    base: './js/'
 });

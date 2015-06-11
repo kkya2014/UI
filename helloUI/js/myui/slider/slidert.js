@@ -4,68 +4,16 @@
  */
 (function() {
     
-    var map = {
-            touchstart: 'sliderTonStart',
-            touchmove: 'sliderTonMove',
-            touchend: 'sliderTonEnd',
-            touchcancel: 'sliderTonEnd',
-            click: 'sliderTonClick'
-        },
-
-        isScrolling,
+    var isScrolling,
         start,
         delta,
         moved;
 
-    
-
-    /**
-     * 图片轮播手指跟随插件
-     * @pluginfor Slider
-     */
-    define(function(require, exports, module) {
-        UI = require("UI");
-        // 提供默认options
-        $.extend(true, UI.Slider.prototype.options, {
-
-            /**
-             * @property {Boolean} [stopPropagation=false] 是否阻止事件冒泡
-             * @namespace options
-             * @for Slider
-             * @uses Slider.touch
-             */
-            stopPropagation: false,
-
-            /**
-             * @property {Boolean} [disableScroll=false] 是否阻止滚动
-             * @namespace options
-             * @for Slider
-             * @uses Slider.touch
-             */
-            disableScroll: false
-        });
-        var sliderTinit =  function() {
-                var _sl = this, opts = _sl.opts;
-
-                _sl._handler = function( e ) {
-                    opts.stopPropagation && e.stopPropagation();
-                    return map[ e.type ] && _sl[ map[ e.type ] ].call( _sl, e );
-                };
-
-                _sl.ref.on( 'readydom', function() {
-                    // 绑定手势
-                    _sl.ref.on( 'touchstart', _sl._handler );
-                    
-                    // 阻止误点击, 犹豫touchmove被preventDefault了，导致长按也会触发click
-                    _sl._container.on( 'click', _sl._handler );
-                } );
-            };
-
-            sliderTinit.sliderTonClick = function() {
+        var sliderTonClick = function() {
                 return !moved;
             };
 
-            sliderTinit.sliderTonStart = function( e ) {
+        var sliderTonStart = function( e ) {
                     
                 // 不处理多指
                 if ( e.touches.length > 1 ) {
@@ -97,7 +45,7 @@
                         ' touchcancel', _sl._handler );
             };
 
-            sliderTinit.sliderTonMove = function( e ) {
+        var sliderTonMove = function( e ) {
 
                 // 多指或缩放不处理
                 if ( e.touches.length > 1 || e.scale &&
@@ -154,7 +102,7 @@
                 }
             };
 
-            sliderTinit.sliderTonEnd = function() {
+        var sliderTonEnd = function() {
                 var _sl = this,
                     opts = _sl.opts;
                 // 解除事件
@@ -217,7 +165,60 @@
                     }
                 }
         };
-        UI.Slider.prototype.extend.call(UI.Slider,sliderTinit);
-        UI.Slider.prototype.plugins.push(sliderTinit);
+
+    
+
+    /**
+     * 图片轮播手指跟随插件
+     * @pluginfor Slider
+     */
+    define(function(require, exports, module) {
+       
+        var sliderTinit =  function() {
+                var _sl = this, opts = _sl.opts;
+
+                 // 提供默认options
+                $.extend(true, opts, {
+
+                    /**
+                     * @property {Boolean} [stopPropagation=false] 是否阻止事件冒泡
+                     * @namespace options
+                     * @for Slider
+                     * @uses Slider.touch
+                     */
+                    stopPropagation: false,
+
+                    /**
+                     * @property {Boolean} [disableScroll=false] 是否阻止滚动
+                     * @namespace options
+                     * @for Slider
+                     * @uses Slider.touch
+                     */
+                    disableScroll: false
+                });
+
+                _sl._handler = function( e ) {
+                    opts.stopPropagation && e.stopPropagation();
+                    switch (e.type) {
+                        case 'touchstart':
+                            sliderTonStart.call(_sl,e);
+                            break;
+                        case 'touchmove':
+                            sliderTonMove.call(_sl,e);
+                            break;
+                        case 'touchcancel':
+                        case 'touchend':
+                            sliderTonEnd.call(_sl,e);
+                            break;
+                        case 'click':
+                            sliderTonClick.call(_sl,e);
+                            break;
+                    }
+                };
+                // 绑定手势
+                _sl.ref.on( 'touchstart', _sl._handler);
+                    
+            };
+        module.exports = sliderTinit;
     } );
 })();

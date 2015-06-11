@@ -442,7 +442,7 @@ h6, .ui-h6 {
 
 p {
   margin-top: 0;
-  margin-bottom: 10px;
+  margin-bottom: 1px;
   font-size: 14px;
   color: #8f8f94;
 }
@@ -1770,9 +1770,9 @@ input[type="submit"]:enabled:active, input[type="submit"].ui-active:enabled,
   right: 35px;
 }
 
-.ui-content > .ui-table-view:first-child {
+/*.ui-content > .ui-table-view:first-child {
   margin-top: 15px;
-}
+}*/
 
 .ui-table-view-cell.ui-collapse > .ui-navigate-right:after, .ui-table-view-cell.ui-collapse > .ui-push-right:after {
   content: '\e581';

@@ -18,6 +18,7 @@ $(selector).slider(options)
 *	interval
 *	dots
 *	data
+*	guide
 *	tpl
 
 
@@ -54,7 +55,11 @@ $(selector).slider(options)
 *	自动播放的间隔时间（毫秒）
 *	true/false
 *	默认值：true
+>###guide###
 
+*	是否显示导向按钮
+*	true/false
+*	默认值：false
 >###data###
 
 数据对象，包含每张图片对应的数据。通过与模板结合达到展现效果，每项的key需要与模板中需要替换的一一对应
@@ -118,7 +123,8 @@ tpl默认值：
 * stop
 * slideTo
 * getIndex
-
+* next
+* prev
 
 ###play###
 	
@@ -152,18 +158,6 @@ tpl默认值：
 *	说明：返回当前显示的第几个slide
 ###代码###
 		slider.getIndex(index);
-
-
-##插件##
-*	sliderbtn：图片轮播剪头按钮插件
-
-####使用方式####
-
-在页面依赖部分添加sliderbtn，如seajs.use(['slider','sliderbtn'])
-
-##接口##
-* next
-* prev
 
 ###next###
 	

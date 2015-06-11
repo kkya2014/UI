@@ -1,5 +1,21 @@
-define(function(require, exports, module) {
-  window.onerror = function(message, url, line) {
+// 下面是 seajs 的异步载入代码：
+// ;(function(m, o, d, u, l, a, r) {
+//   if(m[d]) return;
+//   function f(n, t) { return function() { r.push(n, arguments); return t; } }
+//   m[d] = a = { args: (r = []), config: f(0, a), use: f(1, a) };
+//   m.define = f(2);
+//   u = o.createElement('script');
+//   u.id = d + 'node';
+//   u.src = 'http://example.com/libs/seajs/1.0.2/sea.js';
+//   l = o.getElementsByTagName('head')[0];
+//   l.insertBefore(u, l.firstChild);
+// })(window, document, 'seajs');
+
+// // 下面立刻就可以调用 seajs 的方法了：
+// seajs.config({
+//   'base': 'http://example.com/libs/'
+// });
+window.onerror = function(message, url, line) {
      if (!url) return;
      var msg = {};
  
@@ -23,8 +39,8 @@ define(function(require, exports, module) {
  
      //这里是用增加标签的方法调用日志收集接口，优点是比较简洁。
      alert(s);  
-  };
-	require("$");
+};
+define(function(require, exports, module) {
 	var UI = {},Base = {},$local = {},$N = window.rd;
 	UI.config = {};
    /*
@@ -38,14 +54,6 @@ define(function(require, exports, module) {
         });
   };
   Base.init = function(){};
-  Base.initPlugins = function(){
-      var self = this;
-      self.plugins.forEach(function(fn){
-          if ($.isFunction(fn)) {
-                    fn.call(self);
-                }
-      });
-  };
   /**
   * @name extend
   * @desc 扩充现有组件
@@ -177,13 +185,10 @@ define(function(require, exports, module) {
             this.opts = $.extend(true,baseOpts, opts); 
             this.ref = $(this.opts.ref);
             this.callback = this.opts.callback;
-            this.initPlugins();
             this.init($N);
-            this.opts.ref&&this.ref.trigger('readydom');
         }
         UI[ name ] = Base.extend.call(klass,Base);
         UI[ name ].prototype.options = $.extend(defOpts, options); 
-        UI[ name ].prototype.plugins = [];
         return UI[ name ];
     };
 

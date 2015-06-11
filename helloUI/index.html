@@ -47,14 +47,29 @@
         <script src="data/data-index.js"></script>
 </body>
 <script>
-   	seajs.use(['treeview'], function(){
-   		$('#treeview').treeview({
-         					callback:function(el,evt){
-         						  $local.Win.openWin($(el).attr('tar'));
-         					},
-                  iscroll:true,  
-                	data:data
-                });
+
+  var domReady = function(fun){
+    if (seajs.isFunction(fun)) {
+    var deps = seajs.parseDependencies(fun.toString())
+    debugger;
+    seajs.use(deps, function(){
+      fun.call(null,seajs.require);
    })
+  }
+  }
+
+
+  // seajs.require("treeview");
+  domReady(function(require){
+        require("treeview");
+        require("$");
+        $('#treeview').treeview({
+                   callback:function(el,evt){
+                       $local.Win.openWin($(el).attr('tar'));
+                   },
+                 data:data
+                });
+  })
+   	
    </script>
 </html>

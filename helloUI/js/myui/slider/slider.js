@@ -68,8 +68,7 @@
                     .addClass( CLASS_SLIDER_ITEM )
                     .toArray();
             _sl.ref.addClass( CLASS_SLIDER );
-            //自适应
-            opts.imgZoom&&zoom.call(this);
+            
             _sl.ref.trigger('donedom');
             opts.dots&&initDots.call(_sl);
             initWidth.call(_sl);
@@ -192,35 +191,7 @@
             _sl.ref.trigger('slideend', [_sl.index]);
         }; 
 
-     var zoom = function() {
-        var _sl = this, opts = _sl.opts,
-            watches;
-
-        function unWatch() {
-            watches && watches.off( 'load', imgZoom );
-        }
-
-        function watch() {
-            unWatch();
-            watches = _sl._container.find( 'img' )
-                    .on( 'load', imgZoom );
-        }
-
-        function imgZoom( e ) {
-            var img = e.target || this,
-
-                // 只缩放，不拉伸
-                scale = Math.min( 1, _sl.width / img.naturalWidth,
-                    _sl.height / img.naturalHeight );
-            
-            img.style.width = scale * img.naturalWidth + 'px';
-        }
-
-        watch();
-        _sl.ref.on( 'width.change', function() {
-            watches && watches.each( imgZoom );
-        } );
-    };
+ 
     
     /**
      * 图片轮播组件
@@ -250,27 +221,25 @@
                 /**
                  * @property {Boolean} [autoPlay=true] 是否开启自动播放
                  * @namespace options
-                 * @for Slider
-                 * @uses Slider.autoplay
                  */
                 autoPlay: true,
                 /**
                  * @property {Number} [interval=4000] 自动播放的间隔时间（毫秒）
                  * @namespace options
-                 * @for Slider
-                 * @uses Slider.autoplay
                  */
                 interval: 4000,
 
                 /**
                  * @property {Boolean} [dots=true] 是否显示点
                  * @namespace options
-                 * @for Slider
-                 * @uses Slider.dots
                  */
                 dots: true,
-                imgZoom:true,
                 data:null,
+                 /**
+                 * @property {Boolean} [guide=true] 是否显示导向按钮
+                 * @namespace options
+                 */
+                guide:false,  
                 tpl : {
                     item: '<div class="'+CLASS_SLIDER_ITEM+'"><a <% if( href ) { %>href="<%= href %>" <% } %>>' +
                             '<img src="<%= pic %>" /></a>' +
@@ -281,8 +250,6 @@
                 }
 
         }); 
-        //加載觸摸按鈕
-        require("slidertouch");
         //初始化
         $slider.prototype.init = function() {
             var _sl = this,opts = _sl.opts;
@@ -292,6 +259,16 @@
             bind.call(this);
             //自动轮播
             opts.autoPlay&&_sl.play();
+
+            //加載觸摸按鈕
+            require.async('slidertouch', function(st) {
+                st.call(_sl);
+            });
+            if(opts.guide){
+                require.async('sliderbtn',function(sb) {
+                    sb.call(_sl);
+                });
+            }   
         };
 
         /**
@@ -324,6 +301,36 @@
                 clearTimeout( _sl._timer );
                 _sl._timer = null;
             }
+            return _sl;
+        };
+
+        
+        /**
+         * 切换到下一个slide
+         * @method next
+         * @chainable
+         * @return {self} 返回本身
+         */
+        $slider.prototype.next = function() {
+            var _sl = this, opts = _sl.opts;
+            if ( opts.loop || _sl.index + 1 < _sl.length ) {
+                _sl.slideTo( _sl.index + 1 );
+            }
+
+            return _sl;
+        };
+         /**
+         * 切换到上一个slide
+         * @method prev
+         * @chainable
+         * @return {self} 返回本身
+         */
+        $slider.prototype.prev = function() {
+            var _sl = this, opts = _sl.opts;
+            if ( opts.loop || _sl.index > 0 ) {
+                _sl.slideTo( _sl.index - 1 );
+            }
+
             return _sl;
         };
 

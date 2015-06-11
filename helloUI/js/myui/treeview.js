@@ -14,18 +14,8 @@
 
         var render = function(){
             var _tv = this,opts = _tv.opts;
-            if(opts.iscroll){
-                _tv._ul = _tv.ref.find('ul.'+CLASS_TABLE_VIEW);
-                (_tv._ul.length>0)||(_tv._ul = $(opts.tpl.ul).appendTo( _tv.ref ));
-                _tv.ref.scroll({
-                        scrollbars: true,
-                        interactiveScrollbars: true,
-                        shrinkScrollbars: 'scale',
-                        fadeScrollbars: true
-                });
-            }else{
-                _tv._ul = $(opts.tpl.ul).appendTo( _tv.ref );
-            }
+            $(opts.tpl.ul).appendTo( _tv.ref );
+            _tv._ul = _tv.ref.find('ul.'+CLASS_TABLE_VIEW);
             _tv._lis = [];
             _tv.renderData(opts.data);
         };
@@ -87,12 +77,16 @@
                     tarEl.removeClass(CLASS_ACTIVE);
                     tarEl = false;
                 }
+            }).on( _tv.touchCancel() , function(evt) {
+                if (tarEl) {
+                    tarEl.removeClass(CLASS_ACTIVE);
+                    tarEl = false;
+                }
             })
         };
 
     define(function(require, exports, module) {
         var UI = require("UI");
-                 require("scroll");
         //treeview
         var $treeview = UI.define('Treeview',{
                 /**
@@ -124,6 +118,16 @@
             _tv.toggle = opts.toggle;
             render.call(this);
             bind.call(this);
+            if(opts.iscroll){
+                require.async('scroll', function() {
+                    _tv.ref.scroll({
+                        scrollbars: true,
+                        interactiveScrollbars: true,
+                        shrinkScrollbars: 'scale',
+                        fadeScrollbars: true
+                });
+                });
+            }
         };
         /**
          * 根據傳入數據渲染

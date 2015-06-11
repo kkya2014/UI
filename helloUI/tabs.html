@@ -14,7 +14,6 @@
    <style>
             body {
                 font-family: ubuntu, helvetica, arial;
-                overflow: hidden; /* this is important to prevent the whole page to bounce */
             }
             html,body {
                 background-color: #efeff4;
@@ -50,22 +49,21 @@
             .oa-contact-name, oa-contact-position {
                 float: left;
             }
-            .ui-bar-tab ~ .ui-content .ui-wrapper {
+            /*.ui-bar-tab ~ .ui-content .ui-wrapper {
                 position: absolute;
                 z-index: 1;
                 top: 44px;
                 bottom: 50px;
                 width: 100%;
                 background: #ccc;
-            }
-            .ui-slider .ui-slider-group .ui-slider-item {
+            }*/
+           /* .ui-slider .ui-slider-group .ui-slider-item {
                   position: relative;
                   display: inline-block;
                   width: 100%;
-                   height: 148px; 
                   font-size: 14px;
                   vertical-align: top;
-                }
+                }*/
         </style>
 </head>
 <body>  
@@ -136,7 +134,7 @@
         <script src="js/config.js"></script>
 </body>
 <script>
-   seajs.use(['tab','gridview','treeview','slider','sliderbtn','scroll','button'], function(){
+   seajs.use(['tab','gridview','treeview','slider','button'], function(){
             $('a.ui-pull-left').button(function(evt){
                     this.back();
                 })
@@ -155,28 +153,24 @@
              $('#slider').slider( { 
                     loop:true,
                     data:[{
-                        pic:'css/assets/slider/image1.png',
+                        pic:'css/assets/slider/img1.png',
                         title:'1,让Coron的太阳把自己晒黑—小天',
                         href:'http://www.baidu.com/'
                     },{
-                        pic:'css/assets/slider/image2.png',
+                        pic:'css/assets/slider/img2.png',
                         title:'2,让Coron的太阳把自己晒黑—小天',
                         href:'http://www.baidu.com/'
                     },{
-                        pic:'css/assets/slider/image3.png',
+                        pic:'css/assets/slider/img3.jpg',
                         title:'3,让Coron的太阳把自己晒黑—小天',
                         href:'http://www.baidu.com/'
                     },{
-                        pic:'css/assets/slider/image4.png',
+                        pic:'css/assets/slider/img4.jpg',
                         title:'4,让Coron的太阳把自己晒黑—小天',
                         href:'http://www.baidu.com/'
                     },{
-                        pic:'css/assets/slider/image5.png',
+                        pic:'css/assets/slider/img5.jpg',
                         title:'5,让Coron的太阳把自己晒黑—小天',
-                        href:'http://www.baidu.com/'
-                    },{
-                        pic:'css/assets/slider/image6.png',
-                        title:'6,让Coron的太阳把自己晒黑—小天',
                         href:'http://www.baidu.com/'
                     }] 
                 });
@@ -262,8 +256,7 @@
                     tpl:{
                         li: tplLeft 
                     },
-                    data:data,
-                    iscroll:true
+                    data:data
                 });
         }
 
@@ -364,7 +357,6 @@
                             ul:ul,
                             li: tpluiR 
                         },
-                        iscroll:true,
                         data:dataR
 
                     }); 
